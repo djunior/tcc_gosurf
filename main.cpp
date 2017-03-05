@@ -36,10 +36,10 @@ int main(int argc, char* argv[]) {
 	int iLowH = 133;
 	int iHighH = 162;
 
-	int iLowS = 66; 
-	int iHighS = 129;
+	int iLowS = 52; 
+	int iHighS = 104;
 
-	int iLowV = 42;
+	int iLowV = 73;
 	int iHighV = 141;
 
 	std::cout << "Inicio do main!" << std::endl;
@@ -112,17 +112,15 @@ int main(int argc, char* argv[]) {
 			//calculate the position of the ball
 			int posX = dM10 / dArea;
 			int posY = dM01 / dArea;        
-			    
-			if (iLastX >= 0 && iLastY >= 0 && posX >= 0 && posY >= 0)
-			{
-			//Draw a red line from the previous point to the current point
-			line(imgLines, Point(posX, posY), Point(iLastX, iLastY), Scalar(0,0,255), 2);
-			}
 
-			iLastX = posX;
-			iLastY = posY;
+			cout << "PosX: " << posX << endl;
+			cout << "PosY: " << posY << endl;
+			    
+			//Draw a red line from the previous point to the current point
+			Scalar color = Scalar( 255, 255, 255 );
+			circle( imgLines, Point(posX, posY), 4, color, -1, 8, 0 );
 		}
-	  
+
 	  	imageMat = imageMat + imgLines;
 
 		Size size(1280,720);//the dst image size,e.g.100x100
