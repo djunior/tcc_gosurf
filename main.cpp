@@ -119,6 +119,29 @@ int main(int argc, char* argv[]) {
 			//Draw a red line from the previous point to the current point
 			Scalar color = Scalar( 255, 255, 255 );
 			circle( imgLines, Point(posX, posY), 4, color, -1, 8, 0 );
+
+			unsigned int half_width = 0;
+			unsigned int half_height = 0;
+
+			for (int i = posX; i > 0; i--) {
+				Scalar colour = imgThresholded.at<uchar>(Point(i, posY));
+				if(colour.val[0]==0) {
+					half_width = posX - (i + 1);
+					break;
+				}
+			}
+
+			for (int j = posY; j > 0; j--) {
+				Scalar colour = imgThresholded.at<uchar>(Point(posX, j));
+				if(colour.val[0]==0) {
+					half_height = posY - (j+1);
+					break;
+				}
+			}
+
+			cout << "Width: " << (half_width*2) << endl;
+			cout << "Height: " << (half_height*2) << endl;
+
 		}
 
 	  	imageMat = imageMat + imgLines;
