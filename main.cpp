@@ -146,7 +146,7 @@ int main(int argc, char* argv[]) {
 
 	  	imageMat = imageMat + imgLines;
 
-		Size size(1280,720);//the dst image size,e.g.100x100
+		Size size(480,720);//the dst image size,e.g.100x100
 		Mat rThreshold, rOriginal;//dst image
 		resize(imgThresholded,rThreshold,size);
 		resize(imageMat,rOriginal,size);
