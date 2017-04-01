@@ -2,6 +2,10 @@
 #include <opencv2/core/core.hpp>
 #include <opencv2/highgui/highgui.hpp>
 #include "opencv/cv.h"
+#include "gradedTimestack.h"
+#include "timestack.h"
+#include "stabilize.h"
+#include "imageFilter.h"
 
 /*
 	Image info:
@@ -30,8 +34,68 @@
 
 using namespace std;
 using namespace cv;
+using namespace tcc;
 
-int main(int argc, char* argv[]) {
+string fileWithoutExtension(string path) {
+ 	std::string base_filename = path.substr(path.find_last_of("/\\") + 1);
+	std::string::size_type const p(base_filename.find_last_of('.'));
+	std::string file_without_extension = base_filename.substr(0, p);
+	return file_without_extension;
+}
+
+void filterImage(int argc, char* argv[]) {
+	/// Load an image
+	std::string path = argv[1];
+	Mat src = imread( path );
+
+	if( !src.data )
+	{ 
+		return; 
+	}
+
+	ImageFilter imgFilter(src);
+
+	imgFilter.filter();
+
+	imgFilter.save("output_images/" + fileWithoutExtension(path) + "_filteredTimestack.jpg");
+
+}
+
+void timestackFromVideo(int argc,char* argv[]) {
+	if (argc < 2) {
+		std::cerr << "timestackFromVideo - Esperado o nome do video!" << std::endl;
+		return;
+	}
+
+	std::string path = argv[1];
+
+	VideoCapture cap(path.c_str());
+	
+	// GradedTimestack originalTimestack(cap);
+	// GradedTimestack stableTimestack(cap);
+
+	Timestack originalTimestack(cap);
+	Timestack stableTimestack(cap);
+	
+	stabilize(cap,originalTimestack,stableTimestack);
+
+ 	std::string base_filename = path.substr(path.find_last_of("/\\") + 1);
+	std::string::size_type const p(base_filename.find_last_of('.'));
+	std::string file_without_extension = base_filename.substr(0, p);
+
+	std::string outputOriginal = "output_images/" + file_without_extension + "_originalTimestack.jpg";
+	std::string outputStable = "output_images/" + file_without_extension + "_stableTimestack.jpg";
+
+	originalTimestack.save(outputOriginal);
+	stableTimestack.save(outputStable);
+}
+
+void detectReference(int argc, char* argv[]) {
+
+	if (argc < 2) {
+		std::cerr << "detectReference - Esperado o nome da imagem!" << std::endl;
+		return;
+	}
 
 	int iLowH = 133;
 	int iHighH = 162;
@@ -44,10 +108,6 @@ int main(int argc, char* argv[]) {
 
 	std::cout << "Inicio do main!" << std::endl;
 	std::cout << "argc: " << argc << std::endl;
-	if (argc < 2) {
-		std::cerr << "Esperado o nome da imagem!" << std::endl;
-		return 1;
-	}
 
     namedWindow("Control", CV_WINDOW_AUTOSIZE); //create a window called "Control"
     createTrackbar("LowH", "Control", &iLowH, 179); //Hue (0 - 179)
@@ -156,9 +216,12 @@ int main(int argc, char* argv[]) {
 
 		// resizeWindow("image", 1280, 1280);
 
-
 		waitKey(0);
     }
+}
 
+int main(int argc, char* argv[]) {
+	filterImage(argc,argv);
+	// timestackFromVideo(argc,argv);
 	return 0;
 }
