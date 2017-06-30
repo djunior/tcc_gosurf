@@ -12,6 +12,8 @@ file(GLOB_RECURSE TIMESTACK_FILES "src/lib/timestack/*.cpp")
 
 add_executable( timestack "src/timestackFromVideo.cpp" ${SRC_FILES} ${TIMESTACK_FILES} )
 add_executable( filterImage "src/filterImage.cpp" ${SRC_FILES} ${FILTER_FILES} )
+add_executable( waveViewer "src/waveViewer.cpp" ${SRC_FILES} ${FILTER_FILES} )
 
 target_link_libraries( timestack ${OpenCV_LIBS} )
 target_link_libraries( filterImage ${OpenCV_LIBS} )
+target_link_libraries( waveViewer ${OpenCV_LIBS} )

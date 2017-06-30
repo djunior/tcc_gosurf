@@ -230,4 +230,8 @@ void Trajectory::findFirstPoint(Mat& m) {
 	}	
 }
 
+Trajectory::Point Trajectory::getPoint(int i) {
+	return points[i];
+}
+
 }

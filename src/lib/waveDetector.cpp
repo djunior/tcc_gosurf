@@ -7,6 +7,7 @@
 #include <stdlib.h>     /* srand, rand */
 #include <time.h>       /* time */
 #include <unistd.h>
+#include <fstream>
 
 using namespace std;
 using namespace cv;
@@ -27,10 +28,12 @@ void WaveDetector::detectWave(Trajectory& t, int bottom, int top) {
 
 	// cout << "Detecting wave from " << bottom << " to " << top << endl;
 	// cout << "Calculating height: " << height << endl;
-
-	if (height > MIN_HEIGHT_THRESHOLD && height < MAX_HEIGHT_THRESHOLD) {
-		waves.push_back(t.points[bottom]);
-		waves.push_back(t.points[top]);
+	
+	if ((height > MIN_HEIGHT_THRESHOLD && height < MAX_HEIGHT_THRESHOLD)) {
+		if (waves.size() == 0 || t.getPoint(bottom).y > waves.back().y) {
+			waves.push_back(t.points[bottom]);
+			waves.push_back(t.points[top]);
+		}
 	}
 }
 
@@ -197,6 +200,22 @@ void WaveDetector::filter() {
 
 
 	// waitKey(0);
+
+}
+
+void WaveDetector::save(char* fname) {
+	ofstream f;
+  	f.open(fname);
+
+  	for (int i = 0; i < (waves.size()-1); i += 2) {
+  		Trajectory::Point bottom = waves[i];
+  		Trajectory::Point top = waves[i+1];
+
+  		f << bottom.x << "," << bottom.y << endl;
+  		f << top.x << "," << top.y << endl;
+  	}
+
+  	f.close();
 
 }
 

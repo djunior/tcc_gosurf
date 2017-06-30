@@ -176,7 +176,7 @@ void process(Mat& image) {
 	pipeline.addFilter(new ImageOutput("output_images/process/process_sky_remover.jpg"));
 
 	//Main processing
-	pipeline.addFilter(new GaussianBlurFilter(3));
+	pipeline.addFilter(new GaussianBlurFilter(15));
 	pipeline.addFilter(new ImageOutput("output_images/process/process_gaussian.jpg"));
 	pipeline.addFilter(new ThresholdFilter(150,0,255));
 	pipeline.addFilter(new ImageOutput("output_images/process/process_threshold.jpg"));
@@ -204,6 +204,8 @@ void process(Mat& image) {
 	ImageOutput wavesOutput("output_images/process/process_waves_result.jpg");
 	wavesOutput.setSourceMat(&debug);
 	wavesOutput.filter();
+
+	wd->save("waves.txt");
 }
 
 void on_trackbar( int, void* )

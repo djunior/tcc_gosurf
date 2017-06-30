@@ -11,7 +11,7 @@ using namespace cv;
 using namespace std;
 
 Timestack::Timestack(VideoCapture& cap):
-    size(cap.get(CV_CAP_PROP_FRAME_HEIGHT)),
+    size(cap.get(CV_CAP_PROP_FRAME_WIDTH)),
     timestack(0,size,CV_8UC1,0.0f)
 {
     horizontalPercent = 50;
@@ -32,14 +32,18 @@ void Timestack::process(Mat& frame) {
     // Converting input to grey scale
     cvtColor(frame, greyMat, CV_BGR2GRAY);
 
+    // cout << "Row: " << r << endl;
+    // imshow("frame",greyMat);
+    // waitKey(1);
+
     // Getting middle row from grey scale
-    row = greyMat.col(r);
+    row = greyMat.row(r);
 
     // Transposing the row
-    transpose(row,transposedMat);
+    // transpose(row,transposedMat);
 
     // Pushing the transposed row to the timestack
-    timestack.push_back(transposedMat);
+    timestack.push_back(row);
 }
 
 Mat* Timestack::getTimestack() {
@@ -88,6 +92,8 @@ void Timestack::save(std::string fileName) {
     Mat transposedTimestack;
     transpose(timestack,transposedTimestack);
 
+    // imshow(fileName.c_str(),transposedTimestack);
+    // waitKey(0);
     imwrite( fileName.c_str(), transposedTimestack );
 }
 

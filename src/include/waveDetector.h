@@ -13,6 +13,7 @@ public:
 	~WaveDetector();
 	void filter();
 	void drawWaves(cv::Mat&);
+	void save(char*);
 private:
 	std::vector<Trajectory*> trajectoryList;
 	void detectWave(Trajectory&,int,int);

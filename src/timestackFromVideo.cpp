@@ -12,6 +12,21 @@ using namespace tcc;
 using namespace std;
 using namespace cv;
 
+void simpleTimestack(VideoCapture& cap) {
+	Mat frame;
+	Timestack t(cap);
+	while(1) {
+		cap >> frame;
+		if (frame.data == NULL)
+			break;
+
+		// cvtColor(frame,frame,COLOR_BGR2GRAY);
+		t.process(frame);
+	}
+	cout << "Saving timestack..." << endl;
+	t.save("output_images/timestack.jpg");
+}
+
 int main(int argc, char* argv[]) {
 	string path = argv[1];
 
@@ -33,6 +48,10 @@ int main(int argc, char* argv[]) {
 	}
 
 	VideoCapture cap(path.c_str());
+
+	simpleTimestack(cap);
+	if (1 == 1)
+		return 0;
 
 	// GradedTimestack originalTimestack(cap);
 	// GradedTimestack stableTimestack(cap);
