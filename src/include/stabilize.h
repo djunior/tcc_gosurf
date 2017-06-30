@@ -1,11 +1,12 @@
 #ifndef __STABILIZE_H__
 #define __STABILIZE_H__
 #include "opencv/cv.h"
-#include "timestack.h"
+#include "imageProcessor.h"
 
 namespace tcc {
 
-void stabilize(cv::VideoCapture &cap, Timestack& ot, Timestack& st);
+void stabilize(cv::VideoCapture&);
+void stabilize(cv::VideoCapture&, ImageProcessor*, ImageProcessor*);
 
 }
 

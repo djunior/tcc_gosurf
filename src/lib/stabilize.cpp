@@ -22,7 +22,6 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
 #include "opencv/cv.h"
 
 #include "stabilize.h"
-#include "timestack.h"
 
 namespace tcc {
 
@@ -68,7 +67,75 @@ struct Trajectory
     double a; // angle
 };
 
-void stabilize(VideoCapture &cap, Timestack& ot, Timestack& st)
+class StableVideoViewer : public ImageProcessor {
+private:
+        enum StableVideoViewer_State {
+            WAITING_FOR_ORIGINAL,
+            WAITING_FOR_STABLE
+        };
+
+        Mat original,stable;
+        StableVideoViewer_State state;
+
+        void postProcess() {
+            int vert_border = HORIZONTAL_BORDER_CROP * original.rows / original.cols; // get the aspect ratio correct
+
+            Mat s(stable,Range(vert_border, stable.rows-vert_border), Range(HORIZONTAL_BORDER_CROP, stable.cols-HORIZONTAL_BORDER_CROP));
+
+            // Resize cur2 back to cur size, for better side by side comparison
+            resize(s, s, original.size());
+
+            // Now draw the original and stablised side by side for coolness
+            Mat canvas = Mat::zeros(original.rows, original.cols*2+10, original.type());
+
+            original.copyTo(canvas(Range::all(), Range(0, s.cols)));
+            s.copyTo(canvas(Range::all(), Range(s.cols+10, s.cols*2+10)));
+
+            // If too big to fit on the screen, then scale it down by 2, hopefully it'll fit :)
+            if(canvas.cols > 1920) {
+                resize(canvas, canvas, Size(canvas.cols/2, canvas.rows/2));
+            }
+
+            imshow("before and after", canvas);
+
+            waitKey(1);
+        }
+public:
+    void process(Mat& mat) {
+        switch (state) {
+            case WAITING_FOR_ORIGINAL:
+                original = mat.clone();
+                state = WAITING_FOR_STABLE;
+                break;
+            case WAITING_FOR_STABLE:
+                stable = mat.clone();
+                state = WAITING_FOR_ORIGINAL;
+                postProcess();
+                break;
+        }
+    }
+};
+
+void stabilize(VideoCapture &cap) {
+    StableVideoViewer videoViewer;
+    stabilize(cap,&videoViewer,&videoViewer);
+}
+
+void convertToGreyscale(Mat& input, Mat& output) {
+    for (int i = 0; i < input.cols; i++) {
+        for (int j = 0; j < input.rows; j++) {
+            Vec3b bgrValue = input.at<Vec3b>(j,i);
+            float b = (float) bgrValue[0] / 255;
+            float g = (float) bgrValue[1] / 255;
+            float r = (float) bgrValue[2] / 255;
+            float value = 255 * (0.35*r + 0.5*g + 0.15*b);
+            // cout << "Value: " << value << endl;
+            output.at<uchar>(j,i) = (uchar) value;
+        }
+    }
+}
+
+void stabilize(VideoCapture &cap, ImageProcessor* origProc, ImageProcessor* stableProc)
 {
     // For further analysis
     // ofstream out_transform("prev_to_cur_transformation.txt");
@@ -78,7 +145,7 @@ void stabilize(VideoCapture &cap, Timestack& ot, Timestack& st)
 
     assert(cap.isOpened());
 
-    Mat cur, cur_grey;
+    Mat cur;
     Mat prev, prev_grey;
 
     cap >> prev;
@@ -91,6 +158,13 @@ void stabilize(VideoCapture &cap, Timestack& ot, Timestack& st)
     int max_frames = cap.get(CV_CAP_PROP_FRAME_COUNT);
     Mat last_T;
 
+    bool printed0 = false;
+    bool printed25 = false;
+    bool printed50 = false;
+    bool printed75 = false;
+    bool printed90 = false;
+    bool printed99 = false;
+
     while(true) {
         cap >> cur;
 
@@ -98,7 +172,9 @@ void stabilize(VideoCapture &cap, Timestack& ot, Timestack& st)
             break;
         }
 
-        cvtColor(cur, cur_grey, COLOR_BGR2GRAY);
+        // cvtColor(cur, cur_grey, COLOR_BGR2GRAY);
+        Mat cur_grey(cur.size(),CV_8UC1);
+        convertToGreyscale(cur, cur_grey);
 
         // vector from prev to cur
         vector <Point2f> prev_corner, cur_corner;
@@ -139,7 +215,51 @@ void stabilize(VideoCapture &cap, Timestack& ot, Timestack& st)
         cur.copyTo(prev);
         cur_grey.copyTo(prev_grey);
 
-        // cout << "Frame: " << k << "/" << max_frames << " - good optical flow: " << prev_corner2.size() << endl;
+        int percent = k * 100 / max_frames;
+        // cout << "Percent " << percent << endl;
+        switch(percent) {
+            case 0:
+                // cout << "Case 0" << endl;
+                if (!printed0) {
+                    printed0 = true;
+                    cout << "Stabilization step 1: 0%...";
+                }
+                break;
+            case 25:
+                if (!printed25) {
+                    printed25 = true;
+                    cout << "25%...";
+                }
+                break;
+            case 50:
+                if (!printed50) {
+                    printed50 = true;
+                    cout << "50%...";
+                }
+                break;
+            case 75:
+                if (!printed75) {
+                    printed75 = true;
+                    cout << "75%...";
+                }
+                break;
+            case 90:
+                if (!printed90) {
+                    printed90 = true;
+                    cout << "90%...";
+                }
+                break;
+            case 98:
+            case 99:
+                if (!printed99) {
+                    printed99 = true;
+                    cout << "99% completed!" << endl;;
+                }
+                break;
+            default:
+                break;
+        }
+
         k++;
     }
 
@@ -221,8 +341,6 @@ void stabilize(VideoCapture &cap, Timestack& ot, Timestack& st)
     cap.set(CV_CAP_PROP_POS_FRAMES, 0);
     Mat T(2,3,CV_64F);
 
-    int vert_border = HORIZONTAL_BORDER_CROP * prev.rows / prev.cols; // get the aspect ratio correct
-
     k=0;
 
     while(k < max_frames-1) { // don't process the very last frame, no valid transform
@@ -242,27 +360,29 @@ void stabilize(VideoCapture &cap, Timestack& ot, Timestack& st)
 
         Mat cur2,originalGreyMat,stableGreyMat,originalTransposedMat,stableTransposedMat;
 
-       	ot.addFrame(cur);
+        if (origProc != NULL && origProc != 0)
+       	    origProc->process(cur);
 
         warpAffine(cur, cur2, T, cur.size());
 
-		st.addFrame(cur2);
+        if (stableProc != NULL && stableProc != 0)
+            stableProc->process(cur2);
 
-        cur2 = cur2(Range(vert_border, cur2.rows-vert_border), Range(HORIZONTAL_BORDER_CROP, cur2.cols-HORIZONTAL_BORDER_CROP));
+        // cur2 = cur2(Range(vert_border, cur2.rows-vert_border), Range(HORIZONTAL_BORDER_CROP, cur2.cols-HORIZONTAL_BORDER_CROP));
 
-        // Resize cur2 back to cur size, for better side by side comparison
-        resize(cur2, cur2, cur.size());
+        // // Resize cur2 back to cur size, for better side by side comparison
+        // resize(cur2, cur2, cur.size());
 
-        // Now draw the original and stablised side by side for coolness
-        Mat canvas = Mat::zeros(cur.rows, cur.cols*2+10, cur.type());
+        // // Now draw the original and stablised side by side for coolness
+        // Mat canvas = Mat::zeros(cur.rows, cur.cols*2+10, cur.type());
 
-        cur.copyTo(canvas(Range::all(), Range(0, cur2.cols)));
-        cur2.copyTo(canvas(Range::all(), Range(cur2.cols+10, cur2.cols*2+10)));
+        // cur.copyTo(canvas(Range::all(), Range(0, cur2.cols)));
+        // cur2.copyTo(canvas(Range::all(), Range(cur2.cols+10, cur2.cols*2+10)));
 
-        // If too big to fit on the screen, then scale it down by 2, hopefully it'll fit :)
-        if(canvas.cols > 1920) {
-            resize(canvas, canvas, Size(canvas.cols/2, canvas.rows/2));
-        }
+        // // If too big to fit on the screen, then scale it down by 2, hopefully it'll fit :)
+        // if(canvas.cols > 1920) {
+        //     resize(canvas, canvas, Size(canvas.cols/2, canvas.rows/2));
+        // }
 
         // imshow("before and after", canvas);
 
@@ -274,20 +394,6 @@ void stabilize(VideoCapture &cap, Timestack& ot, Timestack& st)
 
         k++;
     }
-
-	// Mat transposedOriginalTimestack;
- //    Mat* originalTimestackMat = originalTimestack.getTimestack();
- //    transpose(*originalTimestackMat,transposedOriginalTimestack);
- //    imshow("OriginalTimestack",transposedOriginalTimestack);
-    // ot.save("output_images/original_timestack.jpg");
-    // st.save("output_images/stable_timestack.jpg");
-
-	// Mat transposedStableTimestack;
- //    Mat* stableTimestackMat = stableTimestack.getTimestack();
- //    transpose(*stableTimestackMat,transposedStableTimestack);
- //    imshow("StableTimestack",transposedStableTimestack);
-
-    // waitKey(0);
 }
 
 }

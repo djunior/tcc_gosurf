@@ -1,0 +1,82 @@
+\select@language {brazil}
+\contentsline {paragraph}{}{iv}
+\contentsline {paragraph}{}{iv}
+\contentsline {paragraph}{}{iv}
+\contentsline {paragraph}{}{v}
+\contentsline {paragraph}{}{vi}
+\contentsline {paragraph}{}{vii}
+\contentsline {paragraph}{}{vii}
+\contentsline {paragraph}{}{viii}
+\contentsline {paragraph}{}{viii}
+\contentsline {paragraph}{}{ix}
+\contentsline {paragraph}{}{ix}
+\contentsline {chapter}{\numberline {1}Introdu\c c\~ao}{1}
+\contentsline {section}{\numberline {1.1}Tema}{1}
+\contentsline {paragraph}{}{1}
+\contentsline {section}{\numberline {1.2}Delimita\c c\~ao}{1}
+\contentsline {paragraph}{}{1}
+\contentsline {section}{\numberline {1.3}Justificativa}{1}
+\contentsline {paragraph}{}{1}
+\contentsline {paragraph}{}{2}
+\contentsline {paragraph}{}{2}
+\contentsline {paragraph}{}{2}
+\contentsline {paragraph}{}{2}
+\contentsline {paragraph}{}{2}
+\contentsline {paragraph}{}{3}
+\contentsline {section}{\numberline {1.4}Objetivos}{3}
+\contentsline {paragraph}{}{3}
+\contentsline {section}{\numberline {1.5}Metodologia}{3}
+\contentsline {paragraph}{}{3}
+\contentsline {paragraph}{}{4}
+\contentsline {section}{\numberline {1.6}Descri\c c\~ao}{4}
+\contentsline {paragraph}{}{4}
+\contentsline {paragraph}{}{4}
+\contentsline {paragraph}{}{4}
+\contentsline {paragraph}{}{4}
+\contentsline {chapter}{\numberline {2}Fundamenta\c c\~ao Te\'orica}{5}
+\contentsline {section}{\numberline {2.1}Trabalhos Relacionados}{5}
+\contentsline {paragraph}{}{5}
+\contentsline {paragraph}{}{5}
+\contentsline {paragraph}{}{6}
+\contentsline {paragraph}{}{6}
+\contentsline {paragraph}{}{6}
+\contentsline {paragraph}{}{6}
+\contentsline {section}{\numberline {2.2}Processamento de V\IeC {\'\i }deo e Imagens}{7}
+\contentsline {paragraph}{}{7}
+\contentsline {paragraph}{}{7}
+\contentsline {paragraph}{}{7}
+\contentsline {paragraph}{}{7}
+\contentsline {section}{\numberline {2.3}Identifica\c c\~ao de objetos}{8}
+\contentsline {paragraph}{}{8}
+\contentsline {paragraph}{}{8}
+\contentsline {section}{\numberline {2.4}M\'etodos de Aprimoramento de Imagens}{8}
+\contentsline {paragraph}{}{8}
+\contentsline {paragraph}{}{8}
+\contentsline {paragraph}{}{8}
+\contentsline {paragraph}{}{9}
+\contentsline {paragraph}{}{9}
+\contentsline {paragraph}{}{9}
+\contentsline {paragraph}{}{10}
+\contentsline {paragraph}{}{10}
+\contentsline {paragraph}{}{10}
+\contentsline {subsection}{\numberline {2.4.1}M\'etodos de Segmenta\c c\~ao de Imagens}{11}
+\contentsline {paragraph}{}{11}
+\contentsline {subsection}{\numberline {2.4.2}M\'etodos de Detec\c c\~ao de Bordas}{11}
+\contentsline {section}{\numberline {2.5}Rela\c c\~ao Entre Dist\^ancia e Altura de um Objeto}{11}
+\contentsline {subsection}{\numberline {2.5.1}O Olho Humano}{11}
+\contentsline {subsection}{\numberline {2.5.2}Lentes e C\^ameras}{11}
+\contentsline {chapter}{\numberline {3}Algoritmo de Medi\c c\~ao de Altura das Ondas do Mar}{12}
+\contentsline {section}{\numberline {3.1}Timestack}{12}
+\contentsline {paragraph}{}{12}
+\contentsline {paragraph}{}{12}
+\contentsline {paragraph}{}{12}
+\contentsline {paragraph}{}{13}
+\contentsline {chapter}{\numberline {4}Implementa\c c\~ao do Algoritmo}{14}
+\contentsline {chapter}{\numberline {5}Dados Experimentais}{15}
+\contentsline {chapter}{\numberline {6}Conclus\~oes}{16}
+\contentsline {chapter}{Bibliografia}{17}
+\contentsline {chapter}{\numberline {A}O que \'e um ap\^endice}{19}
+\contentsline {paragraph}{}{19}
+\contentsline {chapter}{\numberline {B}Encaderna\c c\~ao do Projeto de Gradua\c c\~ao}{20}
+\contentsline {chapter}{\numberline {C}O que \'e um anexo}{22}
+\contentsline {paragraph}{}{22}

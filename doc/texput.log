@@ -1,0 +1,13 @@
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015) (preloaded format=pdfetex 2016.4.27)  2 JUN 2017 15:25
+entering extended mode
+ restricted \write18 enabled.
+ file:line:error style messages enabled.
+ %&-line parsing enabled.
+**\nonstopmode \input /Users/davidbrittojr/workspace/tcc_gosurf/doc/gen
+
+! Emergency stop.
+<*> .../davidbrittojr/workspace/tcc_gosurf/doc/gen
+                                                  
+*** (job aborted, file error in nonstop mode)
+
+!  ==> Fatal error occurred, no output PDF file produced!

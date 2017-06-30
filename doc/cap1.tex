@@ -1,0 +1,54 @@
+\section{Tema}
+
+\paragraph{}O tema deste trabalho é o uso de inteligência de máquina e visão computacional para estimar dados sobre ondas em uma cabeça de praia. Neste sentido, o problema a ser resolvido é construir uma solução de hardware e software capaz de inferir a altura de ondas e sua periodicidade.
+
+\section{Delimitação}
+
+\paragraph{}Esse estudo será realizado com base em ondas na praia de Itacoatiara, Niterói. Os dados foram coletados inicialmente utilizando uma câmera de celular, e posteriormente utilizando um aparato de hardware desenvolvido para o projeto. A captura de dados usando um dispositivo móvel introduz algumas dificuldades no projeto, como instabilidades nos vídeos capturados. Entretanto, utilizar um hardware em um local fixo apresenta outros problemas, como produzir um hardware que aguente exposição ao tempo e encontrar um local seguro para fixá-lo.
+
+
+
+\section{Justificativa}
+
+\paragraph{}Hoje, os métodos mais difundidos para medição de ondas do mar são: método gráfico e método sensorial. O método gráfico é utilizado principalmente em campeonatos de surf, onde o tamanho do surfista é usado como referência para calcular a altura da onda. Já o método sensorial utiliza boias com sensores de movimento, instaladas em um ponto na praia, de forma que a passagem das ondas altera a altura do sensor de movimento, e com isso pode-se calcular a diferença da altura inicial para a final.
+
+\paragraph{}Ambos os métodos descritos anteriormente não são práticos de serem implementados em larga escala. O método gráfico necessita sempre de uma referência para realizar a medição de cada onda, além de necessitar o ajuste humano em cada medida. O método sensorial é custoso para adquirir, instalar e manter o equipamento necessário.
+
+\paragraph{}Uma das características desejadas para esse sistema de monitoramento é que ele deveria ser autônomo e distribuído, podendo monitorar diversas praias em tempo real. Logo de início ficou claro que medir a altura das ondas de uma forma automatizada e barata é essencial para o sistema, e ainda, que todos os métodos existentes não atendem esses requisitos.
+
+\paragraph{}Inicialmente, este projeto começou como parte de um sistema de monitoramento de praias voltado para avaliação da condição de surf, chamado GoSurf. O sistema foi desenvolvido na disciplina Projeto Integrado. Entretanto, no desenvolvimento inicial do sistema não foi possível implementar uma forma de medição de ondas do mar satisfatório.
+
+\paragraph{}O monitoramento de praias possui outras aplicações fora do sistema descrito anteriormente. Um sistema similar, também baseado em imagens, foi desenvolvido na Griffin University, Australia, para indicar nível de perigo para nado em praias e que será objeto de estudo na fundamentação teórica deste trabalho \cite{Griffith05}.
+
+\paragraph{}O estudo de processamento de imagens voltado a ondas do mar apresenta um problema interessante em análise de imagens. Como se está trabalhando com imagens reais e altamente dinâmicas, deve-se empregar diversas técnicas para reduzir o ruído nos dados de entrada e garantir uma medição confiável.
+
+\paragraph{}Assim, torna-se desejável criar e implementar um algoritmo para medir a altura de ondas do mar utilizando técnicas de processamento de imagens. A análise de cenários naturais dinâmicos é um desafio na área de análise de imagens, uma vez que não se pode alterar o cenário para facilitar a análise desejada. Por isso é necessário um algoritmo inteligente que consiga se adaptar a variações nos dados de entrada para extrair as informações relevantes.
+
+
+
+\section{Objetivos}
+
+\paragraph{}Informar qual é o objetivo geral do trabalho, isto é, aquilo que deve ser atendido e que corresponde ao indicador inequívoco do sucesso do seu trabalho. Pode acontecer que venha a existir um conjunto de objetivos específicos, que complementam o objetivo geral (tamanho do texto: livre, mas cuidado para não fazer uma literatura romanceada, afinal esta seção trata dos objetivos).
+\begin{itemize}
+\item Construir um aparato de aquisição de vídeos  montado em uma praia. 
+\item Adquirir os vídeos e transmiti-los para um servidor.
+\item Realizar medições (este item pode ser fragmentado em outras metas)
+\item Disponibilizar os dados. 
+\end{itemize}
+
+\section{Metodologia}
+
+\paragraph{}As medições obtidas pelo algoritmo serão comparadas com medições manuais tanto nas imagens geradas quanto por estimativas in loco. As medições manuais são feitas na imagem por um operador humano. Inspecionando a imagem, é fácil perceber onde é o ponto de máximo e mínimo de uma onda, e com o auxílio de um programa de edição de imagem pode-se contar o número de pixels entre esses dois pontos. As medições in loco são realizadas no mesmo momento que as imagens são obtidas. Como não é possível medir a onda através de instrumentos, vale-se da experiência da pessoa realizando a aquisição dos dados e de outras no local para estimar a altura das ondas naquele momento. Essa estimativa serve para validar se o processo de calcular dimensões reais baseadas nas dimensões em pixels está na ordem de grandeza correta.
+
+\paragraph{}Para certificar a confiabilidade do algoritmo, serão avaliados inúmeros dados de uma mesma praia, contemplando variações de clima, iluminação, angulação e posicionamento da câmera, maré e ocupação da praia. Todos esses fatores podem interferir com o resultado do algoritmo, principalmente as mudanças de maré e posicionamento da câmera. A escolha de uma posição para a câmera adequada é fundamental para minimizar o efeito dos outros fatores no resultado final.
+
+
+\section{Descrição}
+
+\paragraph{}No capítulo 2 será .....
+
+\paragraph{}O capítulo 3 apresenta ...
+
+\paragraph{}Os .... são apresentados no capítulo 4. Nele será explicitado ...
+
+\paragraph{}E assim vai até chegar na conclusão.

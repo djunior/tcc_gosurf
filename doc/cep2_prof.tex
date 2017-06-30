@@ -1,0 +1,123 @@
+\section{Capítulo 2 se chamará Fundamentação Teórica – Australianos, o Rico de Souza, etc}
+
+\section{Começar com os trabalhos relacionados com ondas}
+
+\section{Processamento de Vídeo e Imagens}
+
+\paragraph{}Processamento de Imagem é uma sequência de operações realizadas em uma ou mais imagens de entrada, resultado em uma imagem de saída ou características extraídas das imagens de entrada. Uma imagem, conforme definido por Rafael Gonzalez\cite{Gonzalez92} é: "[...] uma função bidimensional \(f(x,y)\), onde \(x\) e \(y\) são coordenadas espaciais (plano), e a amplitude de \(f\) de qualquer par de coordenadas \((x,y)\) é chamada de intensidade ou nível de cinza da imagem naquele ponto.".
+
+\paragraph{}Neste projeto, como em outras aplicações de oceanografia\cite{Jahne02}, imagens estáticas do objeto de estudo são pouco produtivas para extrair informações. Por isso, uma solução encontrada foi capturar e trabalhar com um vídeo da arrebentação de uma praia, em vez de usar apenas fotografias. 
+
+\paragraph{}Um vídeo é definido como uma sequência temporal de imagens. De forma análoga a imagem, um vídeo pode ser descrito como uma função tridimensional \(g(x,y,t)\), onde \(x\) e \(y\) são coordenadas espaciais, como em uma imagem, e \(t\) é uma coordenada temporal. A amplitude \(g\) é a intensidade ou nível de cinza do ponto \((x,y)\) no instante de tempo \(t\).
+
+% A sequência de imagens de um vídeo também é conhecido como uma sequência de frames.
+
+\paragraph{}A principal vantagem de utilizar um vídeo é eliminar o problema de identificar qual é o melhor momento para análisar a onda fotografada. Utilizando uma sequência de imagens, é mais fácil de determinar qual foi o momento em que a onda estava maior, e ai sim realizar a mediçao de sua altura. Será demonstrado adiante que a estrutura a ser chamada de timestack também ajudará a tornar as imagens analisadas mais uniformes, criando regiões bem definidas para segmentação. 
+
+
+
+
+
+
+
+
+
+\section{Métodos de Aprimoramento de Imagens } %features ?
+
+\paragraph{}Para extrair os dados desejados de uma imagem, é necessário separar o que é o objeto de estudo -- no caso específico deste projeto, uma onda do mar -- do restante da imagem. Isto é, através de transformações na imagem original deseja-se identificar o que é o primeiro plano e o plano de fundo. Este processo de extração de objetos ou planos de uma imagem é chamado na literatura de segmentação\cite{Gonzalez92}.
+
+\paragraph{}Antes de aplicar uma técnica de segmentação, precisa-se melhorar a imagem. O processo de aprimoramento de imagens, segundo Rafael Gonzalez\cite{Gonzalez92}, é fundamental para torná-la adequada para a aplicação desejada. O aprimoramento permite realçar alguma característica de interesse da imagem, enquanto minimiza a presença de outras características não relevantes.
+
+
+\paragraph{}Os métodos de aprimoramento de imagens são classificados em dois domínios: domínio espacial e domínio da frequência. 
+O aprimoramento no domínio espacial trabalha com os próprios pixels de uma imagem, e podem ser representados pela expressão: \(g(x,y) = T[f(x,y)]\), onde \( g(x,y) \) é a imagem transformada, \( f(x,y) \) é a imagem original e \( T[ \ \cdot\  ] \) é a transformação que será aplicada na imagem original.Fazer uma breve explanação para o caso do domínio em freqüência.
+
+\paragraph{}Alguns métodos de aprimoramento de imagens serão utilizados nesse projeto: transformações em níveis de cinza, filtros de nitidez (\textit{sharpening}), filtros de suavização (\textit{blur}), filtros de detecção de bordas. Esses métodos são importantes para melhorar o contraste entre as regiões da imagem analisada e reduzir o ruído, facilitando assim o processo de segmentação que será realizado posteriormente.
+
+\paragraph{}As transformações em níveis de cinza englobam métodos que alteram o contraste de uma imagem. Em geral, são métodos onde cada pixel \((x,y)\) da saída depende apenas do pixel correspondente da entrada, ou seja, não é influenciado pelos seus vizinhos. O principal método que será utilizado nesse projeto é o de \textit{thresholding}, onde a transformação aplicada na entrada é da forma: 
+
+\[
+T[f(x,y)] =
+\begin{cases}
+        f(x,y), & \text{se } f(x,y) > C\\
+        0, & \text{se } f(x,y) < C
+\end{cases}
+\] 
+
+\noindentonde C é uma constante escolhida arbitrariamente. A utilidade dessa função é facilitar a definição das regiões da imagem, quais fazem parte do céu, do mar e da arrebentação.
+
+\paragraph{}Os filtros de suavização, também conhecidos como filtros de \textit{blur} são importantes para reduzir o nível de ruído na imagem. Outra função importante para esse projeto é homogeneizar as regiões da imagem, isto é, eliminar ou pelo menos reduzir pontos mais claros em regiões escuras, ou pontos escuros em regiões claros. Dessa forma, os métodos de 
+\textit{thresholding} são mais efetivos.
+
+\paragraph{}Neste projeto o filtro de suavização utilizado é o filtro passa-baixas gaussiano. Este filtro, como definido em Gonzalez \cite{Gonzalez92}, possui a seguinte forma:
+
+\[
+H(u,v) = e^{-D^{2}(u,v)/2D^{2}_{0}}
+\]
+
+\noindent\(D(u,v)\) é definido como a distância da origem da transformada de Fourier, e \(D^{2}_{0}\) é definido como \(\sigma^{2}\), ou a variância da curva gaussiana.
+
+\paragraph{}Segundo Bernd Jähne\cite{Jahne02}, um filtro de suavização deve atender algumas propriedades específicas para ser aplicável a identificação de objetos e extração de dados de uma imagem. As propriedades são:
+
+\begin{enumerate}
+
+\item Desvio de fase zero, isto é, o filtro não deve causar desvio na fase da imagem a fim de não alterar a posição dos objetos na mesma.
+
+\item Preservação da média, isto é, a soma de todos os fatores da máscara no domínio espacial deve ser igual a 1.
+
+\item Monotonicidade, isto é, a função de transferência do filtro de suavização deve decrescer monotonicamente.
+
+\item Equidade, isto é, a função de transferência deve ser isotrópica, a fim de não privilegiar nenhuma direção na imagem.
+
+\end{enumerate}
+
+\section{Métodos de Segmentação de Imagens}
+
+\section{Relação Entre Distância e Altura de um Objeto}
+
+O Olho Humano, Lentes e Câmeras
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\section{Timestack – Colocar no Cap3}
+\paragraph{}Um timestack é uma representação bidimensional de um vídeo. Isto é, é uma forma de transformar um vídeo em uma única imagem. O timestack é útil para analisar vídeos pois é possível olhar para o fenômeno temporal completo observando uma única imagem. Esta abordagem cria um facilitador porque ao se aplicar o processamento em uma única imagem tem-se a aplicação indireta do mesmo processamento sobre todo objeto de interesse contido no vídeo.
+\paragraph{}Para construir um timestack, é necessário fixar uma das dimensões espaciais de cada imagem do vídeo, obtendo assim um conjunto de funções unidimensionais. O timestack deste vídeo é definido então como uma função bidimensional \(s_{Y}(x,t)\) ou \(s_{X}(t,y)\), onde \(x\) e \(y\) são coordenadas espaciais, \(t\) é uma coordenada temporal, e as amplitudes \(s_{X}\) e \(s_{Y}\) são a intensidade ou nível de cinza do vídeo \(g(x,y,t)\) quando fixamos \(x = X\) e \(y = Y\), respectivamente. Dessa forma, a relação entre um timestack e um vídeo é dada por: \(s_{Y}(x,t)=g(x,Y,t)\) e \(s_{X}(t,y) = g(X,y,t)\).
+\paragraph{}Note que, na prática, a coordenada temporal \(t\) cumpre o papel de uma coordenada espacial quando o timestack é exibido como uma imagem, mas sua interpretação continua sendo temporal. É claro que a perda de uma dimensão resulta em perda de informação no vídeo, entretanto, nos casos em que o vídeo é constante na dimensão espacial fixada não a perda de informação. Expandindo esse conceito, nos casos em que o vídeo varie muito pouco em uma de suas dimensões espaciais, a perda de informação não é significativa.
+\paragraph{}A análise de ondas maritímas apresenta condição similar a descrita anteriormente. Com a posição da câmera escolhida com cuidado, uma onda quebrando ocupará maior parte horizontal da imagem. Além disso, não é importante para a análise desejada entender o tamanho horizontal da onda, apenas o seu tamanho vertical - precisa-se apenas determinar o seu ponto mais baixo e seu ponto mais alto. Sendo assim, o timestack mostra-se um método adequado de análise de vídeos para esse projeto.
+%TODO: Rever essa subseção
+% Talvez não falar de estabilização aqui ??
+% \subsection{Estabilização de Vídeo}
+% \paragraph{}

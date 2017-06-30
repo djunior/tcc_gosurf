@@ -1,0 +1,109 @@
+\documentclass[a4paper,12pt,oneside,openany]{book}	
+\input{TesePack}
+
+\begin{document}
+
+\frontmatter
+\thispagestyle{empty}
+
+\input{Capa}
+
+\pagebreak            
+
+\input{Preambulo}
+
+% Table of Contents
+% ---------------------------------------------------------------
+     \tableofcontents
+% ---------------------------------------------------------------
+% Lista de figuras
+% ---------------------------------------------------------------
+%\cleardoublepage
+%\addcontentsline{toc}{chapter}{Lista de Figuras}
+\listoffigures
+% ---------------------------------------------------------------
+% Lista de Tabelas
+% ---------------------------------------------------------------
+%\cleardoublepage
+%\addcontentsline{toc}{chapter}{Lista de Tabelas}
+\listoftables
+
+\mainmatter
+\cleardoublepage
+% ---------------------------------------------------------------
+% Chapter 1 - Introdução
+% ---------------------------------------------------------------
+\chapter{Introdução}
+\label{cap1}
+\input{cap1}
+
+% ---------------------------------------------------------------
+% Chapter 2 - Embasamento Teórico
+% ---------------------------------------------------------------
+\chapter{Fundamentação Teórica}
+\label{cap2}
+\input{cap2}
+
+% ---------------------------------------------------------------
+% Chapter 3 - Algoritmo de Medição de Altura das Ondas do Mar
+% ---------------------------------------------------------------
+\chapter{Algoritmo de Medição de Altura das Ondas do Mar}
+\label{cap3}
+\input{cap3}
+
+% ---------------------------------------------------------------
+% Chapter 4 - Implementação do Algoritmo
+% ---------------------------------------------------------------
+\chapter{Implementação do Algoritmo}
+\label{cap4}
+%\input{cap4}
+
+% ---------------------------------------------------------------
+% Chapter 5 - Dados Experimentais
+% ---------------------------------------------------------------
+\chapter{Dados Experimentais}
+\label{cap5}
+%\input{cap5}
+
+% ---------------------------------------------------------------
+% Chapter 6 - Conclusões
+% ---------------------------------------------------------------
+\chapter{Conclusões}
+\label{cap6}
+% \input{cap3}
+
+% ---------------------------------------------------------------
+% Bibliografia
+% ---------------------------------------------------------------
+\normalsize
+\cleardoublepage
+\addcontentsline{toc}{chapter}{Bibliografia}
+\bibliographystyle{coppe}
+\bibliography{biblio}
+
+% ---------------------------------------------------------------
+% Apêndices 
+% ---------------------------------------------------------------
+   \appendix
+   % ---------------------------------------------------------------
+   % Apêndice A
+   % ---------------------------------------------------------------
+   \chapter{O que é um apêndice}
+   \label{ApendiceA}
+   \input{ApendiceA}
+   % ---------------------------------------------------------------
+   % Apêndice B
+   % ---------------------------------------------------------------
+   \chapter{Encadernação do Projeto de Graduação}
+   \label{ApendiceB}
+   \input{ApendiceB}
+   % ---------------------------------------------------------------
+   % Apêndice C
+   % ---------------------------------------------------------------
+   \chapter{O que é um anexo}
+   \label{ApendiceC}
+   \input{ApendiceC}   
+
+\backmatter
+
+\end{document}

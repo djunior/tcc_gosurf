@@ -14,22 +14,29 @@ Timestack::Timestack(VideoCapture& cap):
     size(cap.get(CV_CAP_PROP_FRAME_HEIGHT)),
     timestack(0,size,CV_8UC1,0.0f)
 {
+    horizontalPercent = 50;
 }
 
-void Timestack::addFrame(Mat& frame) {
-    Mat greyMat, middleRow, transposedMat;
+void Timestack::process(Mat& frame) {
+    Mat greyMat, row, transposedMat;
 
     // Getting the frame width
     int width = frame.cols;
+
+    float percent = (float) horizontalPercent / 100;
+
+    int r = width * percent;
+    if (r == width)
+        r--;
 
     // Converting input to grey scale
     cvtColor(frame, greyMat, CV_BGR2GRAY);
 
     // Getting middle row from grey scale
-    middleRow = greyMat.col(width/2);
+    row = greyMat.col(r);
 
     // Transposing the row
-    transpose(middleRow,transposedMat);
+    transpose(row,transposedMat);
 
     // Pushing the transposed row to the timestack
     timestack.push_back(transposedMat);
@@ -64,9 +71,17 @@ void Timestack::calculateTimestack(std::string videoPath)
             break;
         }
 
-        addFrame(frame);
+        process(frame);
     }
 
+}
+
+void Timestack::setHorizontalPercent(int p) {
+    horizontalPercent = p;
+}
+
+int Timestack::getHorizontalPercent() {
+    return horizontalPercent;
 }
 
 void Timestack::save(std::string fileName) {
