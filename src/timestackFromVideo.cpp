@@ -19,9 +19,10 @@ void simpleTimestack(VideoCapture& cap) {
 		cap >> frame;
 		if (frame.data == NULL)
 			break;
-
+		// imshow("frame",frame);
 		// cvtColor(frame,frame,COLOR_BGR2GRAY);
 		t.process(frame);
+		// waitKey(1);
 	}
 	cout << "Saving timestack..." << endl;
 	t.save("output_images/timestack.jpg");
@@ -49,9 +50,9 @@ int main(int argc, char* argv[]) {
 
 	VideoCapture cap(path.c_str());
 
-	simpleTimestack(cap);
-	if (1 == 1)
-		return 0;
+	// simpleTimestack(cap);
+	// if (1 == 1)
+	// 	return 0;
 
 	// GradedTimestack originalTimestack(cap);
 	// GradedTimestack stableTimestack(cap);

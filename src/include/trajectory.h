@@ -32,6 +32,8 @@ public:
 	bool findNextPoint(cv::Mat&);
 	bool findNextPoint(cv::Mat&, int);
 	void fill(cv::Mat&);
+
+	Point getPoint(int);
 };
 
 }

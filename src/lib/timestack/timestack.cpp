@@ -2,6 +2,7 @@
 #include <opencv2/core/core.hpp>
 #include <opencv2/highgui/highgui.hpp>
 #include "opencv/cv.h"
+#include <algorithm>
 
 #include "timestack.h"
 
@@ -11,9 +12,14 @@ using namespace cv;
 using namespace std;
 
 Timestack::Timestack(VideoCapture& cap):
-    size(cap.get(CV_CAP_PROP_FRAME_WIDTH)),
+    size(min(cap.get(CV_CAP_PROP_FRAME_WIDTH),cap.get(CV_CAP_PROP_FRAME_HEIGHT))),
     timestack(0,size,CV_8UC1,0.0f)
 {
+    cout << "WIDTH: " << cap.get(CV_CAP_PROP_FRAME_WIDTH) << endl;
+    cout << "HEIGHT: " << cap.get(CV_CAP_PROP_FRAME_HEIGHT) << endl;
+
+    cout << "SIZE: " << size << endl;
+
     horizontalPercent = 50;
 }
 
@@ -21,7 +27,7 @@ void Timestack::process(Mat& frame) {
     Mat greyMat, row, transposedMat;
 
     // Getting the frame width
-    int width = frame.cols;
+    int width = max(frame.cols,frame.rows);
 
     float percent = (float) horizontalPercent / 100;
 
@@ -36,14 +42,27 @@ void Timestack::process(Mat& frame) {
     // imshow("frame",greyMat);
     // waitKey(1);
 
+    // cout << "rows: " << frame.rows << endl;
+    // cout << "cols: " << frame.cols << endl;
+
     // Getting middle row from grey scale
-    row = greyMat.row(r);
+    if (frame.cols > frame.rows) {
+        row = greyMat.col(r);
+        transpose(row,transposedMat); 
+        timestack.push_back(transposedMat);
+    } else {
+        row = greyMat.row(r);
+        timestack.push_back(row);
+    }
+
+    // cout << "ROW rows: " << row.rows << endl;
+    // cout << "ROW cols: " << row.cols << endl;
 
     // Transposing the row
-    // transpose(row,transposedMat);
+    // 
 
     // Pushing the transposed row to the timestack
-    timestack.push_back(row);
+    
 }
 
 Mat* Timestack::getTimestack() {
@@ -89,12 +108,12 @@ int Timestack::getHorizontalPercent() {
 }
 
 void Timestack::save(std::string fileName) {
-    Mat transposedTimestack;
-    transpose(timestack,transposedTimestack);
-
-    // imshow(fileName.c_str(),transposedTimestack);
-    // waitKey(0);
-    imwrite( fileName.c_str(), transposedTimestack );
+    if (timestack.rows > timestack.cols) {
+        Mat transposedTimestack;
+        transpose(timestack,transposedTimestack);
+        imwrite( fileName.c_str(), transposedTimestack );
+    } else
+        imwrite(fileName.c_str(), timestack);
 }
 
 }

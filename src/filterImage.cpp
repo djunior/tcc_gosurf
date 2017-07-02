@@ -166,13 +166,23 @@ void process(Mat& image) {
 
 	cvtColor(image,greyImage,COLOR_BGR2GRAY);
 
+	// HistogramEqualizatorFilter eq;
+	// eq.setSourceMat(&greyImage);
+	// eq.filter();
+	Mat equalized;
+	equalizeHist(greyImage,equalized);
+
+	ImageViewer iv("histogram equalized");
+	iv.setSourceMat(&equalized);
+	iv.filter();
+
 	FilterPipeline pipeline(&greyImage);
 
 	//Pre-processing
 	pipeline.addFilter(new ImageOutput("output_images/process/process_original.jpg"));
 	pipeline.addFilter(new CannyFilter(50));
 	pipeline.addFilter(new ImageOutput("output_images/process/process_horizon_line.jpg"));
-	pipeline.addFilter(new SkyRemoverFilter(&greyImage));
+	pipeline.addFilter(new SkyRemoverFilter(&equalized));
 	pipeline.addFilter(new ImageOutput("output_images/process/process_sky_remover.jpg"));
 
 	//Main processing
