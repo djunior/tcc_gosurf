@@ -19,6 +19,7 @@
 #include "histogramEqualizatorFilter.h"
 #include "waveDetector.h"
 #include "skyRemoverFilter.hpp"
+#include "waveBandDebugger.hpp"
 
 #include <vector>
 
@@ -89,77 +90,6 @@ void convertToGreyscale(Mat& input, Mat& output) {
 	}
 }
 
-class WaveBandDebugger : public ImageFilter {
-private:
-public:
-	WaveBandDebugger(Mat& m) : ImageFilter() {
-		filteredMat = m.clone();
-	}
-	WaveBandDebugger(Mat* m) : ImageFilter() {
-		filteredMat = m->clone();
-	}
-	void filter() {
-		for (int i = 0; i < srcMat.cols; i++) {
-			for (int j = 0; j < srcMat.rows; j++) {
-				if (srcMat.at<uchar>(j,i) > 0)
-					filteredMat.at<Vec3b>(j,i) = Vec3b(0,0,255);
-			}
-		}
-		// resize(originalMat,originalMat,Size(originalMat.cols/2,originalMat.rows/2));
-	}
-};
-
-class NewWaveBandFinder : public ImageFilter {
-public:
-	void filter() {
-		cout << "NewWavevBandFinder filter" << endl;
-		vector< vector<Point> > contours; // Vector for storing contour
-	    vector<Vec4i> hierarchy;
-	    double largest_area;
-	    int largest_contour_index;
-
-	    cout << "NewWavevBandFinder filter -> calling findContours" << endl;
-	    findContours( srcMat, contours, hierarchy,CV_RETR_CCOMP, CV_CHAIN_APPROX_SIMPLE );
-
-		for( int i = 0; i< contours.size(); i++ ) {
-	       double a=contourArea( contours[i],false);  //  Find the area of contour
-	       if( a>largest_area ){
-		       largest_area=a;
-		       largest_contour_index=i;                //Store the index of largest contour
-		    }
-		}
-
-	    Scalar color( 255, 255, 255 );
-
-	    Mat dst(srcMat.rows,srcMat.cols,CV_8UC1,Scalar::all(0));
-
-	    cout << "NewWavevBandFinder filter -> drawing contours" << endl;
- 		drawContours( dst, contours,largest_contour_index, color, CV_FILLED, 8, hierarchy );
-
- 		filteredMat = dst.clone();
-
- 		// cout << "Calling imshow" << endl;
-  	// 	imshow("NewWaveBandFinder",filteredMat);
-	}
-};
-
-void processMain(Mat* mat, Mat& originalImage) {
-
-	cout << "Main Process with threshold value " << threshold_slider << endl;
-
-	FilterPipeline auxPipeline(mat);
-	auxPipeline.addFilter(new ImageViewer("original image"));
-	auxPipeline.addFilter(new GaussianBlurFilter(15));
-	auxPipeline.addFilter(new ThresholdFilter(150,0,255));
-	auxPipeline.addFilter(new ImageSaver("threshold_image_fail.jpg"));
-	// auxPipeline.addFilter(new NewWaveBandFinder());
-	// auxPipeline.addFilter(new CannyFilter(0));
-	// auxPipeline.addFilter(new WaveBandDebugger(originalImage));
-	// auxPipeline.addFilter(new WaveDetector());
-
-	auxPipeline.filter();
-}
-
 void process(Mat& image) {
 
 	Mat greyImage(image.size(),CV_8UC1);
@@ -190,7 +120,7 @@ void process(Mat& image) {
 	pipeline.addFilter(new ImageOutput("output_images/process/process_gaussian.jpg"));
 	pipeline.addFilter(new ThresholdFilter(150,0,255));
 	pipeline.addFilter(new ImageOutput("output_images/process/process_threshold.jpg"));
-	pipeline.addFilter(new NewWaveBandFinder());
+	pipeline.addFilter(new WaveBandFinder(WaveBandFinder::WBF_MODE_THRESHOLD));
 	pipeline.addFilter(new ImageOutput("output_images/process/process_threshold.jpg"));
 
 	//Wave Detection
@@ -216,16 +146,6 @@ void process(Mat& image) {
 	wavesOutput.filter();
 
 	wd->save("waves.txt");
-}
-
-void on_trackbar( int, void* )
-{
-	// alpha = (int) alpha_slider/threshold_slider_max ;
-
-	// addWeighted( src1, alpha, src2, beta, 0.0, dst);
-	processMain(skyDetector.getOutputMat(),image);
-
-	// imshow( "wave_band_debugger", dst );
 }
 
 // void completeProcess(Mat& image) {

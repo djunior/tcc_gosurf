@@ -3,6 +3,8 @@
 
 #include <iostream>
 #include <opencv2/core/core.hpp>
+#include <opencv2/core/core.hpp>
+#include <opencv2/highgui/highgui.hpp>
 #include "imageFilter.h"
 
 namespace tcc {
@@ -21,9 +23,9 @@ public:
 		if (mode && strcmp(mode,"n") == 0) {
 			save(filename);
 		} else {
-			Mat debug;
-			resize(srcMat, debug, Size(srcMat.cols/2, srcMat.rows/2));
-			imshow(filename,debug);
+			cv::Mat debug;
+			cv::resize(srcMat, debug, cv::Size(srcMat.cols/2, srcMat.rows/2));
+			cv::imshow(filename,debug);
 		}
 	};
 };

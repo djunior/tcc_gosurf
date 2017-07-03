@@ -19,10 +19,10 @@ void SobelFilter::filter() {
 	Mat sobelY;
 	Mat sobelX;
 
-	// Sobel(srcMat, sobelY, ddepth, 0, 1, kernel_size, scale, delta, BORDER_DEFAULT );
+	Sobel(srcMat, sobelFiltered, ddepth, 1, 0, kernel_size, scale, delta, BORDER_DEFAULT );
 	// Sobel(srcMat, sobelX, ddepth, 1, 0, kernel_size, scale, delta, BORDER_DEFAULT );
 
-	Laplacian( srcMat, sobelFiltered, ddepth, kernel_size, scale, delta, BORDER_DEFAULT );
+	// Laplacian( srcMat, sobelFiltered, ddepth, kernel_size, scale, delta, BORDER_DEFAULT );
 
 	// sobelFiltered = sobelX + sobelY;
 

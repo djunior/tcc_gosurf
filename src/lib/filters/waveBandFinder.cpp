@@ -14,6 +14,10 @@ using namespace cv;
 
 namespace tcc {
 
+void WaveBandFinder::setMode(WaveBandFinder::WaveBandFinder_Mode m) {
+	mode = m;
+}
+
 void WaveBandFinder::setThresholdedImage(Mat* m) {
 	thresholdedImage = m->clone();
 }
@@ -145,7 +149,7 @@ void WaveBandFinder::createSegments(cv::Mat& markers) {
 
 }
 
-void WaveBandFinder::filter() {
+void WaveBandFinder::findByWatershed() {
 
 	// Mat markerMask(thresholdedImage.size(),CV_32S);
 	Mat markers(thresholdedImage.size(),CV_32S);
@@ -199,5 +203,46 @@ void WaveBandFinder::filter() {
 
 }
 
+void WaveBandFinder::findByThreshold() {
+	cout << "NewWavevBandFinder filter" << endl;
+	vector< vector<Point> > contours; // Vector for storing contour
+    vector<Vec4i> hierarchy;
+    double largest_area;
+    int largest_contour_index;
+
+    cout << "NewWavevBandFinder filter -> calling findContours" << endl;
+    findContours( srcMat, contours, hierarchy,CV_RETR_CCOMP, CV_CHAIN_APPROX_SIMPLE );
+
+	for( int i = 0; i< contours.size(); i++ ) {
+       double a=contourArea( contours[i],false);  //  Find the area of contour
+       if( a>largest_area ){
+	       largest_area=a;
+	       largest_contour_index=i;                //Store the index of largest contour
+	    }
+	}
+
+    Scalar color( 255, 255, 255 );
+
+    Mat dst(srcMat.rows,srcMat.cols,CV_8UC1,Scalar::all(0));
+
+    cout << "NewWavevBandFinder filter -> drawing contours" << endl;
+	drawContours( dst, contours,largest_contour_index, color, CV_FILLED, 8, hierarchy );
+
+	filteredMat = dst.clone();
+
+	// cout << "Calling imshow" << endl;
+	// 	imshow("NewWaveBandFinder",filteredMat);
+}
+
+void WaveBandFinder::filter() {
+	switch(mode) {
+		case WBF_MODE_WATERSHED:
+			findByWatershed();
+			break;
+		case WBF_MODE_THRESHOLD:
+			findByThreshold();
+			break;
+	}
+}
 
 }
