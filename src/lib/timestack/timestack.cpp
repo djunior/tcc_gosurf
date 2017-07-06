@@ -15,10 +15,9 @@ Timestack::Timestack(VideoCapture& cap):
     size(min(cap.get(CV_CAP_PROP_FRAME_WIDTH),cap.get(CV_CAP_PROP_FRAME_HEIGHT))),
     timestack(0,size,CV_8UC1,0.0f)
 {
-    cout << "WIDTH: " << cap.get(CV_CAP_PROP_FRAME_WIDTH) << endl;
-    cout << "HEIGHT: " << cap.get(CV_CAP_PROP_FRAME_HEIGHT) << endl;
-
-    cout << "SIZE: " << size << endl;
+    // cout << "WIDTH: " << cap.get(CV_CAP_PROP_FRAME_WIDTH) << endl;
+    // cout << "HEIGHT: " << cap.get(CV_CAP_PROP_FRAME_HEIGHT) << endl;
+    // cout << "SIZE: " << size << endl;
 
     horizontalPercent = 50;
 }
@@ -36,7 +35,7 @@ void Timestack::process(Mat& frame) {
         r--;
 
     // Converting input to grey scale
-    cvtColor(frame, greyMat, CV_BGR2GRAY);
+    // cvtColor(frame, greyMat, CV_BGR2GRAY);
 
     // cout << "Row: " << r << endl;
     // imshow("frame",greyMat);
@@ -47,11 +46,11 @@ void Timestack::process(Mat& frame) {
 
     // Getting middle row from grey scale
     if (frame.cols > frame.rows) {
-        row = greyMat.col(r);
+        row = frame.col(r);
         transpose(row,transposedMat); 
         timestack.push_back(transposedMat);
     } else {
-        row = greyMat.row(r);
+        row = frame.row(r);
         timestack.push_back(row);
     }
 

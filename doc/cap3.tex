@@ -1,4 +1,5 @@
 \newcommand{\timestack}[0]{\textit{timestack} }
+\newcommand{\frame}[0]{\textit{frame} }
 
 \section{Algoritmo de Processamento de Imagens}
 
@@ -10,7 +11,15 @@
 
 \section{Pré-Processamento}
 
-\paragraph{}A etapa de pré-processamento tem como objetivo transformar os dados de entrada (o vídeo capturado de uma praia) em uma imagem \timestack tal como ilustrado na Figura \ref{FigDiagramaPreProc}. Acho que o resultado final precisa ser renomeado,pois esse timstack foi gerado no segundo passo do pipeline. Sugiro repensar o nome e corrigir as figuras. Para este fim, são realizados cinco passos: estabilização do vídeo, geração do timestack, conversão para nível de cinza, detecção e remoção do céu. O passo mais importante nessa etapa é a criação do \timestack, que é uma representação espaço-temporal de um vídeo. Os demais passos servirão para garantir a confiabilidade do \timestack e o prepararão para a etapa de processamento principal.  Estas etapas são explicadas nas seções a seguir.
+\paragraph{}A etapa de pré-processamento tem como objetivo transformar os dados de entrada (o vídeo capturado de uma praia) em uma imagem \timestack tal como ilustrado na Figura \ref{FigDiagramaPreProc}, pronta para ser processada e análisada pelos passos subsequentes.
+
+%Acho que o resultado final precisa ser renomeado,pois esse timstack foi gerado no segundo passo do pipeline. Sugiro repensar o nome e corrigir as figuras. 
+
+\paragraph{}O pré-processamento atua sobre cada \textit{frame} do vídeo, realizando as seguintes operações: conversão para nível de cinza, equalização de histograma, detecção da linha de horizonte, remoção do céu. Após processar cada \textit{frame} do vídeo é gerado um \timestack das imagens processadas. 
+
+\paragraph{}O passo mais importante nessa etapa é a criação do \timestack, que é uma representação espaço-temporal de um vídeo. O \timestack é a imagem que será processada pelo processamento principal e análisada para extração dos dados das ondas do mar. Os demais passos servirão para garantir a confiabilidade do \timestack e o prepararão para a etapa de processamento principal. 
+
+%Estas etapas são explicadas nas seções a seguir.
 
 \begin{figure}[h]
 \begin{center}
@@ -21,15 +30,20 @@
 
 %Fazer um parágrafo que descreva de forma geral todo o pré-processoamento. Nas seções em seguida, você fará o aprofundamento.
 
+\paragraph{}O pré-processamento inicia a partir do vídeo capturado de uma praia. Cada \textit{frame} do vídeo é processado, primeiro convertendo o \textit{frame} par
+
 \section{\textit{Timestack}}
 
 \paragraph{}Um \timestack é uma representação bidimensional de um vídeo, isto é, trata-se de uma forma de transformar tal vídeo em uma só imagem. O \timestack é útil para analisar tais vídeos pois é possível olhar para uma sequencia completa de quadros observando uma única imagem. Dessa forma, pode-se aplicar métodos de processamento de uma única imagem  \timestack, em vez de todo o vídeo.
 
 \paragraph{}Para construir um \timestack, é necessário fixar uma das dimensões espaciais de cada imagem do vídeo, obtendo assim um conjunto de funções unidimensionais. O \timestack deste vídeo é definido então como uma função bidimensional \(s_{Y}(x,t)\) ou \(s_{X}(t,y)\), onde \(x\) e \(y\) são coordenadas espaciais; \(t\) é uma coordenada temporal; as amplitudes \(s_{X}\) e \(s_{Y}\) são a intensidade ou nível de cinza do vídeo \(g(x,y,t)\) quando são fixados os valores \(x = X\) e \(y = Y\), respectivamente. Dessa forma, a relação entre um \timestack e um vídeo é dada por: \(s_{Y}(x,t)=g(x,Y,t)\) e \(s_{X}(t,y) = g(X,y,t)\).
 
-\paragraph{}Note que, na prática, a coordenada temporal \(t\) cumpre o papel de uma coordenada espacial quando o \timestack é exibido como uma imagem, mas sua interpretação continua sendo temporal. É claro que a perda de uma dimensão resulta em perda de informação no vídeo, entretanto, nos casos em que o vídeo é constante na dimensão espacial fixada não a perda de informação. Expandindo esse conceito, nos casos em que o vídeo varie muito pouco em uma de suas dimensões espaciais, não há necessariamente uma perda de conteúdo significativa.
+\paragraph{}Note que, na prática, a coordenada temporal \(t\) cumpre o papel de uma coordenada espacial quando o \timestack é exibido como uma imagem, mas sua interpretação continua sendo temporal. É claro que a perda de uma dimensão resulta em perda de informação no vídeo, entretanto, nos casos em que o vídeo é constante na dimensão espacial fixada não há perda de informação. Expandindo esse conceito, nos casos em que o vídeo varie muito pouco em uma de suas dimensões espaciais, não há necessariamente uma perda de conteúdo significativa.
 
-\paragraph{}A análise de ondas marítimas apresenta condição similar a descrita anteriormente. Com a posição da câmera escolhida com cuidado, isto é, xxxxxxxDescrever Tecnicamentexxxxxxxx. Assim, uma onda quebrando ocupará maior parte horizontal da imagem. Além disso, não é importante para a análise desejada entender o tamanho horizontal da onda, apenas o seu tamanho vertical. Precisa-se apenas determinar o seu ponto mais baixo e seu ponto mais alto. Sendo assim, o \timestack mostra-se um método adequado de análise de vídeos para esse projeto.
+\paragraph{}A análise de ondas marítimas apresenta condição similar a descrita anteriormente. Com a posição da câmera escolhida com cuidado, isto é, 
+%xxxxxxxDescrever Tecnicamentexxxxxxxx. 
+
+Assim, uma onda quebrando ocupará maior parte horizontal da imagem. Além disso, não é importante para a análise desejada entender o tamanho horizontal da onda, apenas o seu tamanho vertical. Precisa-se apenas determinar o seu ponto mais baixo e seu ponto mais alto. Sendo assim, o \timestack mostra-se um método adequado de análise de vídeos para esse projeto.
 
 \begin{figure}[h]
 \begin{center}
@@ -119,7 +133,7 @@ Além disso, como foi mostrado anteriormente, a localização das ondas no \timesta
 
 \section{Suavização}
 
-\paragraph{}A primeira etapa de suavização é realizada utilizando um filtro passa-baixas gaussiano, implementado no domínio do espaço com máscara de tamanho 3, o menor tamanho possível. Este efeito de suavização é importante para reduzir o nível de ruído na imagem, facilitando a identificação das bordas relevantes nos passos subsequentes. Outro efeito desejado é homogeneizar o nível de intensidade das regiões da imagem, de forma que o passo de \textit{thresholding} consiga segmentar a região de arrebentação do \timestack consistentemente. As figuras \ref{FigGaussianBlurOk} \ref{FigGaussiaBlurFail} ilustram a diferença na segmentação da região de arrebentação com e sem o passo de suavização.
+\paragraph{}A primeira etapa de suavização é realizada utilizando um filtro passa-baixas gaussiano, implementado no domínio do espaço com máscara de tamanho 3, o menor tamanho possível. Este efeito de suavização é importante para reduzir o nível de ruído na imagem, facilitando a identificação das bordas relevantes nos passos subsequentes. Outro efeito desejado é homogeneizar o nível de intensidade das regiões da imagem, de forma que o passo de \textit{thresholding} consiga segmentar a região de arrebentação do \timestack consistentemente. As figuras \ref{FigGaussianBlurOk} \ref{FigGaussiaBlurFail} ilustram a diferença na segmentação da região de arrebentação com e sem o passo de suavização. A figura \ref{FigGaussianBlurFail} 
 
 %TODO: Adicionar imagem da primeira suavização
 

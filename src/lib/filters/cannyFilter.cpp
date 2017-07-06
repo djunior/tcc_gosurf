@@ -10,12 +10,11 @@ using namespace cv;
 namespace tcc {
 
 void CannyFilter::setLowThreshold(int t) {
-  lowThreshold = t;
+	lowThreshold = t;
 }
 
 void CannyFilter::filter() {
-  /// Canny detector
-  Canny( srcMat, filteredMat, lowThreshold, lowThreshold*ratio, kernel_size );
+	Canny( srcMat, filteredMat, lowThreshold, lowThreshold*ratio, kernel_size );
 }
 
 }

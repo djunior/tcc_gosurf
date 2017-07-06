@@ -41,7 +41,7 @@ void WaveDetector::drawWaves(Mat &mat) {
 	if (waves.size() > 0) {
 		cout << "Painting lines on image" << endl;
 		for (int i = 0; i < (waves.size()-1); i += 2) {
-			Point pt1(waves[i].y, waves[i].x);
+			Point pt1(waves[i+1].y, waves[i].x);
 			Point pt2(waves[i+1].y, waves[i+1].x);
 			line(mat,pt1,pt2,Scalar(0,0,255),3);
 

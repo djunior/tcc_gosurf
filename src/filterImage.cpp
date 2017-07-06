@@ -100,20 +100,20 @@ void process(Mat& image) {
 	// eq.setSourceMat(&greyImage);
 	// eq.filter();
 	Mat equalized;
-	equalizeHist(greyImage,equalized);
+	// equalizeHist(greyImage,equalized);
 
-	ImageViewer iv("histogram equalized");
-	iv.setSourceMat(&equalized);
-	iv.filter();
+	// ImageViewer iv("histogram equalized");
+	// iv.setSourceMat(&equalized);
+	// iv.filter();
 
 	FilterPipeline pipeline(&greyImage);
 
 	//Pre-processing
-	pipeline.addFilter(new ImageOutput("output_images/process/process_original.jpg"));
-	pipeline.addFilter(new CannyFilter(50));
-	pipeline.addFilter(new ImageOutput("output_images/process/process_horizon_line.jpg"));
-	pipeline.addFilter(new SkyRemoverFilter(&equalized));
-	pipeline.addFilter(new ImageOutput("output_images/process/process_sky_remover.jpg"));
+	// pipeline.addFilter(new ImageOutput("output_images/process/process_original.jpg"));
+	// pipeline.addFilter(new CannyFilter(50));
+	// pipeline.addFilter(new ImageOutput("output_images/process/process_horizon_line.jpg"));
+	// pipeline.addFilter(new SkyRemoverFilter(&equalized));
+	// pipeline.addFilter(new ImageOutput("output_images/process/process_sky_remover.jpg"));
 
 	//Main processing
 	pipeline.addFilter(new GaussianBlurFilter(15));

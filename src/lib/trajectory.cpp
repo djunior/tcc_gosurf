@@ -123,7 +123,7 @@ void Trajectory::calculateDerivative(std::vector<Point>& d) {
 	// Point bottom(-1,-1);
 	// Point top(-1,-1);
 
-	cout << "Points size: " << points.size() << endl;
+	// cout << "Points size: " << points.size() << endl;
 
 	for (int i = 0; i < points.size(); i++) {
 	
@@ -153,7 +153,7 @@ void Trajectory::fill(Mat& m) {
 	while(1) {
 
 		if (! findNextPoint(m)) {
-			cout << "Finished trajectory" << endl;
+			// cout << "Finished trajectory" << endl;
 			break;
 		}
 
@@ -199,7 +199,7 @@ bool Trajectory::findNextPoint(Mat& m, int threshold) {
 		return findNextPoint(m,threshold+1);
 
 
-	cout << "Could not find next point for current point (" << currentPoint.x << "," << currentPoint.y << ")" << endl;
+	// cout << "Could not find next point for current point (" << currentPoint.x << "," << currentPoint.y << ")" << endl;
 
 	return false;
 
@@ -217,7 +217,7 @@ void Trajectory::findFirstPoint(Mat& m) {
 			float v = (float) col.at<uchar>(i) / 255;
 			
 			if (v > 0) {
-				cout << "Found first point at: (" << i << "," << j << ")" << endl;
+				// cout << "Found first point at: (" << i << "," << j << ")" << endl;
 				found = true;
 				addPoint(i,j);
 				break;

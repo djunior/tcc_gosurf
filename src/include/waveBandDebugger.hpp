@@ -13,14 +13,19 @@ namespace tcc {
 class WaveBandDebugger : public ImageFilter {
 private:
 public:
+	
 	WaveBandDebugger(Mat& m) : ImageFilter() {
 		filteredMat = m.clone();
 	}
+	
 	WaveBandDebugger(Mat* m) : ImageFilter() {
 		filteredMat = m->clone();
 	}
+
 	void filter() {
-		cvtColor(filteredMat,filteredMat,COLOR_GRAY2BGR);
+		if (filteredMat.channels() == 1)
+			cvtColor(filteredMat,filteredMat,COLOR_GRAY2BGR);
+		
 		for (int i = 0; i < srcMat.cols; i++) {
 			for (int j = 0; j < srcMat.rows; j++) {
 				if (srcMat.at<uchar>(j,i) > 0)
