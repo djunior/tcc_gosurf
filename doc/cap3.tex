@@ -19,8 +19,7 @@
 
 \paragraph{}O passo mais importante nessa etapa é a criação do \timestack, que é uma representação espaço-temporal de um vídeo. O \timestack é a imagem que será processada pelo processamento principal e análisada para extração dos dados das ondas do mar. Os demais passos servirão para garantir a confiabilidade do \timestack e o prepararão para a etapa de processamento principal. 
 
-%Estas etapas são explicadas nas seções a seguir.
-
+%TODO: atualizar essa imagem
 \begin{figure}[h]
 \begin{center}
   \includegraphics[width=\textwidth,height=\textheight,keepaspectratio]{diagrama_preprocessamento.png}
@@ -28,22 +27,17 @@
 \end{center}
 \end{figure}
 
-%Fazer um parágrafo que descreva de forma geral todo o pré-processoamento. Nas seções em seguida, você fará o aprofundamento.
-
-\paragraph{}O pré-processamento inicia a partir do vídeo capturado de uma praia. Cada \textit{frame} do vídeo é processado, primeiro convertendo o \textit{frame} para uma imagem em níveis de cinza, pois todos os processamentos posteriores só operam sobre o nível de intensidade de cada \textit{pixel}. A seguir, equaliza-se o histograma do \textit{frame}, a fim de minimizar a variação da iluminação na imagem. Este passo deve ser realizado em cada frame pois com vídeo longos a iluminação pode mudar consideravelmente do começo até o final do vídeo.
+\paragraph{}O pré-processamento inicia a partir do vídeo capturado de uma praia. Cada \textit{frame} do vídeo é processado, primeiro convertendo o \textit{frame} para uma imagem em níveis de cinza, pois todos os processamentos posteriores só operam sobre o nível de intensidade de cada \textit{pixel}. A seguir, equaliza-se o histograma do \textit{frame}, a fim de normalizar a iluminação da imagem. Assim, filmagem realizadas em qualquer hora do dia podem ser tratadas da mesma forma. Os passos seguintes são a detecção da linha do horizonte e a remoção do céu. Para detectar o horizonte, analisa-se o \frame original em nível de cinza. Uma vez detectada a linha do horizonte, o céu é removido simplesmente alterando todos \textit{pixels} acima da linha para intensidade zero. O último passo é gerar o \timestack a partir dos \textit{frames} do vídeo. O \timestack é gerado selecionando a coluna central de cada \frame, acumulando-as sequencialmente em uma única imagem. Todos esses passos serão descritos detalhadamente a seguir.
 
 \section{\textit{Timestack}}
 
-\paragraph{}Um \timestack é uma representação bidimensional de um vídeo, isto é, trata-se de uma forma de transformar tal vídeo em uma só imagem. O \timestack é útil para analisar tais vídeos pois é possível olhar para uma sequencia completa de quadros observando uma única imagem. Dessa forma, pode-se aplicar métodos de processamento de uma única imagem  \timestack, em vez de todo o vídeo.
+\paragraph{}Um \timestack é uma representação bidimensional de um vídeo, isto é, trata-se de uma forma de transformar tal vídeo em uma só imagem. O \timestack é útil para analisar tais vídeos pois é possível olhar para uma sequencia completa de quadros observando uma única imagem. Dessa forma, pode-se aplicar métodos de processamento de uma única imagem \timestack, em vez de todo o vídeo.
 
 \paragraph{}Para construir um \timestack, é necessário fixar uma das dimensões espaciais de cada imagem do vídeo, obtendo assim um conjunto de funções unidimensionais. O \timestack deste vídeo é definido então como uma função bidimensional \(s_{Y}(x,t)\) ou \(s_{X}(t,y)\), onde \(x\) e \(y\) são coordenadas espaciais; \(t\) é uma coordenada temporal; as amplitudes \(s_{X}\) e \(s_{Y}\) são a intensidade ou nível de cinza do vídeo \(g(x,y,t)\) quando são fixados os valores \(x = X\) e \(y = Y\), respectivamente. Dessa forma, a relação entre um \timestack e um vídeo é dada por: \(s_{Y}(x,t)=g(x,Y,t)\) e \(s_{X}(t,y) = g(X,y,t)\).
 
 \paragraph{}Note que, na prática, a coordenada temporal \(t\) cumpre o papel de uma coordenada espacial quando o \timestack é exibido como uma imagem, mas sua interpretação continua sendo temporal. É claro que a perda de uma dimensão resulta em perda de informação no vídeo, entretanto, nos casos em que o vídeo é constante na dimensão espacial fixada não há perda de informação. Expandindo esse conceito, nos casos em que o vídeo varie muito pouco em uma de suas dimensões espaciais, não há necessariamente uma perda de conteúdo significativa.
 
-\paragraph{}A análise de ondas marítimas apresenta condição similar a descrita anteriormente. Com a posição da câmera escolhida com cuidado, isto é, 
-%xxxxxxxDescrever Tecnicamentexxxxxxxx. 
-
-Assim, uma onda quebrando ocupará maior parte horizontal da imagem. Além disso, não é importante para a análise desejada entender o tamanho horizontal da onda, apenas o seu tamanho vertical. Precisa-se apenas determinar o seu ponto mais baixo e seu ponto mais alto. Sendo assim, o \timestack mostra-se um método adequado de análise de vídeos para esse projeto.
+\paragraph{}A análise de ondas marítimas apresenta condição similar a descrita anteriormente. Com a posição da câmera escolhida com cuidado, isto é, a zona de arrebentação deve centralizada na imagem, tanto horizontalmente quando verticamente. A câmera deve estar perpendicular em relação a zona de arrebentação, e montada em um ponto acima do nível da praia, de forma que banhistas na areia não atrapalhem a visão da zona de arrebentação. Assim, uma onda quebrando ocupará maior parte horizontal da imagem. Além disso, não é importante para a análise desejada entender o tamanho horizontal da onda, apenas o seu tamanho vertical. Precisa-se apenas determinar o seu ponto mais baixo e seu ponto mais alto. Sendo assim, o \timestack mostra-se um método adequado de análise de vídeos para esse projeto.
 
 \begin{figure}[h]
 \begin{center}
@@ -73,6 +67,10 @@ Assim, uma onda quebrando ocupará maior parte horizontal da imagem. Além disso, 
 \]
 
 \noindent{}onde \(I(t,v)\) é a intensidade do pixel na posição \((t,v)\) na imagem convertida, e \(R(t,v)\), \(G(t,v)\) e \(B(t,v)\) são, respectivamente, os valores das componentes vermelhas, verdes e azuis do pixel \((t,v)\) da imagem original.
+
+\section{Equalização de Histograma}
+
+\paragraph{}A equalização de histograma deve ser realizada a cada frame pois a iluminação do sol pode variar durante a aquisição do vídeo.
 
 \section{Detecção da Linha de Horizonte}
 
