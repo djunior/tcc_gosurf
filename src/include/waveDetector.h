@@ -4,12 +4,13 @@
 #include "trajectory.h"
 #include "opencv/cv.h"
 #include "imageFilter.h"
+#include "wave.hpp"
 
 namespace tcc {
 
 class WaveDetector : public ImageFilter {
 public:
-	std::vector<Trajectory::Point> waves;
+	std::vector<Wave> waves;
 	~WaveDetector();
 	void filter();
 	void drawWaves(cv::Mat&);

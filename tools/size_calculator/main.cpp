@@ -3,6 +3,7 @@
 
 using namespace std;
 
+
 /*
 	Usage: ./main ref_size ref_dist ref_real_size wave_size wave_dist [photo_height] [sensor_size]
 */
@@ -11,6 +12,9 @@ int main(int argc, char* argv[]) {
 	float sensor_size = 1.22e-6;
 	float photo_height = 3264;
 	float ref_size, ref_dist, ref_real_size, wave_size, wave_dist;
+
+	double cameraHeight = 6.0;
+	double cameraAngle = 90.0;
 
 	float scale;
 

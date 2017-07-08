@@ -3,6 +3,8 @@
 #include <opencv2/highgui/highgui.hpp>
 #include "opencv/cv.h"
 
+#include "camera.hpp"
+
 #include <stdio.h>      /* printf, scanf, puts, NULL */
 #include <stdlib.h>     /* srand, rand */
 #include <time.h>       /* time */
@@ -30,24 +32,42 @@ void WaveDetector::detectWave(Trajectory& t, int bottom, int top) {
 	// cout << "Calculating height: " << height << endl;
 	
 	if ((height > MIN_HEIGHT_THRESHOLD && height < MAX_HEIGHT_THRESHOLD)) {
-		if (waves.size() == 0 || t.getPoint(bottom).y > waves.back().y) {
-			waves.push_back(t.points[bottom]);
-			waves.push_back(t.points[top]);
+		if (waves.size() == 0 || t.getPoint(bottom).y > waves.back().top.y) {
+			Wave wave(t.points[bottom],t.points[top]);
+			// waves.push_back(t.points[bottom]);
+			// waves.push_back(t.points[top]);
+			waves.push_back(wave);
 		}
 	}
 }
 
 void WaveDetector::drawWaves(Mat &mat) {
+	Camera camera;
+	cout << "Drawing " << waves.size() << " waves" << endl;
 	if (waves.size() > 0) {
-		cout << "Painting lines on image" << endl;
-		for (int i = 0; i < (waves.size()-1); i += 2) {
-			Point pt1(waves[i+1].y, waves[i].x);
-			Point pt2(waves[i+1].y, waves[i+1].x);
+		for (int i = 0; i < waves.size(); i++) {
+
+			cout << "Drawing wave " << i << endl;
+
+			Trajectory::Point bottom = waves[i].bottom;
+			Trajectory::Point top = waves[i].top;
+
+			cout << "Point 1(" << bottom.x << "," << bottom.y << ")" << endl;
+			cout << "Point 2(" << top.x << "," << top.y << ")" << endl;
+
+			Point pt1(top.y, bottom.x);
+			Point pt2(top.y, top.x);
+			Point pt3(bottom.y, bottom.x);
+
 			line(mat,pt1,pt2,Scalar(0,0,255),3);
+			line(mat,pt3,pt2,Scalar(0,255,0),3);
 
-			int halfway = (waves[i+1].y + waves[i].y)/2;
+			int halfway = (top.y + bottom.y)/2;
+			int height = (bottom.x - top.x);
 
-			cout << "Found wave at " << halfway << " height " << waves[i].x - waves[i+1].x << endl;
+			double realHeight = camera.calculateRealHeight(bottom.x,top.x);
+
+			cout << "Found wave at " << halfway << " height " << height << " real height: " << realHeight << " m" << endl;
 		}
 	}
 }
@@ -207,9 +227,9 @@ void WaveDetector::save(char* fname) {
 	ofstream f;
   	f.open(fname);
 
-  	for (int i = 0; i < (waves.size()-1); i += 2) {
-  		Trajectory::Point bottom = waves[i];
-  		Trajectory::Point top = waves[i+1];
+  	for (int i = 0; i < waves.size(); i ++) {
+  		Trajectory::Point bottom = waves[i].bottom;
+  		Trajectory::Point top = waves[i].top;
 
   		f << bottom.x << "," << bottom.y << endl;
   		f << top.x << "," << top.y << endl;

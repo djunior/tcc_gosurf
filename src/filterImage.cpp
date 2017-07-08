@@ -94,6 +94,8 @@ void process(Mat& image) {
 
 	Mat greyImage(image.size(),CV_8UC1);
 
+	cout << "Analysing image with size: " << image.cols << ", " << image.rows << endl;
+
 	cvtColor(image,greyImage,COLOR_BGR2GRAY);
 
 	// HistogramEqualizatorFilter eq;
