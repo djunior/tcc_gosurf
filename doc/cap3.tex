@@ -1,13 +1,30 @@
 \newcommand{\timestack}[0]{\textit{timestack} }
 \newcommand{\frame}[0]{\textit{frame} }
+\newcommand{\threshold}[0]{\textit{threshold} }
 
 \section{Algoritmo de Processamento de Imagens}
 
-\paragraph{}Os métodos apresentados no Capítulo 2 agora serão utilizadas em conjunto para estimar a altura de ondas do mar. Este algoritmo é composto de três etapas: o pré-processamento, o processamento principal, e a análise da imagem resultante. Estas etapas serão detalhadas nas seções a seguir.
+\paragraph{}Os métodos apresentados no Capítulo 2 agora serão utilizadas em conjunto para estimar a altura de ondas do mar. Este algoritmo é composto de três etapas: o pré-processamento, o processamento principal, e a análise da imagem resultante. Estas etapas serão detalhadas nas seções a seguir. Antes de detalhá-las, um ponto fundamental para a sua compreensão é entender o que é um \textit{timestack}, qual a sua função e como gerá-lo utilizando um vídeo como base. O \timestack será explicado a seguir.
+
+\section{\textit{Timestack}}
+
+\paragraph{}Um \timestack é uma representação bidimensional de um vídeo, isto é, trata-se de uma forma de transformar tal vídeo em uma só imagem. O \timestack é útil para analisar tais vídeos pois é possível olhar para uma sequencia completa de quadros observando uma única imagem. Dessa forma, pode-se aplicar métodos de processamento de uma única imagem \timestack, em vez de todo o vídeo.
+
+\paragraph{}Para construir um \timestack, é necessário fixar uma das dimensões espaciais de cada imagem do vídeo, obtendo assim um conjunto de funções unidimensionais. O \timestack deste vídeo é definido então como uma função bidimensional \(s_{Y}(x,t)\) ou \(s_{X}(t,y)\), onde \(x\) e \(y\) são coordenadas espaciais; \(t\) é uma coordenada temporal; as amplitudes \(s_{X}\) e \(s_{Y}\) são a intensidade ou nível de cinza do vídeo \(g(x,y,t)\) quando são fixados os valores \(x = X\) e \(y = Y\), respectivamente. Dessa forma, a relação entre um \timestack e um vídeo é dada por: \(s_{Y}(x,t)=g(x,Y,t)\) e \(s_{X}(t,y) = g(X,y,t)\).
+
+\paragraph{}Note que, na prática, a coordenada temporal \(t\) cumpre o papel de uma coordenada espacial quando o \timestack é exibido como uma imagem, mas sua interpretação continua sendo temporal. É claro que a perda de uma dimensão resulta em perda de informação no vídeo, entretanto, nos casos em que o vídeo é constante na dimensão espacial fixada não há perda de informação. Expandindo esse conceito, nos casos em que o vídeo varie muito pouco em uma de suas dimensões espaciais, não há necessariamente uma perda de conteúdo significativa.
+
+\paragraph{}A análise de ondas marítimas apresenta condição similar a descrita anteriormente. Com a posição da câmera escolhida com cuidado, isto é, a zona de arrebentação deve centralizada na imagem, tanto horizontalmente quando verticamente. A câmera deve estar perpendicular em relação a zona de arrebentação, e montada em um ponto acima do nível da praia, de forma que banhistas na areia não atrapalhem a visão da zona de arrebentação. Assim, uma onda quebrando ocupará maior parte horizontal da imagem. Além disso, não é importante para a análise desejada entender o tamanho horizontal da onda, apenas o seu tamanho vertical. Precisa-se apenas determinar o seu ponto mais baixo e seu ponto mais alto. Sendo assim, o \timestack mostra-se um método adequado de análise de vídeos para esse projeto.
 
 \section{Aparato Instrumental}
 
 % Está esquecendo do seu trabalho de projeto integrado. Trazer ele para cá fazendo referência ao seus colegas co-autores.
+
+\section{Estabilização de Vídeo}
+
+\paragraph{}A estabilização de vídeo é fundamental para a criação de um \timestack fiel ao cenário real. Como o \timestack é criado selecionando a coluna central de cada frame do vídeo, é importante que esta coluna corresponda ao mesmo conjunto de pixels de quadro a quadro. Caso a câmera se desloque horizontalmente no decorrer do vídeo, o conjunto de pixels não será o mesmo, e com isso o \timestack formado não será uma representação fiel em duas dimensões do vídeo capturado. A estabilidade na direção vertical é importante para que a estimativa de altura das ondas seja fiel a altura real. Um deslocamento vertical da câmera resulta em um deslocamento das colunas do \timestack, que por sua vez podem imbutir erros na identificação dos pontos de máximo e mínimo de cada onda.
+
+\paragraph{}Primeiro experimentou-se realizar a estabilização do vídeo utilizando técnicas de processamnto de imagens. Foi testado um procedimento simples descrito por Nghia Ho \cite{Ho2014}. Embora este procedimento apresente bons resultados para vídeos gravados manualmente, foi observado que quando aplicado o procedimento em vídeos gravados já com alta estabilidade o procedimento introduzia erros no \timestack resultante. Então, concluiu-se que basta utilizar um ponto de montagem para a câmera, como um tripé, para atingir a estabilidade necessária para a extração fiel dos dados desejados.
 
 \section{Pré-Processamento}
 
@@ -29,16 +46,6 @@
 
 \paragraph{}O pré-processamento inicia a partir do vídeo capturado de uma praia. Cada \textit{frame} do vídeo é processado, primeiro convertendo o \textit{frame} para uma imagem em níveis de cinza, pois todos os processamentos posteriores só operam sobre o nível de intensidade de cada \textit{pixel}. A seguir, equaliza-se o histograma do \textit{frame}, a fim de normalizar a iluminação da imagem. Assim, filmagem realizadas em qualquer hora do dia podem ser tratadas da mesma forma. Os passos seguintes são a detecção da linha do horizonte e a remoção do céu. Para detectar o horizonte, analisa-se o \frame original em nível de cinza. Uma vez detectada a linha do horizonte, o céu é removido simplesmente alterando todos \textit{pixels} acima da linha para intensidade zero. O último passo é gerar o \timestack a partir dos \textit{frames} do vídeo. O \timestack é gerado selecionando a coluna central de cada \frame, acumulando-as sequencialmente em uma única imagem. Todos esses passos serão descritos detalhadamente a seguir.
 
-\section{\textit{Timestack}}
-
-\paragraph{}Um \timestack é uma representação bidimensional de um vídeo, isto é, trata-se de uma forma de transformar tal vídeo em uma só imagem. O \timestack é útil para analisar tais vídeos pois é possível olhar para uma sequencia completa de quadros observando uma única imagem. Dessa forma, pode-se aplicar métodos de processamento de uma única imagem \timestack, em vez de todo o vídeo.
-
-\paragraph{}Para construir um \timestack, é necessário fixar uma das dimensões espaciais de cada imagem do vídeo, obtendo assim um conjunto de funções unidimensionais. O \timestack deste vídeo é definido então como uma função bidimensional \(s_{Y}(x,t)\) ou \(s_{X}(t,y)\), onde \(x\) e \(y\) são coordenadas espaciais; \(t\) é uma coordenada temporal; as amplitudes \(s_{X}\) e \(s_{Y}\) são a intensidade ou nível de cinza do vídeo \(g(x,y,t)\) quando são fixados os valores \(x = X\) e \(y = Y\), respectivamente. Dessa forma, a relação entre um \timestack e um vídeo é dada por: \(s_{Y}(x,t)=g(x,Y,t)\) e \(s_{X}(t,y) = g(X,y,t)\).
-
-\paragraph{}Note que, na prática, a coordenada temporal \(t\) cumpre o papel de uma coordenada espacial quando o \timestack é exibido como uma imagem, mas sua interpretação continua sendo temporal. É claro que a perda de uma dimensão resulta em perda de informação no vídeo, entretanto, nos casos em que o vídeo é constante na dimensão espacial fixada não há perda de informação. Expandindo esse conceito, nos casos em que o vídeo varie muito pouco em uma de suas dimensões espaciais, não há necessariamente uma perda de conteúdo significativa.
-
-\paragraph{}A análise de ondas marítimas apresenta condição similar a descrita anteriormente. Com a posição da câmera escolhida com cuidado, isto é, a zona de arrebentação deve centralizada na imagem, tanto horizontalmente quando verticamente. A câmera deve estar perpendicular em relação a zona de arrebentação, e montada em um ponto acima do nível da praia, de forma que banhistas na areia não atrapalhem a visão da zona de arrebentação. Assim, uma onda quebrando ocupará maior parte horizontal da imagem. Além disso, não é importante para a análise desejada entender o tamanho horizontal da onda, apenas o seu tamanho vertical. Precisa-se apenas determinar o seu ponto mais baixo e seu ponto mais alto. Sendo assim, o \timestack mostra-se um método adequado de análise de vídeos para esse projeto.
-
 \begin{figure}[h]
 \begin{center}
   \includegraphics[width=\textwidth,height=\textheight,keepaspectratio]{timestack.jpg}
@@ -48,14 +55,6 @@
 
 % Explicar a figura chamando a atenção para os detalhes descritos nesta seção.
 
-\section{Estabilização de Vídeo}
-
-\paragraph{}A estabilização de vídeo é fundamental para a criação de um \timestack fiel ao cenário real. Como o \timestack é criado selecionando a coluna central de cada frame do vídeo, é importante que esta coluna corresponda ao mesmo conjunto de pixels de quadro a quadro. Caso a câmera se desloque horizontalmente no decorrer do vídeo, o conjunto de pixels não será o mesmo, e com isso o \timestack formado não será uma representação fiel em duas dimensões do vídeo capturado. A estabilidade na direção vertical é importante para que a estimativa de altura das ondas seja fiel a altura real. Um deslocamento vertical da câmera resulta em um deslocamento das colunas do \timestack, que por sua vez podem imbutir erros na identificação dos pontos de máximo e mínimo de cada onda.
-
-%TODO: Explicar como é feito a estabiliação de vídeo, Colocar exemplo de timestack corrigido e não corrigido para facilitar o entendimento.
-
-\paragraph{}
-
 \section{Conversão para Nível de Cinza}
 
 \paragraph{}Após gerar o \timestack, o mesmo é convertido para nível de cinza. Os passos e etapas subsequentes do algoritmo ora proposto não necessitam trabalhar com cores, apenas a intensidade de cada \textit{pixel} é necessária para estimar a altura das ondas. O processamento das imagens se torna mais eficiente, pois a representação de uma imagem em nível de cinza possui um terço do tamanho de representação de imagem em cores. Com isso, o algoritmo utilizara menos memória para executar e seu tempo de execução é reduzido.
@@ -63,7 +62,7 @@
 \paragraph{}A conversão para nível de cinza é realizada de acordo com a seguinte fórmula \cite{Griffith14}:
 
 \[
-        I(t, v) = 0.35R(t, v) + 0.5G(t, v) + 0.15B(t, v)
+  I(t, v) = 0.35R(t, v) + 0.5G(t, v) + 0.15B(t, v)
 \]
 
 \noindent{}onde \(I(t,v)\) é a intensidade do pixel na posição \((t,v)\) na imagem convertida, e \(R(t,v)\), \(G(t,v)\) e \(B(t,v)\) são, respectivamente, os valores das componentes vermelhas, verdes e azuis do pixel \((t,v)\) da imagem original.
@@ -74,9 +73,7 @@
 
 \section{Detecção da Linha de Horizonte}
 
-\paragraph{}Uma etapa importante é a detecção da linha de horizonte a fim de viabilizar a detecção e remoção do céu na imagem. Esta operação é utilizada para facilitar o passo de \textit{thresholding} na etapa de processamento de imagem. Em alguns cenários, é difícil distinguir a região de céu da região de arrebentação utilizando apenas o nível de intensidade dos \textit{pixels} de cada região, pois a faixa de valores de intensidade de cada região se sobrepõem. A figura \ref{FigTimestackSkyFail1} exibe um \timestack com o céu incluído após aplicado um \textit{threshold} com valor de limite 150. Pode-se observar que parte do céu não foi removido pelo \textit{threshold}. Já a figura \ref{FigTimestackSkyFail2} exibe um \timestack com o céu incluído após aplicado um \textit{threshold} com valor de limite 120. Com este valor o céu foi removido completamente, mas a delimitação da região de arrebentação não foi bem definida, resultando em uma estimação de altura das ondas menor do que o esperado.
-
-Por este motivo, a segmentação é baseada não só no nível de intensidade dos \textit{pixels} mas como na sua localização no imagem. A detecção da linha de horizonte se mostra fundamental para obter localização desta região.
+\paragraph{}Uma etapa importante é a detecção da linha de horizonte a fim de viabilizar a detecção e remoção do céu na imagem. Esta operação é utilizada para facilitar o passo de \textit{thresholding} na etapa de processamento de imagem. Em alguns cenários, é difícil distinguir a região de céu da região de arrebentação utilizando apenas o nível de intensidade dos \textit{pixels} de cada região, pois a faixa de valores de intensidade de cada região se sobrepõem. A figura \ref{FigTimestackSkyFail1} exibe um \timestack com o céu incluído após aplicado um \textit{threshold} com valor de limite 150. Pode-se observar que parte do céu não foi removido pelo \textit{threshold}. Já a figura \ref{FigTimestackSkyFail2} exibe um \timestack com o céu incluído após aplicado um \textit{threshold} com valor de limite 120. Com este valor o céu foi removido completamente, mas a delimitação da região de arrebentação não foi bem definida, resultando em uma estimação de altura das ondas menor do que o esperado. Por este motivo, a segmentação é baseada não só no nível de intensidade dos \textit{pixels} mas como na sua localização no imagem. A detecção da linha de horizonte se mostra fundamental para obter localização desta região.
 
 \begin{figure}[h]
 \begin{center}
@@ -92,8 +89,9 @@ Por este motivo, a segmentação é baseada não só no nível de intensidade dos \tex
 \end{center}
 \end{figure}
 
-\paragraph{}A detecção do céu é realizada utilizando um detector de bordas de Canny para identificar a linha do horizonte (Figuras \ref{FigTimestackSkyCanny}). Então, procura-se a primeira borda detectada pelo método de Canny, percorrendo pelas colunas da imagem até encontrar um \textit{pixel} . Todos os \textit{pixels} acima dessa borda são considerados como \textit{pixels} da região do céu, e serão removidos no passo seguinte.
+\paragraph{}A detecção do céu é realizada utilizando um detector de bordas de Canny para identificar a borda entre o céu e o mar em um \frame do vídeo (Figura \ref{FigTimestackSkyCanny}). Então, procura-se a primeira borda detectada pelo método de Canny, através do algoritmo descrito em \ref{AlgLineTracking}. A borda detectada é a linha do horizonte. Todos os \textit{pixels} acima dessa linha são considerados como \textit{pixels} da região do céu, e serão removidos no passo seguinte.
 
+%TODO: atualizar essa imagem
 \begin{figure}[h]
 \begin{center}
   \includegraphics[width=\textwidth,height=\textheight,keepaspectratio]{skydetector_after_canny.jpg}
@@ -103,9 +101,9 @@ Por este motivo, a segmentação é baseada não só no nível de intensidade dos \tex
 
 \section{Remoção do Céu}
 
-\paragraph{}O último passo da etapa de pré-processamento é a remoção do céu. Este passo utiliza duas entradas, a linha do horizonte detectada pelo passo anterior, e o \timestack em nível de cinza. A partir da linha do horizonte, considera-se todos os pixels do \timestack em nível de cinza acima dessa linha como preto. Este passo é importante pois o nível médio de intensidade do céu pode variar muito dependendo do nível de iluminação no momento que o vídeo foi capturado. Os dois principais fatores que impactam o nível de iluminação são as condições climáticas (dias mais nublados ou mais claros alteram o nível de intensidade médio do céu) e o horário do dia (o nível de iluminação será diferente no começo da manhã quando comparado com o meio do dia).
+\paragraph{}O último passo da etapa de pré-processamento é a remoção do céu. Este passo utiliza duas entradas, a linha do horizonte detectada pelo passo anterior, e o \frame equalizado. A partir da linha do horizonte, considera-se todos os \textit{pixels} do \frame equalizado acima dessa linha como preto. 
 
-\paragraph{}Sem a remoção do céu, é difícil definir um valor automático de \textit{threshold} que será utilizado na etapa de processamento principal. Uma tarefa essencial é ser capaz de separar o céu, o mar e a faixa de espuma da arrebentação. Com o céu removido, ao operação de  \textit{threshold} produzirá resultados mais adequados para dar suporte às etapas de medição.
+\paragraph{}Sem a remoção do céu, é difícil definir um valor único de \textit{threshold} que será utilizado na etapa de processamento principal. Uma tarefa essencial é ser capaz de separar o céu, o mar e a faixa de espuma da arrebentação. Com o céu removido, ao operação de  \textit{threshold} produzirá resultados mais adequados para dar suporte às etapas de medição.
 
 \section{Processamento Principal}
 
@@ -116,8 +114,7 @@ Por este motivo, a segmentação é baseada não só no nível de intensidade dos \tex
 \end{center}
 \end{figure}
 
-\paragraph{}A etapa de processamento principal tem como objetivo extrair a linha de arrebentação (figura \ref{FigLinhaArrebentacao}) de um \timestack gerado pelo pré-processamento. A linha de arrebentação é definida como a linha que delimita a região de espuma, formada depois das ondas quebrarem, do restante do mar atrás das ondas. A forma que essa linha evolui, ou seja, o seu formato, como e quanto a linha sobe ou desce indica tanto a localização das ondas como a sua altura. 
-
+\paragraph{}A etapa de processamento principal tem como objetivo extrair a linha de arrebentação (figura \ref{FigLinhaArrebentacao}) de um \timestack gerado pelo pré-processamento. A linha de arrebentação é definida como a linha que delimita a região de espuma do restante do mar. Uma característica marcante dessas duas regiões é que a região de espuma apresenta a maioria dos \textit{pixels} com intensidade alta, enquanto o restante do mar apresenta a maioria dos \textit{pixels} com intensidade baixa. A região de espuma varia verticalmente de acordo com o avanço das ondas do mar em direção a areia.
 %Esta frase está confusa, reescrever. 
 
 Além disso, como foi mostrado anteriormente, a localização das ondas no \timestack representa a sua localização temporal no vídeo capturado, e desta forma é possível calcular a periodicidade das ondas.
@@ -131,12 +128,17 @@ Além disso, como foi mostrado anteriormente, a localização das ondas no \timesta
 
 \section{Suavização}
 
-\paragraph{}A primeira etapa de suavização é realizada utilizando um filtro passa-baixas gaussiano, implementado no domínio do espaço com máscara de tamanho 3, o menor tamanho possível. Este efeito de suavização é importante para reduzir o nível de ruído na imagem, facilitando a identificação das bordas relevantes nos passos subsequentes. Outro efeito desejado é homogeneizar o nível de intensidade das regiões da imagem, de forma que o passo de \textit{thresholding} consiga segmentar a região de arrebentação do \timestack consistentemente. As figuras \ref{FigGaussianBlurOk} \ref{FigGaussiaBlurFail} ilustram a diferença na segmentação da região de arrebentação com e sem o passo de suavização. A figura \ref{FigGaussianBlurFail} 
+\paragraph{}A primeira etapa de suavização é realizada utilizando um filtro passa-baixas gaussiano, implementado no domínio do espaço com máscara de tamanho 15. Este valor foi escolhido empiricamente,  . Este efeito de suavização é importante para reduzir o nível de ruído na imagem, facilitando a identificação das bordas relevantes nos passos subsequentes. Outro efeito desejado é homogeneizar o nível de intensidade das regiões da imagem, de forma que o passo de \textit{thresholding} consiga segmentar a região de arrebentação do \timestack consistentemente. As figuras \ref{FigGaussianBlurOk} \ref{FigGaussiaBlurFail} ilustram a diferença na segmentação da região de arrebentação com e sem o passo de suavização. A figura \ref{FigGaussianBlurFail} 
 
 %TODO: Adicionar imagem da primeira suavização
 
 \section{\textit{Thresholding}}
-\paragraph{}\textit{Thresholding} é o primeiro passo para realizar a segmentação. Neste passo separa-se a região de espuma do restante do mar, alterando todos os pixels com intensidade acima de 150 para 0 O valor não é dinâmico por conta daquela história de remoção do céu (figura \ref{FigThreshold}). 
+\paragraph{}\textit{Thresholding} é o primeiro passo para realizar a segmentação. Neste passo separa-se a região de espuma do restante do mar, alterando todos os pixels com intensidade acima de 150 para 0 
+
+%O valor não é dinâmico por conta daquela história de remoção do céu (figura \ref{FigThreshold}). 
+
+
+%Atualizar essa figura
 \begin{figure}[h]
 \begin{center}
   \includegraphics[width=\textwidth,height=\textheight,keepaspectratio]{mainprocessing_threshold.jpg}
@@ -169,11 +171,14 @@ Além disso, como foi mostrado anteriormente, a localização das ondas no \timesta
 \end{figure}
 
 \section{Rastreamento da Linha de Ondas}
+
 \paragraph{}O primeiro passo desta etapa consiste em rastrear a linha de arrebentação encontrada, isto é, construir uma sequência \(s[n]\) que indica a sequência ordenada dos pontos \((x,y)\) que compõe a linha de arrebentação. Esta sequência ordenada permite caminhar por cima da linha de arrebentação e assim determinar os pontos de máximo e mínimo locais da linha.
+
 \paragraph{}Para rastrear a linha de arrebentação foi utilizado um algoritmo que, dado um ponto de origem \(s[0] = (x_{i},y_{i})\), encontra o próximo ponto da linha, o adiciona a sequência e busca o próximo ponto, até que não encontre mais nenhum ponto disponível para adicionar na sequência \(s[n]\). o pseudo-código \ref{AlgLineTracking} ilustra o algoritmo de rastreamento, e o pseudo-código \ref{AlgFirstPoint} ilustra o algoritmo que popula o primeiro ponto da sequência $s[n]$. Explicar a idéia que é implementada no algoritmo.
+
 \begin{algorithm}
-\caption{Algoritmo de Rastreamento de Linha}
-\label{AlgLineTracking}
+  \caption{Algoritmo de Rastreamento de Linha}
+  \label{AlgLineTracking}
 \begin{algorithmic}
 
 \Procedure{RastreiaLinha}{$raioDeBusca$}
@@ -201,8 +206,8 @@ Além disso, como foi mostrado anteriormente, a localização das ondas no \timesta
 \end{algorithm}
 
 \begin{algorithm}
-\caption{Algoritmo de Identificação do Primeiro Ponto da Linha}
-\label{AlgFirstPoint}
+  \caption{Algoritmo de Identificação do Primeiro Ponto da Linha}
+  \label{AlgFirstPoint}
 \begin{algorithmic}
 
 \Procedure{EncontraPrimeiroPonto}{}
@@ -226,7 +231,7 @@ Além disso, como foi mostrado anteriormente, a localização das ondas no \timesta
 \paragraph{}O último passo para estimar a altura das ondas em um \timestack é identificar as ondas na linha rastreada no passo anterior. Para isso, calcula-se a derivada da sequência discreta $s[n]$, da seguinte forma:
 
 \[
-        s'[n] = s[n] - s[n-1], \text{para n $>$ 0}
+  s'[n] = s[n] - s[n-1], \text{para n $>$ 0}
 \] 
 
 \noindent{}A sequência $s'[n]$ indica quais trechos da sequência original $s[n]$ são crescentes, decrescentes ou constantes. Então, ao caminhar sobre a sequência derivada $s'[n]$, é trivial determinar quais são as faces crescentes das ondas. Em um cenário ideal, o ponto inicial de uma face crescente corresponde ao ponto mínimo local de uma onda, e o último ponto crescente desta face corresponde ao ponto de máximo local, determinando assim a altura da onda. Entretanto, em uma imagem não ideal podem existir trechos que a derivada é $0$, ou até mesmo negativa, antes da sequência tornar a crescer. A figura \ref{FigAutomato} descreve um autômato que reconhece uma onda considerando as condições descritas anteriormente.
@@ -237,7 +242,9 @@ Além disso, como foi mostrado anteriormente, a localização das ondas no \timesta
   \caption[\small{Autômato Finito Determinístico que identifica uma onda em uma linha de arrebentação.}]{\label{FigAutomato} \small{Autômato Finito Determinísticoque identifica uma onda em uma linha de arrebentação.}}
 \end{center}
 \end{figure}
+
 \noindent{}O estado 0 do autômato procura pela primeira derivada $s'[n]$ positiva, marcando o ponto equivalente de $s[n]$ como o mínimo da onda e avançando para o estado 1. O estado 1 procura pela primeira derivada negativa de $s'[n]$, marcando o ponto equivalente de $s[n]$ como candidato ao ponto máximo da onda e andando para o estado 2. Então, os estados 2 e 3 buscam por "buracos" ou \textit{gaps} no trecho de derivada positiva, onde a derivada se torna negativa por um curto período e depois $s[n]$ torna a crescer. O estado 2 procura por novos pontos de máximo, trechos onde a derivada é positiva, e o estado 3 procura por trechos de derivada negativa. Quando o estado 3 encontrar uma derivada positiva, o autômato retorna para o estado 2. Enquanto o estado 3 encontrar derivadas não-positivas um contador de tamanho do \textit{gap} é incrementado. Quando o tamanho do \textit{gap} é superior a um certo limite, o autômato avança para o estado 4, identificando assim que um candidato a uma onda foi encontrado, delimitado pelos pontos de mínimo e máximo encontrados anteriormente. Este candidato apenas será considerado uma onda se sua altura estiver dentro de uma faixa de controle, isto é, são descartadas ondas muito pequenas ou muito grandes.A figura \ref{FigWave} mostra os pares de pontos máximo e mínimo identificados pelo autômato em uma linha de arrebentação aplicados no \timestack original. As linhas vermelhas unem os pares de pontos encontrados. Você vai precisar dar uma ênfase maior na linha vermelha da imagem para ficar nítido.
+
 \begin{figure}[h]
 \begin{center}
   \includegraphics[width=\textwidth,height=\textheight,keepaspectratio]{result_wave.jpg}

@@ -44,6 +44,9 @@ void WaveDetector::detectWave(Trajectory& t, int bottom, int top) {
 void WaveDetector::drawWaves(Mat &mat) {
 	Camera camera;
 	cout << "Drawing " << waves.size() << " waves" << endl;
+
+	double average_sum = 0;
+
 	if (waves.size() > 0) {
 		for (int i = 0; i < waves.size(); i++) {
 
@@ -67,9 +70,19 @@ void WaveDetector::drawWaves(Mat &mat) {
 
 			double realHeight = camera.calculateRealHeight(bottom.x,top.x);
 
+			average_sum += bottom.x;
+
 			cout << "Found wave at " << halfway << " height " << height << " real height: " << realHeight << " m" << endl;
 		}
 	}
+
+	double average_y = average_sum / waves.size();
+
+	Point avP1(0,average_y);
+	Point avP2(mat.cols,average_y);
+
+	line(mat,avP1,avP2,Scalar(255,255,0),1);
+
 }
 
 void WaveDetector::filter() {
