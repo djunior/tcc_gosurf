@@ -85,23 +85,11 @@ void WaveDetector::drawWaves(Mat &mat) {
 
 }
 
-void WaveDetector::filter() {
-	cout << "Filtering" << endl;
-
-	Trajectory t(srcMat);
-
-	// findFirstPoint(t);
-	// fillTrajectory(t);
-
-	Mat debugMat(srcMat.size(),CV_8UC3,Scalar::all(0));
+void WaveDetector::analyseTrajectory(Trajectory &t) {
 
 	vector<Trajectory::Point> derivative;
 
 	t.calculateDerivative(derivative);
-
-	// cout << "Derivative size: " << derivative.size() << endl;
-
-	cout << "Detecting waves" << endl;
 
 	int state = 0; 
 	int bottom_index = 0;
@@ -114,7 +102,7 @@ void WaveDetector::filter() {
 		int dX = derivative[i].x;
 		int dY = derivative[i].y;
 
-		debugMat.at<Vec3b>(t.points[i+1].x,t.points[i+1].y) = Vec3b(255,255,255);
+		// debugMat.at<Vec3b>(t.points[i+1].x,t.points[i+1].y) = Vec3b(255,255,255);
 
 		// cout << "Index: " << i << endl;
 		// cout << "State: " << state << endl;
@@ -189,6 +177,70 @@ void WaveDetector::filter() {
 
 	}
 
+}
+
+void WaveDetector::filter() {
+	cout << "Filtering" << endl;
+
+	// Trajectory t(srcMat);
+	// vector<Trajectory> trajectories;
+
+	// trajectories[0] = Trajectory(srcMat);
+
+	// findFirstPoint(t);
+	// fillTrajectory(t);
+
+	// Mat debugMat(srcMat.size(),CV_8UC3,Scalar::all(0));
+
+
+	// cout << "Derivative size: " << derivative.size() << endl;
+
+	cout << "Detecting waves" << endl;
+
+	int col = 0;
+
+	while(true) {
+		if (col >= srcMat.cols-1) {
+			break;
+		}
+
+		cout << "col: " << col << ", " << srcMat.cols << endl;
+
+		Mat m = Mat(srcMat,Rect(col,0,srcMat.cols-col,srcMat.rows)).clone();
+		// .colRange(col,srcMat.cols-1).copyTo(m);
+
+		// cout << "size: "
+
+		// imshow("m",m);
+		// waitKey(1000);
+		
+		cout << "m size: (" << m.cols << ", " << m.rows << ")" << endl;
+
+		Trajectory t(m,col,0);
+
+		cout << "analysing the trajectory" << endl;
+				
+		cout << "pushing the trajectory to the vector" << endl;
+
+		cout << "First point: " << t.points[0].x << ", " << t.points[0].y << endl;
+		cout << "Last point: " << t.points.back().x << ", " << t.points.back().y << endl;
+
+		for (int i = 0; i < t.points.size(); i++) {
+			t.points[i].y += col;
+		}
+
+		if (t.points.back().y >= (srcMat.cols-1) )
+			break;
+		else
+			col = t.points.back().y+1;
+
+		// trajectories.push_back(t);
+
+		analyseTrajectory(t);
+
+		// cin.ignore();
+	}
+
 	// for (int i = 0; i < waves.size()-1; i = i + 2) {
 	// 	if ( (waves[i+1].y - waves[i].y) > 20) {
 	// 		cout << "Wave " << (i / 2) + 1 << " low = (" << waves[i].x << "," << waves[i].y << "), high = (" << waves[i+1].x << "," << waves[i+1].y << ")" << endl;
@@ -224,7 +276,7 @@ void WaveDetector::filter() {
 	filteredMat = srcMat.clone();
 
 	// resize
-	resize(debugMat, debugMat, Size(debugMat.cols/2, debugMat.rows/2));
+	// resize(debugMat, debugMat, Size(debugMat.cols/2, debugMat.rows/2));
 	// imshow("debug mat",debugMat);
 
 	// resize(debug2Mat, debug2Mat, Size(debug2Mat.cols/2, debug2Mat.rows/2));

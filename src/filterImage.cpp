@@ -122,12 +122,13 @@ void process(Mat& image) {
 	pipeline.addFilter(new ImageOutput("output_images/process/process_gaussian.jpg"));
 	pipeline.addFilter(new ThresholdFilter(150,0,255));
 	pipeline.addFilter(new ImageOutput("output_images/process/process_threshold.jpg"));
+	
+	//Wave Detection
 	pipeline.addFilter(new WaveBandFinder(WaveBandFinder::WBF_MODE_THRESHOLD));
 	pipeline.addFilter(new ImageOutput("output_images/process/process_threshold.jpg"));
-
-	//Wave Detection
-	pipeline.addFilter(new CannyFilter(0));
-	pipeline.addFilter(new ImageOutput("output_images/process/process_canny.jpg"));
+	
+	// pipeline.addFilter(new CannyFilter(0));
+	// pipeline.addFilter(new ImageOutput("output_images/process/process_canny.jpg"));
 
 	// Debug
 	FilterPipeline* auxPipeline = new FilterPipeline();

@@ -7,6 +7,8 @@
 namespace tcc {
 
 class Trajectory {
+private:
+	int x_offset,y_offset;
 public:
 
 	class Point {
@@ -20,6 +22,7 @@ public:
 
 	Trajectory();
 	Trajectory(cv::Mat&);
+	Trajectory(cv::Mat&, int, int);
 	~Trajectory();
 
 	bool addPoint(int,int);

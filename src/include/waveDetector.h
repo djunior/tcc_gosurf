@@ -21,6 +21,7 @@ private:
 	void fillTrajectory(Trajectory&);
 	void findFirstPoint(Trajectory&);
 	bool findNextPoint(Trajectory&);
+	void analyseTrajectory(Trajectory&);
 };
 
 

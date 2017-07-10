@@ -52,7 +52,8 @@ void processThreshold(Mat& mat) {
 	auxPipeline.addFilter(new ThresholdFilter(threshold_slider,0,255));
 	// auxPipeline.addFilter(new ImageOutput("threshold - thresholded image"));
 	auxPipeline.addFilter(new WaveBandFinder(WaveBandFinder::WBF_MODE_THRESHOLD));
-	auxPipeline.addFilter(new CannyFilter(0));
+	// auxPipeline.addFilter(new CannyFilter(0));
+	auxPipeline.addFilter(new ImageOutput("after canny"));
 	auxPipeline.addFilter(new WaveBandDebugger(mat));
 	// auxPipeline.addFilter(new WaveDetector());
 	auxPipeline.filter();
@@ -101,9 +102,9 @@ void on_threshold_trackbar( int, void* )
 
 	// imshow( "wave_band_debugger", dst );
 	Mat mat;
-	resize(outputMat,mat,Size(outputMat.cols/2, outputMat.rows/2));
+	// resize(outputMat,mat,Size(outputMat.cols/2, outputMat.rows/2));
 
-	imshow("wave_band_debugger",mat);
+	imshow("wave_band_debugger",outputMat);
 }
 
 void on_blur_trackbar(int, void* ) {
@@ -111,9 +112,9 @@ void on_blur_trackbar(int, void* ) {
 	processThreshold(greyImage);
 
 	Mat mat;
-	resize(outputMat,mat,Size(outputMat.cols/2, outputMat.rows/2));
+	// resize(outputMat,mat,Size(outputMat.cols/2, outputMat.rows/2));
 
-	imshow("wave_band_debugger",mat);
+	imshow("wave_band_debugger",outputMat);
 }
 
 int main(int argc, char** argv) {

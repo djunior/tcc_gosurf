@@ -226,12 +226,12 @@ void WaveBandFinder::findByThreshold() {
     Mat dst(srcMat.rows,srcMat.cols,CV_8UC1,Scalar::all(0));
 
     cout << "NewWavevBandFinder filter -> drawing contours" << endl;
-	drawContours( dst, contours,largest_contour_index, color, CV_FILLED, 8, hierarchy );
+	drawContours( dst, contours,largest_contour_index, color, 1, 8, hierarchy );
 
 	filteredMat = dst.clone();
 
 	// cout << "Calling imshow" << endl;
-	// 	imshow("NewWaveBandFinder",filteredMat);
+	imshow("NewWaveBandFinder",filteredMat);
 }
 
 void WaveBandFinder::filter() {

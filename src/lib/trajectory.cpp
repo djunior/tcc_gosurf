@@ -16,6 +16,13 @@ Trajectory::Trajectory(cv::Mat& m) {
 	fill(m);
 }
 
+Trajectory::Trajectory(cv::Mat& m, int x, int y) {
+	x_offset = x;
+	y_offset = y;
+	findFirstPoint(m);
+	fill(m);
+}
+
 Trajectory::~Trajectory() {
 	points.clear();
 }
@@ -153,7 +160,7 @@ void Trajectory::fill(Mat& m) {
 	while(1) {
 
 		if (! findNextPoint(m)) {
-			// cout << "Finished trajectory" << endl;
+			cout << "Finished trajectory" << endl;
 			break;
 		}
 
@@ -169,19 +176,23 @@ bool Trajectory::findNextPoint(Mat& m, int threshold) {
 
 	Trajectory::Point currentPoint = points.back();
 
+	if (currentPoint.y >= m.cols-2)
+		return false;
+
 	int MAX_THRESHOLD = 3;
 
-	// cout << "Trajectory::findNextPoint(m," << threshold << ")" << endl;
+	cout << "Trajectory::findNextPoint(m," << threshold << ")" << endl;
 
 	// cout << "current point: (" << currentPoint.x << "," << currentPoint.y << ")" << endl;
 
-	int beginX = currentPoint.x > (threshold+2) ? currentPoint.x - threshold : 2 + threshold;
-	int endX = currentPoint.x < m.rows - 2 - threshold ? currentPoint.x + threshold : m.rows - 2 - threshold;
+	int beginX = currentPoint.x - threshold > 2 ? currentPoint.x - threshold : 2;
+	int endX = currentPoint.x + threshold < m.rows - 2 ? currentPoint.x + threshold : m.rows - 2;
 
-	int endY = currentPoint.y > (threshold+2) ? currentPoint.y + threshold : 2 + threshold;
-	int beginY = currentPoint.y < m.cols - 2 - threshold ? currentPoint.y - threshold : m.cols - 2 - threshold;
+	int beginY = currentPoint.y - threshold > 2 ? currentPoint.y - threshold : 2;
+	int endY = currentPoint.y + threshold < m.cols - 2 ? currentPoint.y + threshold : m.cols - 2;
 
-	// cout << "Looking for point from (" << beginX << "," << beginY << ") to (" << endX << "," << endY << ")" << endl;
+	// cout << "mat size: " << m.cols << ", " << m.rows << endl;
+	cout << "Looking for point from (" << beginX << "," << beginY << ") to (" << endX << "," << endY << ")" << endl;
 
 	for (int i = beginX; i <= endX; i++) {
 		for (int j = beginY; j <= endY; j++) {
@@ -189,8 +200,10 @@ bool Trajectory::findNextPoint(Mat& m, int threshold) {
 			// cout << "Pixel(" << i << "," << j << ") = " << (int) m.at<uchar>(i,j) << endl;
 
 			if (m.at<uchar>(i,j) > 0) {
-				if (addPoint(i,j))
+				if (addPoint(i,j)) {
+					cout << "Point (" << i << "," << j << ") added" << endl;
 					return true;
+				}
 			}
 		}
 	}
