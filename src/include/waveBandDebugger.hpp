@@ -41,7 +41,7 @@ public:
 		cout << "populating debug(" << debug.cols << "," << debug.rows << ")" << endl;
 		for (int i = 0; i < t.points.size(); i++) {
 			// cout << "Point: " << t.points[i].y << ", " << t.points[i].x << endl;
-			debug.at<Vec3b>(t.points[i].x,t.points[i].y) = Vec3b(0,0,255);
+			debug.at<Vec3b>(t.points[i].getY(),t.points[i].getX()) = Vec3b(0,0,255);
 		}
 
 		cout << "resizing video" << endl;

@@ -16,11 +16,9 @@ Trajectory::Trajectory(cv::Mat& m) {
 	fill(m);
 }
 
-Trajectory::Trajectory(cv::Mat& m, int x, int y) {
-	x_offset = x;
-	y_offset = y;
-	findFirstPoint(m);
-	fill(m);
+Trajectory::Trajectory(cv::Mat& m, cv::Rect area) {
+	findFirstPoint(m,area);
+	fill(m,area);
 }
 
 Trajectory::~Trajectory() {
@@ -121,7 +119,7 @@ bool Trajectory::isContinous(int x, int y) {
 }
 
 int Trajectory::calculateHeight(int bottom, int top) {
-	int height = points[bottom].x - points[top].x;
+	int height = points[bottom].getY() - points[top].getY();
 	// cout << "Calculating height from " << bottom << " to " << top << ": " << height << endl;
 	return height;
 }
@@ -134,8 +132,8 @@ void Trajectory::calculateDerivative(std::vector<Point>& d) {
 
 	for (int i = 0; i < points.size(); i++) {
 	
-		int x = points[i].x;
-		int y = points[i].y;
+		int x = points[i].getX();
+		int y = points[i].getY();
 
 		// if (bottom.x == -1 || x >= bottom.x) {
 		// 	bottom.x = x;
@@ -148,8 +146,8 @@ void Trajectory::calculateDerivative(std::vector<Point>& d) {
 		// }
 
 		if (i > 0) {
-			int dX = x - points[i-1].x;
-			int dY = y - points[i-1].y;
+			int dX = x - points[i-1].getX();
+			int dY = y - points[i-1].getY();
 			Point p(dX, dY);
 			d.push_back(p);
 		}
@@ -157,9 +155,13 @@ void Trajectory::calculateDerivative(std::vector<Point>& d) {
 }
 
 void Trajectory::fill(Mat& m) {
+	fill(m,Rect(0,0,m.cols,m.rows));
+}
+
+void Trajectory::fill(Mat& m, Rect roi) {
 	while(1) {
 
-		if (! findNextPoint(m)) {
+		if (! findNextPoint(m,roi)) {
 			cout << "Finished trajectory" << endl;
 			break;
 		}
@@ -168,40 +170,44 @@ void Trajectory::fill(Mat& m) {
 }
 
 bool Trajectory::findNextPoint(Mat& m) {
-	int THRESHOLD = 1;
-	return findNextPoint(m,THRESHOLD);
+	return findNextPoint(m,Rect(0,0,m.cols,m.rows));
 }
 
-bool Trajectory::findNextPoint(Mat& m, int threshold) {
+bool Trajectory::findNextPoint(Mat& m,Rect roi) {
+	int THRESHOLD = 1;
+	return findNextPoint(m,THRESHOLD,roi);
+}
+
+bool Trajectory::findNextPoint(Mat& m, int threshold, Rect roi) {
 
 	Trajectory::Point currentPoint = points.back();
 
-	if (currentPoint.y >= m.cols-2)
+	if (currentPoint.getX() >= (roi.x + roi.width - 2))
 		return false;
 
 	int MAX_THRESHOLD = 3;
 
-	cout << "Trajectory::findNextPoint(m," << threshold << ")" << endl;
+	// cout << "Trajectory::findNextPoint(m," << threshold << ")" << endl;
 
 	// cout << "current point: (" << currentPoint.x << "," << currentPoint.y << ")" << endl;
 
-	int beginX = currentPoint.x - threshold > 2 ? currentPoint.x - threshold : 2;
-	int endX = currentPoint.x + threshold < m.rows - 2 ? currentPoint.x + threshold : m.rows - 2;
+	int beginY = currentPoint.getY() - threshold > (roi.y + 2) ? currentPoint.getY() - threshold : roi.y + 2;
+	int endY = currentPoint.getY() + threshold < (roi.y + roi.height - 2) ? currentPoint.getY() + threshold : roi.y + roi.height - 2;
 
-	int beginY = currentPoint.y - threshold > 2 ? currentPoint.y - threshold : 2;
-	int endY = currentPoint.y + threshold < m.cols - 2 ? currentPoint.y + threshold : m.cols - 2;
+	int beginX = currentPoint.getX() - threshold > (roi.x + 2) ? currentPoint.getX() - threshold : roi.x + 2;
+	int endX = currentPoint.getX() + threshold < (roi.x + roi.width - 2) ? currentPoint.getX() + threshold : roi.x + roi.width - 2;
 
 	// cout << "mat size: " << m.cols << ", " << m.rows << endl;
-	cout << "Looking for point from (" << beginX << "," << beginY << ") to (" << endX << "," << endY << ")" << endl;
+	// cout << "Looking for point from (" << beginX << "," << beginY << ") to (" << endX << "," << endY << ")" << endl;
 
-	for (int i = beginX; i <= endX; i++) {
-		for (int j = beginY; j <= endY; j++) {
+	for (int i = beginY; i <= endY; i++) {
+		for (int j = beginX; j <= endX; j++) {
 
 			// cout << "Pixel(" << i << "," << j << ") = " << (int) m.at<uchar>(i,j) << endl;
 
 			if (m.at<uchar>(i,j) > 0) {
-				if (addPoint(i,j)) {
-					cout << "Point (" << i << "," << j << ") added" << endl;
+				if (addPoint(j,i)) {
+					// cout << "Point (" << i << "," << j << ") added" << endl;
 					return true;
 				}
 			}
@@ -209,7 +215,7 @@ bool Trajectory::findNextPoint(Mat& m, int threshold) {
 	}
 
 	if (threshold < MAX_THRESHOLD)
-		return findNextPoint(m,threshold+1);
+		return findNextPoint(m,threshold+1,roi);
 
 
 	// cout << "Could not find next point for current point (" << currentPoint.x << "," << currentPoint.y << ")" << endl;
@@ -219,15 +225,19 @@ bool Trajectory::findNextPoint(Mat& m, int threshold) {
 }
 
 void Trajectory::findFirstPoint(Mat& m) {
+	findFirstPoint(m,Rect(0,0,m.cols,m.rows));
+}
+
+void Trajectory::findFirstPoint(Mat& m, cv::Rect roi) {
 	int width = m.cols;
 	int height = m.rows;
 
-	for (int j = 1; j < (width-1); j++) {
-		Mat col = m.col(j);
+	for (int i = (1+roi.x); i < (roi.x + roi.width - 1); i++) {
+		Mat col = m.col(i);
 
 		bool found = false;
-		for (int i = 2; i < (col.rows-1); i++) {
-			float v = (float) col.at<uchar>(i) / 255;
+		for (int j = (2+roi.y); j < (roi.y+roi.height - 1); j++) {
+			float v = (float) col.at<uchar>(j) / 255;
 			
 			if (v > 0) {
 				// cout << "Found first point at: (" << i << "," << j << ")" << endl;

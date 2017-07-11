@@ -22,6 +22,7 @@ private:
 	void findFirstPoint(Trajectory&);
 	bool findNextPoint(Trajectory&);
 	void analyseTrajectory(Trajectory&);
+	void extractWaveDetails();
 };
 
 

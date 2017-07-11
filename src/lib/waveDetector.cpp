@@ -32,7 +32,7 @@ void WaveDetector::detectWave(Trajectory& t, int bottom, int top) {
 	// cout << "Calculating height: " << height << endl;
 	
 	if ((height > MIN_HEIGHT_THRESHOLD && height < MAX_HEIGHT_THRESHOLD)) {
-		if (waves.size() == 0 || t.getPoint(bottom).y > waves.back().top.y) {
+		if (waves.size() == 0 || t.getPoint(bottom).getX() > waves.back().top.getX()) {
 			Wave wave(t.points[bottom],t.points[top]);
 			// waves.push_back(t.points[bottom]);
 			// waves.push_back(t.points[top]);
@@ -42,7 +42,6 @@ void WaveDetector::detectWave(Trajectory& t, int bottom, int top) {
 }
 
 void WaveDetector::drawWaves(Mat &mat) {
-	Camera camera;
 	cout << "Drawing " << waves.size() << " waves" << endl;
 
 	double average_sum = 0;
@@ -50,29 +49,23 @@ void WaveDetector::drawWaves(Mat &mat) {
 	if (waves.size() > 0) {
 		for (int i = 0; i < waves.size(); i++) {
 
-			cout << "Drawing wave " << i << endl;
+			// cout << "Drawing wave " << i << endl;
 
 			Trajectory::Point bottom = waves[i].bottom;
 			Trajectory::Point top = waves[i].top;
 
-			cout << "Point 1(" << bottom.x << "," << bottom.y << ")" << endl;
-			cout << "Point 2(" << top.x << "," << top.y << ")" << endl;
+			// cout << "Point 1(" << bottom.x << "," << bottom.y << ")" << endl;
+			// cout << "Point 2(" << top.x << "," << top.y << ")" << endl;
 
-			Point pt1(top.y, bottom.x);
-			Point pt2(top.y, top.x);
-			Point pt3(bottom.y, bottom.x);
+			Point pt1(top.getX(), bottom.getY());
+			Point pt2(top.getX(), top.getY());
+			Point pt3(bottom.getX(), bottom.getY());
 
 			line(mat,pt1,pt2,Scalar(0,0,255),3);
 			line(mat,pt3,pt2,Scalar(0,255,0),3);
 
-			int halfway = (top.y + bottom.y)/2;
-			int height = (bottom.x - top.x);
 
-			double realHeight = camera.calculateRealHeight(bottom.x,top.x);
-
-			average_sum += bottom.x;
-
-			cout << "Found wave at " << halfway << " height " << height << " real height: " << realHeight << " m" << endl;
+			average_sum += bottom.getY();
 		}
 	}
 
@@ -82,7 +75,6 @@ void WaveDetector::drawWaves(Mat &mat) {
 	Point avP2(mat.cols,average_y);
 
 	line(mat,avP1,avP2,Scalar(255,255,0),1);
-
 }
 
 void WaveDetector::analyseTrajectory(Trajectory &t) {
@@ -99,8 +91,8 @@ void WaveDetector::analyseTrajectory(Trajectory &t) {
 	int GAP_THRESHOLD = 20;
 
 	for (int i = 1; i < derivative.size(); i++) {
-		int dX = derivative[i].x;
-		int dY = derivative[i].y;
+		int dX = derivative[i].getX();
+		int dY = derivative[i].getY();
 
 		// debugMat.at<Vec3b>(t.points[i+1].x,t.points[i+1].y) = Vec3b(255,255,255);
 
@@ -113,21 +105,21 @@ void WaveDetector::analyseTrajectory(Trajectory &t) {
 
 		switch(state) {
 			case 0:
-				if (dX < 0) {
+				if (dY < 0) {
 					state = 1;
 					bottom_index = i+1;
 				}
 
 				break;
 			case 1:
-				if (dX > 0) {
+				if (dY > 0) {
 					top_index = i+1;
 					state = 2;
 				}
 
 				break;
 			case 2:
-				if (dX > 0) {
+				if (dY > 0) {
 					
 					state = 3;
 					gap_count = 0;
@@ -151,7 +143,7 @@ void WaveDetector::analyseTrajectory(Trajectory &t) {
 
 				} else {
 
-					if (dX < 0) {
+					if (dY < 0) {
 						state = 2;
 
 						if (t.calculateHeight(bottom_index,top_index) < t.calculateHeight(bottom_index,i+1))
@@ -175,6 +167,59 @@ void WaveDetector::analyseTrajectory(Trajectory &t) {
 			top_index = 0;
 		}
 
+	}
+}
+
+void WaveDetector::extractWaveDetails() {
+	
+	Camera camera;
+
+	double time_diff_sum = 0;
+
+	double height_sum = 0;
+	int height_count = 0;
+
+	int state = 0;
+
+	for (int i = 0; i < waves.size(); i++) {
+	
+		Trajectory::Point bottom = waves[i].bottom;
+		Trajectory::Point top = waves[i].top;
+
+		int halfway = waves[i].getHalfway();
+
+		int height = waves[i].getHeight();
+
+		double realHeight = camera.calculateRealHeight(bottom.getY(),top.getY());
+
+		cout << "Found wave at " << halfway << " height " << height << " real height: " << realHeight << " m" << endl;
+	
+		if (i > 0) {
+			int lastHalfway = waves[i-1].getHalfway();
+
+			int diff = halfway - lastHalfway;
+
+			if (diff < 600) {
+
+				height_sum += height;
+				height_count++;
+			
+			} else {
+
+				if (height_count > 0) {
+					cout << "Number of waves on a series: " << height_count << endl;
+					cout << "Average height: " << (int) height_sum / height_count << endl;
+				}
+				height_sum = 0;
+				height_count = 0;
+			}
+
+			time_diff_sum += diff;
+
+			double time_diff = diff / 30;
+
+			cout << "Time distance to last wave: " << diff << " px, " << time_diff << " s" << endl;
+		}
 	}
 
 }
@@ -200,46 +245,25 @@ void WaveDetector::filter() {
 	int col = 0;
 
 	while(true) {
+
 		if (col >= srcMat.cols-1) {
 			break;
 		}
 
-		cout << "col: " << col << ", " << srcMat.cols << endl;
+		cout << "Detecting new trajectory in Rect(" << col << ", 0, " << srcMat.cols - col << ", " << srcMat.rows << ")" << endl;
 
-		Mat m = Mat(srcMat,Rect(col,0,srcMat.cols-col,srcMat.rows)).clone();
-		// .colRange(col,srcMat.cols-1).copyTo(m);
-
-		// cout << "size: "
-
-		// imshow("m",m);
-		// waitKey(1000);
+		Trajectory t(srcMat,Rect(col,0,srcMat.cols - col, srcMat.rows));
 		
-		cout << "m size: (" << m.cols << ", " << m.rows << ")" << endl;
-
-		Trajectory t(m,col,0);
-
-		cout << "analysing the trajectory" << endl;
-				
-		cout << "pushing the trajectory to the vector" << endl;
-
-		cout << "First point: " << t.points[0].x << ", " << t.points[0].y << endl;
-		cout << "Last point: " << t.points.back().x << ", " << t.points.back().y << endl;
-
-		for (int i = 0; i < t.points.size(); i++) {
-			t.points[i].y += col;
-		}
-
-		if (t.points.back().y >= (srcMat.cols-1) )
-			break;
-		else
-			col = t.points.back().y+1;
-
-		// trajectories.push_back(t);
-
+		cout << "Analysing the trajectory" << endl;
 		analyseTrajectory(t);
 
-		// cin.ignore();
+		if (t.points.back().getX() >= (srcMat.cols-1) )
+			break;
+		else
+			col = t.points.back().getX()+1;
 	}
+
+	extractWaveDetails();
 
 	// for (int i = 0; i < waves.size()-1; i = i + 2) {
 	// 	if ( (waves[i+1].y - waves[i].y) > 20) {
@@ -296,8 +320,8 @@ void WaveDetector::save(char* fname) {
   		Trajectory::Point bottom = waves[i].bottom;
   		Trajectory::Point top = waves[i].top;
 
-  		f << bottom.x << "," << bottom.y << endl;
-  		f << top.x << "," << top.y << endl;
+  		f << bottom.getY() << "," << bottom.getX() << endl;
+  		f << top.getY() << "," << top.getX() << endl;
   	}
 
   	f.close();

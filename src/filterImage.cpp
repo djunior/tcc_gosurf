@@ -98,24 +98,7 @@ void process(Mat& image) {
 
 	cvtColor(image,greyImage,COLOR_BGR2GRAY);
 
-	// HistogramEqualizatorFilter eq;
-	// eq.setSourceMat(&greyImage);
-	// eq.filter();
-	Mat equalized;
-	// equalizeHist(greyImage,equalized);
-
-	// ImageViewer iv("histogram equalized");
-	// iv.setSourceMat(&equalized);
-	// iv.filter();
-
 	FilterPipeline pipeline(&greyImage);
-
-	//Pre-processing
-	// pipeline.addFilter(new ImageOutput("output_images/process/process_original.jpg"));
-	// pipeline.addFilter(new CannyFilter(50));
-	// pipeline.addFilter(new ImageOutput("output_images/process/process_horizon_line.jpg"));
-	// pipeline.addFilter(new SkyRemoverFilter(&equalized));
-	// pipeline.addFilter(new ImageOutput("output_images/process/process_sky_remover.jpg"));
 
 	//Main processing
 	pipeline.addFilter(new GaussianBlurFilter(15));
@@ -127,9 +110,6 @@ void process(Mat& image) {
 	pipeline.addFilter(new WaveBandFinder(WaveBandFinder::WBF_MODE_THRESHOLD));
 	pipeline.addFilter(new ImageOutput("output_images/process/process_threshold.jpg"));
 	
-	// pipeline.addFilter(new CannyFilter(0));
-	// pipeline.addFilter(new ImageOutput("output_images/process/process_canny.jpg"));
-
 	// Debug
 	FilterPipeline* auxPipeline = new FilterPipeline();
 	auxPipeline->addFilter(new WaveBandDebugger(image));
