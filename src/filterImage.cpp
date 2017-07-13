@@ -90,6 +90,44 @@ void convertToGreyscale(Mat& input, Mat& output) {
 	}
 }
 
+void compareBlur(Mat& image) {
+	Mat greyImage(image.size(),CV_8UC1);
+
+	cout << "Analysing image with size: " << image.cols << ", " << image.rows << endl;
+
+	cvtColor(image,greyImage,COLOR_BGR2GRAY);
+
+	FilterPipeline pipeline(&greyImage);
+
+	//Main processing
+	pipeline.addFilter(new GaussianBlurFilter(15));
+	pipeline.addFilter(new ThresholdFilter(120,0,255));
+	pipeline.addFilter(new ImageOutput("output_images/process/process_threshold_120.jpg"));
+	
+	//Wave Detection
+	pipeline.addFilter(new WaveBandFinder(WaveBandFinder::WBF_MODE_THRESHOLD));
+	
+	// Debug
+	FilterPipeline* auxPipeline = new FilterPipeline();
+	auxPipeline->addFilter(new WaveBandDebugger(image));
+	auxPipeline->addFilter(new ImageOutput("output_images/process/process_waveband_120.jpg"));
+	pipeline.addFilter(auxPipeline);
+
+	WaveDetector* wd = new WaveDetector();
+	pipeline.addFilter(wd);
+
+	pipeline.filter();
+
+	Mat debug = image.clone();
+	wd->drawWaves(debug);
+
+	ImageOutput wavesOutput("output_images/process/process_waves_result_120.jpg");
+	wavesOutput.setSourceMat(&debug);
+	wavesOutput.filter();
+
+	wd->save("waves.txt");	
+}
+
 void process(Mat& image) {
 
 	Mat greyImage(image.size(),CV_8UC1);
@@ -108,7 +146,6 @@ void process(Mat& image) {
 	
 	//Wave Detection
 	pipeline.addFilter(new WaveBandFinder(WaveBandFinder::WBF_MODE_THRESHOLD));
-	pipeline.addFilter(new ImageOutput("output_images/process/process_threshold.jpg"));
 	
 	// Debug
 	FilterPipeline* auxPipeline = new FilterPipeline();
@@ -157,8 +194,8 @@ int main(int argc, char* argv[]) {
 
 	// convertToGreyscale(image,greyImage);
 
-
 	process(image);
+	compareBlur(image);
 
 	// processMain(&greyImage,image);
 	char* mode = getenv ("DEBUG");

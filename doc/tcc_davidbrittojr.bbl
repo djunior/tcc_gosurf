@@ -1,6 +1,16 @@
 \begin{thebibliography}{10}
 \newcommand{\enquote}[1]{``#1''}
 
+\bibitem{Fusiello}
+FUSIELLO, A., \enquote{Elements of Geometric Computer Vision},
+  http://homepages.inf.ed.ac.uk/rbf/CVonline/LOCAL\_COPIES/FUSIELLO4/tutorial.html,
+  2017, (Acesso em 10 Junho 2017).
+
+\bibitem{Griffith14}
+LANE, C., GAL, Y., BROWNE, M., \enquote{Long-Term Automated Monitoring of
+  Nearshore Wave Height From Digital Video}, \emph{IEEE Transactions on
+  Geoscience and Remote Sensing}, v.~52, pp.~3412--3420, 2014.
+
 \bibitem{Griffith05}
 BROWNE, M., BLUMENSTEIN, M., TOMLINSON, R., \emph{et~al.}, \enquote{An
   intelligent system for remote monitoring and prediction of beach conditions}.
@@ -24,11 +34,6 @@ LANE, C., GAL, Y., BROWNE, M., \enquote{Automatic Estimation of Nearshore Wave
   and Applications (DICTA), 2011 International Conference on}, pp. 364--369,
   Noosa, 2011.
 
-\bibitem{Griffith14}
-LANE, C., GAL, Y., BROWNE, M., \enquote{Long-Term Automated Monitoring of
-  Nearshore Wave Height From Digital Video}, \emph{IEEE Transactions on
-  Geoscience and Remote Sensing}, v.~52, pp.~3412--3420, 2014.
-
 \bibitem{Rico17}
 SOUZA, R.~D.,
   \enquote{http://ricosurf.com.br/boletim-das-ondas/zona-oeste-rj/praia-grumari/},
@@ -51,9 +56,13 @@ JUNEJA, M., SANDHU, P.~S., \enquote{Performance Evaluation of Edge Detection
   Techniques for Images in Spatial Domain}, \emph{International Journal of
   Computer Theory and Engineering}, v.~1, pp.~614--621, 2009.
 
-\bibitem{Fusiello}
-FUSIELLO, A.,
-  \enquote{http://homepages.inf.ed.ac.uk/rbf/CVonline/LOCAL\_COPIES/FUSIELLO4/tutorial.html},
-  http://homepages.inf.ed.ac.uk/, 2017, (Acesso em 10 Junho 2017).
+\bibitem{Ho2014}
+HO, N., \enquote{SIMPLE VIDEO STABILIZATION USING OPENCV},
+  http://nghiaho.com/?p=2093, 2014, (Acesso em 04 Abril 2017).
+
+\bibitem{Suzuki85}
+SUZUKI, S., ABE, K., \enquote{Topological structural analysis of digitized
+  binary images by border following.}, \emph{Computer Vision, Graphics, and
+  Image Processing}, v.~30, n.~1, pp.~32--46, 1985.
 
 \end{thebibliography}

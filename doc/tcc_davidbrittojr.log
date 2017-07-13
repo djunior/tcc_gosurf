@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015) (preloaded format=pdflatex 2016.4.27)  29 JUN 2017 14:30
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015) (preloaded format=pdflatex 2016.4.27)  13 JUL 2017 14:44
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -468,22 +468,50 @@ Document Style algorithmicx 1.2 - a greatly improved `algorithmic' style
 \ALG@tmplength=\skip50
 )
 Document Style - pseudocode environments for use with the `algorithmicx' style
-)) (/usr/local/texlive/2015/texmf-dist/tex/latex/tools/longtable.sty
+) (/usr/local/texlive/2015/texmf-dist/tex/latex/subfig/subfig.sty
+Package: subfig 2005/06/28 ver: 1.3 subfig package
+
+(/usr/local/texlive/2015/texmf-dist/tex/latex/caption/caption3.sty
+Package: caption3 2013/05/02 v1.6-88 caption3 kernel (AR)
+Package caption3 Info: TeX engine: e-TeX on input line 57.
+\captionmargin=\dimen171
+\captionmargin@=\dimen172
+\captionwidth=\dimen173
+\caption@tempdima=\dimen174
+\caption@indent=\dimen175
+\caption@parindent=\dimen176
+\caption@hangindent=\dimen177
+)
+\c@KVtest=\count184
+\sf@farskip=\skip51
+\sf@captopadj=\dimen178
+\sf@capskip=\skip52
+\sf@nearskip=\skip53
+\c@subfigure=\count185
+\c@subfigure@save=\count186
+\c@lofdepth=\count187
+\c@subtable=\count188
+\c@subtable@save=\count189
+\c@lotdepth=\count190
+\sf@top=\skip54
+\sf@bottom=\skip55
+))
+(/usr/local/texlive/2015/texmf-dist/tex/latex/tools/longtable.sty
 Package: longtable 2014/10/28 v4.11 Multi-page Table package (DPC)
-\LTleft=\skip51
-\LTright=\skip52
-\LTpre=\skip53
-\LTpost=\skip54
-\LTchunksize=\count184
-\LTcapwidth=\dimen171
+\LTleft=\skip56
+\LTright=\skip57
+\LTpre=\skip58
+\LTpost=\skip59
+\LTchunksize=\count191
+\LTcapwidth=\dimen179
 \LT@head=\box36
 \LT@firsthead=\box37
 \LT@foot=\box38
 \LT@lastfoot=\box39
-\LT@cols=\count185
-\LT@rows=\count186
-\c@LT@tables=\count187
-\c@LT@chunks=\count188
+\LT@cols=\count192
+\LT@rows=\count193
+\c@LT@tables=\count194
+\c@LT@chunks=\count195
 \LT@p@ftn=\toks40
 )
 (./tcc_davidbrittojr.aux)
@@ -504,16 +532,16 @@ LaTeX Font Info:    ... okay on input line 4.
 
 (/usr/local/texlive/2015/texmf-dist/tex/context/base/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
-\scratchcounter=\count189
-\scratchdimen=\dimen172
+\scratchcounter=\count196
+\scratchdimen=\dimen180
 \scratchbox=\box40
-\nofMPsegments=\count190
-\nofMParguments=\count191
+\nofMPsegments=\count197
+\nofMParguments=\count198
 \everyMPshowfont=\toks41
-\MPscratchCnt=\count192
-\MPscratchDim=\dimen173
-\MPnumerator=\count193
-\makeMPintoPDFobject=\count194
+\MPscratchCnt=\count199
+\MPscratchDim=\dimen181
+\MPnumerator=\count200
+\makeMPintoPDFobject=\count201
 \everyMPtoPDFconversion=\toks42
 ) (/usr/local/texlive/2015/texmf-dist/tex/generic/oberdiek/pdftexcmds.sty
 Package: pdftexcmds 2011/11/29 v0.20 Utility functions of pdfTeX for LuaTeX (HO
@@ -559,6 +587,10 @@ G,.JBIG2,.JB2,.eps]
 File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Liv
 e
 ))
+Package caption Info: Begin \AtBeginDocument code.
+Package caption Info: subfig package v1.3 is loaded.
+Package caption Info: End \AtBeginDocument code.
+
 (./Capa.tex
 Package epstopdf Info: Source file: <./figuras/Poli.eps>
 (epstopdf)                    date: 2017-06-02 15:11:06
@@ -688,157 +720,205 @@ LaTeX Warning: `h' float specifier changed to `ht'.
 [13 <./figuras/pin_hole_camera.png>]) [14 <./figuras/beach_model_griffith.png (
 PNG copy)>]
 Cap\'{\i }tulo 3.
-(./cap3.tex
-<./figuras/diagrama_preprocessamento.png, id=110, 1209.51875pt x 357.335pt>
+(./cap3.tex [15
+
+]
+<./figuras/diagrama_preprocessamento.png, id=113, 1209.51875pt x 357.335pt>
 File: ./figuras/diagrama_preprocessamento.png Graphic file (type png)
 
 <use ./figuras/diagrama_preprocessamento.png>
 Package pdftex.def Info: ./figuras/diagrama_preprocessamento.png used on input 
-line 17.
+line 22.
 (pdftex.def)             Requested size: 426.78914pt x 126.08873pt.
- [15
-
-] [16 <./figuras/diagrama_preprocessamento.png>] <./figuras/timestack.jpg, id=1
-18, 2053.6725pt x 722.7pt>
+ [16 <./figuras/diagrama_preprocessamento.png>] [17] <./figuras/timestack.jpg, 
+id=121, 2053.6725pt x 722.7pt>
 File: ./figuras/timestack.jpg Graphic file (type jpg)
 
 <use ./figuras/timestack.jpg>
-Package pdftex.def Info: ./figuras/timestack.jpg used on input line 36.
+Package pdftex.def Info: ./figuras/timestack.jpg used on input line 51.
 (pdftex.def)             Requested size: 426.7715pt x 150.18352pt.
- [17 <./figuras/timestack.jpg>] [18]
-<./figuras/threshold_image_fail_1.jpg, id=126, 1533.73pt x 1084.05pt>
+ [18 <./figuras/timestack.jpg>] [19]
+<./figuras/threshold_image_fail_1.jpg, id=129, 1533.73pt x 1084.05pt>
 File: ./figuras/threshold_image_fail_1.jpg Graphic file (type jpg)
 
 <use ./figuras/threshold_image_fail_1.jpg>
 Package pdftex.def Info: ./figuras/threshold_image_fail_1.jpg used on input lin
-e 71.
+e 80.
 (pdftex.def)             Requested size: 426.77356pt x 301.64622pt.
 
-<./figuras/threshold_image_fail_2.jpg, id=127, 1533.73pt x 1084.05pt>
+<./figuras/threshold_image_fail_2.jpg, id=130, 1533.73pt x 1084.05pt>
 File: ./figuras/threshold_image_fail_2.jpg Graphic file (type jpg)
 
 <use ./figuras/threshold_image_fail_2.jpg>
 Package pdftex.def Info: ./figuras/threshold_image_fail_2.jpg used on input lin
-e 78.
+e 87.
 (pdftex.def)             Requested size: 426.77356pt x 301.64622pt.
 
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
-<./figuras/skydetector_after_canny.jpg, id=128, 2053.6725pt x 722.7pt>
+<./figuras/skydetector_after_canny.jpg, id=131, 2053.6725pt x 722.7pt>
 File: ./figuras/skydetector_after_canny.jpg Graphic file (type jpg)
 
 <use ./figuras/skydetector_after_canny.jpg>
 Package pdftex.def Info: ./figuras/skydetector_after_canny.jpg used on input li
-ne 87.
+ne 97.
 (pdftex.def)             Requested size: 426.7715pt x 150.18352pt.
 
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
-[19 <./figuras/threshold_image_fail_1.jpg>]
-<./figuras/diagrama_processamento.png, id=132, 1231.60126pt x 369.38pt>
+[20 <./figuras/threshold_image_fail_1.jpg>]
+<./figuras/diagrama_processamento.png, id=135, 1231.60126pt x 369.38pt>
 File: ./figuras/diagrama_processamento.png Graphic file (type png)
 
 <use ./figuras/diagrama_processamento.png>
 Package pdftex.def Info: ./figuras/diagrama_processamento.png used on input lin
-e 102.
+e 112.
 (pdftex.def)             Requested size: 426.78217pt x 127.99986pt.
 
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
-[20 <./figuras/threshold_image_fail_2.jpg>]
-<./figuras/mainprocessing_breakzone_line.jpg, id=136, 2053.6725pt x 722.7pt>
+[21 <./figuras/threshold_image_fail_2.jpg>]
+<./figuras/mainprocessing_breakzone_line.jpg, id=139, 2053.6725pt x 722.7pt>
 File: ./figuras/mainprocessing_breakzone_line.jpg Graphic file (type jpg)
 
 <use ./figuras/mainprocessing_breakzone_line.jpg>
 Package pdftex.def Info: ./figuras/mainprocessing_breakzone_line.jpg used on in
-put line 115.
+put line 121.
 (pdftex.def)             Requested size: 426.7715pt x 150.18352pt.
 
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
-[21 <./figuras/skydetector_after_canny.jpg> <./figuras/diagrama_processamento.p
-ng>] <./figuras/mainprocessing_threshold.jpg, id=140, 2053.6725pt x 722.7pt>
+[22 <./figuras/skydetector_after_canny.jpg> <./figuras/diagrama_processamento.p
+ng>] <./figuras/waveband_blur.png, id=143, 349.305pt x 147.55125pt>
+File: ./figuras/waveband_blur.png Graphic file (type png)
+
+<use ./figuras/waveband_blur.png>
+Package pdftex.def Info: ./figuras/waveband_blur.png used on input line 133.
+(pdftex.def)             Requested size: 426.81772pt x 180.29367pt.
+
+Overfull \hbox (7.85963pt too wide) in paragraph at lines 133--133
+[][] 
+ []
+
+<./figuras/waveband_no_blur.png, id=144, 349.305pt x 147.55125pt>
+File: ./figuras/waveband_no_blur.png Graphic file (type png)
+
+<use ./figuras/waveband_no_blur.png>
+Package pdftex.def Info: ./figuras/waveband_no_blur.png used on input line 136.
+
+(pdftex.def)             Requested size: 426.81772pt x 180.29367pt.
+
+Overfull \hbox (7.85963pt too wide) in paragraph at lines 136--139
+[][] 
+ []
+
+
+LaTeX Warning: `h' float specifier changed to `ht'.
+
+[23 <./figuras/mainprocessing_breakzone_line.jpg>] [24 <./figuras/waveband_blur
+.png> <./figuras/waveband_no_blur.png>]
+<./figuras/mainprocessing_threshold.jpg, id=154, 2053.6725pt x 722.7pt>
 File: ./figuras/mainprocessing_threshold.jpg Graphic file (type jpg)
 
 <use ./figuras/mainprocessing_threshold.jpg>
 Package pdftex.def Info: ./figuras/mainprocessing_threshold.jpg used on input l
-ine 130.
+ine 155.
 (pdftex.def)             Requested size: 426.7715pt x 150.18352pt.
 
+Overfull \hbox (7.81342pt too wide) in paragraph at lines 155--155
+[][] 
+ []
 
-LaTeX Warning: `h' float specifier changed to `ht'.
+File: ./figuras/mainprocessing_threshold.jpg Graphic file (type jpg)
+<use ./figuras/mainprocessing_threshold.jpg>
+Package pdftex.def Info: ./figuras/mainprocessing_threshold.jpg used on input l
+ine 158.
+(pdftex.def)             Requested size: 426.7715pt x 150.18352pt.
 
+Overfull \hbox (7.81342pt too wide) in paragraph at lines 158--161
+[][] 
+ []
 
-Overfull \hbox (6.32051pt too wide) in paragraph at lines 142--142
+[25 <./figuras/mainprocessing_threshold.jpg>]
+Overfull \hbox (6.32051pt too wide) in paragraph at lines 171--171
 []\OT1/cmr/bx/n/17.28 An^^Salise e In-den-ti-fica^^Xc~ao das On-das Mar^^S^^Pti
 mas 
  []
 
-[22 <./figuras/mainprocessing_breakzone_line.jpg>]
-<./figuras/diagrama_analise.png, id=144, 1091.07625pt x 310.15875pt>
+<./figuras/diagrama_analise.png, id=158, 1091.07625pt x 310.15875pt>
 File: ./figuras/diagrama_analise.png Graphic file (type png)
 
 <use ./figuras/diagrama_analise.png>
-Package pdftex.def Info: ./figuras/diagrama_analise.png used on input line 148.
+Package pdftex.def Info: ./figuras/diagrama_analise.png used on input line 177.
 
 (pdftex.def)             Requested size: 426.78331pt x 121.3211pt.
- [23 <./figuras/mainprocessing_threshold.jpg> <./figuras/diagrama_analise.png>]
- [24]
-<./figuras/automato_identificacao_onda.png, id=153, 929.4725pt x 207.77625pt>
+ [26 <./figuras/diagrama_analise.png>]
+[27] [28]
+<./figuras/automato_identificacao_onda.png, id=169, 929.4725pt x 207.77625pt>
 File: ./figuras/automato_identificacao_onda.png Graphic file (type png)
 
 <use ./figuras/automato_identificacao_onda.png>
 Package pdftex.def Info: ./figuras/automato_identificacao_onda.png used on inpu
-t line 218.
+t line 254.
 (pdftex.def)             Requested size: 426.7825pt x 95.40385pt.
-
-<./figuras/result_wave.jpg, id=154, 2053.6725pt x 722.7pt>
+ [29 <./figuras/automato_identificacao_onda.png>] <./figuras/result_wave.jpg, i
+d=173, 2053.6725pt x 722.7pt>
 File: ./figuras/result_wave.jpg Graphic file (type jpg)
 
 <use ./figuras/result_wave.jpg>
-Package pdftex.def Info: ./figuras/result_wave.jpg used on input line 225.
+Package pdftex.def Info: ./figuras/result_wave.jpg used on input line 265.
 (pdftex.def)             Requested size: 426.7715pt x 150.18352pt.
- [25 <./figuras/automato_identificacao_onda.png>]) [26 <./figuras/result_wave.j
-pg>]
+) [30 <./figuras/result_wave.jpg>]
 Cap\'{\i }tulo 4.
-[27
+[31
 
 ]
 Cap\'{\i }tulo 5.
-[28
+[32
 
 ]
 Cap\'{\i }tulo 6.
-[29
+[33
 
 ] (./tcc_davidbrittojr.bbl
-Underfull \hbox (badness 10000) in paragraph at lines 33--36
+Underfull \hbox (badness 10000) in paragraph at lines 5--8
+[]\OT1/cmr/m/n/12 FUSIELLO, A., ``Ele-ments of Ge-o-me-tric Com-pu-ter Vi-sion'
+',
+ []
+
+
+Overfull \hbox (66.39194pt too wide) in paragraph at lines 5--8
+\OT1/cmr/m/n/12 http://homepages.inf.ed.ac.uk/rbf/CVonline/LOCAL[]COPIES/FUSIEL
+LO4/tutorial.html,
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 38--41
 []\OT1/cmr/m/n/12 SOUZA, R. D., ``http://ricosurf.com.br/boletim-das-ondas/zona
 -oeste-
  []
 
 
-Underfull \hbox (badness 1527) in paragraph at lines 33--36
+Underfull \hbox (badness 1527) in paragraph at lines 38--41
 \OT1/cmr/m/n/12 rj/praia-grumari/'', http://ricosurf.com.br/, 2017, (Acesso em 
 06 Ju-nho
  []
 
-[30
+[34
 
 
 ]
-Overfull \hbox (161.28404pt too wide) in paragraph at lines 55--58
-[]\OT1/cmr/m/n/12 FUSIELLO, A., ``http://homepages.inf.ed.ac.uk/rbf/CVonline/LO
-CAL[]COPIES/FUSIELLO4/tutorial.html'',
+Underfull \hbox (badness 10000) in paragraph at lines 60--62
+[]\OT1/cmr/m/n/12 HO, N., ``SIM-PLE VI-DEO STA-BI-LI-ZA-TION USING OPENCV'',
  []
 
-) [31]
+) [35]
 Ap\^endice A.
-(./ApendiceA.tex) [32
+(./ApendiceA.tex) [36
 
 ]
 Ap\^endice B.
@@ -855,7 +935,7 @@ Final-eps-converted-to.pdf ./figuras/Capa_do_Projeto_Final.eps>
 (epstopdf)             \includegraphics on input line 9.
 Package epstopdf Info: Output file is already uptodate.
 
-<./figuras/Capa_do_Projeto_Final-eps-converted-to.pdf, id=180, 420.57124pt x 52
+<./figuras/Capa_do_Projeto_Final-eps-converted-to.pdf, id=198, 420.57124pt x 52
 0.94624pt>
 File: ./figuras/Capa_do_Projeto_Final-eps-converted-to.pdf Graphic file (type p
 df)
@@ -868,21 +948,21 @@ Overfull \hbox (50.6844pt too wide) in paragraph at lines 9--9
  [] 
  []
 
-) [33
+) [37
 
-] [34 <./figuras/Capa_do_Projeto_Final-eps-converted-to.pdf>]
+] [38 <./figuras/Capa_do_Projeto_Final-eps-converted-to.pdf>]
 Ap\^endice C.
-(./ApendiceC.tex) [35
+(./ApendiceC.tex) [39
 
 ] (./tcc_davidbrittojr.aux) ) 
 Here is how much of TeX's memory you used:
- 11776 strings out of 493089
- 195894 string characters out of 6134842
- 278281 words of memory out of 5000000
- 14985 multiletter control sequences out of 15000+600000
- 12400 words of font info for 46 fonts, out of 8000000 for 9000
+ 12528 strings out of 493089
+ 209705 string characters out of 6134842
+ 289519 words of memory out of 5000000
+ 15727 multiletter control sequences out of 15000+600000
+ 12746 words of font info for 47 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 39i,9n,40p,1696b,401s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 55i,10n,92p,1696b,455s stack positions out of 5000i,500n,10000p,200000b,80000s
 </usr/local/texlive/2015/texmf-dist/fonts/type1/pu
 blic/amsfonts/cm/cmbx12.pfb></usr/local/texlive/2015/texmf-dist/fonts/type1/pub
 lic/amsfonts/cm/cmbxti10.pfb></usr/local/texlive/2015/texmf-dist/fonts/type1/pu
@@ -898,10 +978,10 @@ cm/cmsy10.pfb></usr/local/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/c
 m/cmsy8.pfb></usr/local/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/
 cmti10.pfb></usr/local/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/c
 mti12.pfb>
-Output written on tcc_davidbrittojr.pdf (48 pages, 1678136 bytes).
+Output written on tcc_davidbrittojr.pdf (52 pages, 1835468 bytes).
 PDF statistics:
- 289 PDF objects out of 1000 (max. 8388607)
- 159 compressed objects within 2 object streams
+ 306 PDF objects out of 1000 (max. 8388607)
+ 168 compressed objects within 2 object streams
  0 named destinations out of 1000 (max. 500000)
- 76 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 86 words of extra memory for PDF output out of 10000 (max. 10000000)
 

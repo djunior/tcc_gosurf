@@ -49,18 +49,21 @@ void processThreshold(Mat& mat) {
 		blur_slider++;
 
 	auxPipeline.addFilter(new GaussianBlurFilter(blur_slider));
-	auxPipeline.addFilter(new ThresholdFilter(threshold_slider,0,255));
+	auxPipeline.addFilter(new ThresholdFilter(threshold_slider,1,255));
 	// auxPipeline.addFilter(new ImageOutput("threshold - thresholded image"));
-	auxPipeline.addFilter(new WaveBandFinder(WaveBandFinder::WBF_MODE_THRESHOLD));
+	// auxPipeline.addFilter(new WaveBandFinder(WaveBandFinder::WBF_MODE_THRESHOLD));
 	// auxPipeline.addFilter(new CannyFilter(0));
-	auxPipeline.addFilter(new ImageOutput("after canny"));
-	auxPipeline.addFilter(new WaveBandDebugger(mat));
+	// auxPipeline.addFilter(new ImageOutput("after canny"));
+	// auxPipeline.addFilter(new WaveBandDebugger(mat));
 	// auxPipeline.addFilter(new WaveDetector());
 	auxPipeline.filter();
 
-	// auxPipeline.getOutputMat()->copyTo(outputMat(Range(auxPipeline.getOutputMat()->rows+10, auxPipeline.getOutputMat()->rows*2+10),Range::all() ));
+	Mat output;
+	cvtColor( (*auxPipeline.getOutputMat()), output, COLOR_GRAY2BGR );
 
-	auxPipeline.getOutputMat()->copyTo(outputMat);
+	output.copyTo(outputMat(Range(output.rows+10, output.rows*2+10),Range::all() ));
+
+	// auxPipeline.getOutputMat()->copyTo(outputMat);
 }
 
 void processWatershed(Mat& mat) {
@@ -102,9 +105,9 @@ void on_threshold_trackbar( int, void* )
 
 	// imshow( "wave_band_debugger", dst );
 	Mat mat;
-	// resize(outputMat,mat,Size(outputMat.cols/2, outputMat.rows/2));
+	resize(outputMat,mat,Size(outputMat.cols/2, outputMat.rows/2));
 
-	imshow("wave_band_debugger",outputMat);
+	imshow("wave_band_debugger",mat);
 }
 
 void on_blur_trackbar(int, void* ) {
@@ -112,7 +115,7 @@ void on_blur_trackbar(int, void* ) {
 	processThreshold(greyImage);
 
 	Mat mat;
-	// resize(outputMat,mat,Size(outputMat.cols/2, outputMat.rows/2));
+	resize(outputMat,mat,Size(outputMat.cols/2, outputMat.rows/2));
 
 	imshow("wave_band_debugger",outputMat);
 }
@@ -123,10 +126,12 @@ int main(int argc, char** argv) {
 
 	Mat image = imread(path);
 
-	// outputMat = Mat::zeros(10+image.rows*2,image.cols,CV_8UC3);
-	outputMat = Mat::zeros(image.rows,image.cols,CV_8UC3);
+	outputMat = Mat::zeros(10+image.rows*2,image.cols,CV_8UC3);
+	// outputMat = Mat::zeros(image.rows,image.cols,CV_8UC3);
 
 	cvtColor(image,greyImage,COLOR_BGR2GRAY);
+
+	image.copyTo(outputMat(Range(0, image.rows), Range::all()));
 
 	// HistogramEqualizatorFilter hef;
 	// hef.setSourceMat(&greyImage);
