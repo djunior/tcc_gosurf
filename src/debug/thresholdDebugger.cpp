@@ -51,15 +51,15 @@ void processThreshold(Mat& mat) {
 	auxPipeline.addFilter(new GaussianBlurFilter(blur_slider));
 	auxPipeline.addFilter(new ThresholdFilter(threshold_slider,1,255));
 	// auxPipeline.addFilter(new ImageOutput("threshold - thresholded image"));
-	// auxPipeline.addFilter(new WaveBandFinder(WaveBandFinder::WBF_MODE_THRESHOLD));
+	auxPipeline.addFilter(new WaveBandFinder(WaveBandFinder::WBF_MODE_THRESHOLD));
 	// auxPipeline.addFilter(new CannyFilter(0));
 	// auxPipeline.addFilter(new ImageOutput("after canny"));
-	// auxPipeline.addFilter(new WaveBandDebugger(mat));
+	auxPipeline.addFilter(new WaveBandDebugger(mat));
 	// auxPipeline.addFilter(new WaveDetector());
 	auxPipeline.filter();
 
-	Mat output;
-	cvtColor( (*auxPipeline.getOutputMat()), output, COLOR_GRAY2BGR );
+	Mat output = auxPipeline.getOutputMat()->clone();
+	// cvtColor( (*auxPipeline.getOutputMat()), output, COLOR_GRAY2BGR );
 
 	output.copyTo(outputMat(Range(output.rows+10, output.rows*2+10),Range::all() ));
 

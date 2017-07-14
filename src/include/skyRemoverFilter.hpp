@@ -37,9 +37,11 @@ public:
 		int y = findFirstPoint(m);
 
 		Trajectory t;
-		t.addPoint(y,0);
+		t.addPoint(0,y);
 		t.fill(m);
 		mask = Mat::ones(m.size(),CV_8UC1);
+
+		cout << "Trajectory size: " << t.points.size() << endl;
 
 		for (int i = 0; i < t.points.size(); i++) {
 			Trajectory::Point p = t.getPoint(i);
@@ -49,6 +51,8 @@ public:
 				mask.at<uchar>(j,i) = 0;
 			}
 		}
+
+		imwrite("output_images/simpletimestack/simpletimestack_sky_remover_mask.jpg",mask);
 	}
 
 	void filter() {
@@ -62,8 +66,6 @@ public:
 		// 			break;
 		// 	}
 		// }
-
-		// imshow("mask",mask);
 
 		srcMat.copyTo(filteredMat,mask);
 	}

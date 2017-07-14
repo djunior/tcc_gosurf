@@ -92,33 +92,34 @@
 \contentsline {section}{\numberline {3.8}Detec\c c\~ao da Linha de Horizonte}{19}
 \contentsline {paragraph}{}{19}
 \contentsline {paragraph}{}{20}
-\contentsline {section}{\numberline {3.9}Remo\c c\~ao do C\'eu}{21}
+\contentsline {section}{\numberline {3.9}Remo\c c\~ao do C\'eu}{20}
+\contentsline {paragraph}{}{20}
+\contentsline {paragraph}{}{20}
+\contentsline {section}{\numberline {3.10}Processamento Principal}{21}
 \contentsline {paragraph}{}{21}
-\contentsline {paragraph}{}{21}
-\contentsline {section}{\numberline {3.10}Processamento Principal}{22}
+\contentsline {section}{\numberline {3.11}Suaviza\c c\~ao}{22}
 \contentsline {paragraph}{}{22}
-\contentsline {section}{\numberline {3.11}Suaviza\c c\~ao}{23}
-\contentsline {paragraph}{}{23}
 \contentsline {section}{\numberline {3.12}\textit {Thresholding}}{23}
 \contentsline {paragraph}{}{23}
 \contentsline {paragraph}{}{24}
-\contentsline {section}{\numberline {3.13}Segmenta\c c\~ao e Detec\c c\~ao de Bordas}{25}
+\contentsline {paragraph}{}{24}
+\contentsline {section}{\numberline {3.13}Segmenta\c c\~ao e Detec\c c\~ao de Bordas}{24}
+\contentsline {paragraph}{}{24}
+\contentsline {section}{\numberline {3.14}An\'alise e Indentifica\c c\~ao das Ondas Mar\IeC {\'\i }timas}{25}
 \contentsline {paragraph}{}{25}
-\contentsline {section}{\numberline {3.14}An\'alise e Indentifica\c c\~ao das Ondas Mar\IeC {\'\i }timas}{26}
+\contentsline {section}{\numberline {3.15}Rastreamento da Linha de Ondas}{25}
+\contentsline {paragraph}{}{25}
 \contentsline {paragraph}{}{26}
-\contentsline {section}{\numberline {3.15}Rastreamento da Linha de Ondas}{26}
 \contentsline {paragraph}{}{26}
 \contentsline {paragraph}{}{26}
-\contentsline {paragraph}{}{27}
-\contentsline {paragraph}{}{27}
 \contentsline {section}{\numberline {3.16}Identifica\c c\~ao das Ondas}{28}
 \contentsline {paragraph}{}{28}
-\contentsline {chapter}{\numberline {4}Implementa\c c\~ao do Algoritmo}{31}
-\contentsline {chapter}{\numberline {5}Dados Experimentais}{32}
-\contentsline {chapter}{\numberline {6}Conclus\~oes}{33}
-\contentsline {chapter}{Bibliografia}{34}
-\contentsline {chapter}{\numberline {A}O que \'e um ap\^endice}{36}
-\contentsline {paragraph}{}{36}
-\contentsline {chapter}{\numberline {B}Encaderna\c c\~ao do Projeto de Gradua\c c\~ao}{37}
-\contentsline {chapter}{\numberline {C}O que \'e um anexo}{39}
-\contentsline {paragraph}{}{39}
+\contentsline {chapter}{\numberline {4}Implementa\c c\~ao do Algoritmo}{30}
+\contentsline {chapter}{\numberline {5}Dados Experimentais}{31}
+\contentsline {chapter}{\numberline {6}Conclus\~oes}{32}
+\contentsline {chapter}{Bibliografia}{33}
+\contentsline {chapter}{\numberline {A}O que \'e um ap\^endice}{35}
+\contentsline {paragraph}{}{35}
+\contentsline {chapter}{\numberline {B}Encaderna\c c\~ao do Projeto de Gradua\c c\~ao}{36}
+\contentsline {chapter}{\numberline {C}O que \'e um anexo}{38}
+\contentsline {paragraph}{}{38}

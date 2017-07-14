@@ -42,7 +42,7 @@ void WaveDetector::detectWave(Trajectory& t, int bottom, int top) {
 }
 
 void WaveDetector::drawWaves(Mat &mat) {
-	cout << "Drawing " << waves.size() << " waves" << endl;
+	// cout << "Drawing " << waves.size() << " waves" << endl;
 
 	double average_sum = 0;
 
@@ -192,7 +192,7 @@ void WaveDetector::extractWaveDetails() {
 
 		double realHeight = camera.calculateRealHeight(bottom.getY(),top.getY());
 
-		cout << "Found wave at " << halfway << " height " << height << " real height: " << realHeight << " m" << endl;
+		// cout << "Found wave at " << halfway << " height " << height << " real height: " << realHeight << " m" << endl;
 	
 		if (i > 0) {
 			int lastHalfway = waves[i-1].getHalfway();
@@ -206,10 +206,10 @@ void WaveDetector::extractWaveDetails() {
 			
 			} else {
 
-				if (height_count > 0) {
-					cout << "Number of waves on a series: " << height_count << endl;
-					cout << "Average height: " << (int) height_sum / height_count << endl;
-				}
+				// if (height_count > 0) {
+				// 	cout << "Number of waves on a series: " << height_count << endl;
+				// 	cout << "Average height: " << (int) height_sum / height_count << endl;
+				// }
 				height_sum = 0;
 				height_count = 0;
 			}
@@ -218,14 +218,14 @@ void WaveDetector::extractWaveDetails() {
 
 			double time_diff = diff / 30;
 
-			cout << "Time distance to last wave: " << diff << " px, " << time_diff << " s" << endl;
+			// cout << "Time distance to last wave: " << diff << " px, " << time_diff << " s" << endl;
 		}
 	}
 
 }
 
 void WaveDetector::filter() {
-	cout << "Filtering" << endl;
+	// cout << "Filtering" << endl;
 
 	// Trajectory t(srcMat);
 	// vector<Trajectory> trajectories;
@@ -240,7 +240,7 @@ void WaveDetector::filter() {
 
 	// cout << "Derivative size: " << derivative.size() << endl;
 
-	cout << "Detecting waves" << endl;
+	// cout << "Detecting waves" << endl;
 
 	int col = 0;
 
@@ -250,11 +250,11 @@ void WaveDetector::filter() {
 			break;
 		}
 
-		cout << "Detecting new trajectory in Rect(" << col << ", 0, " << srcMat.cols - col << ", " << srcMat.rows << ")" << endl;
+		// cout << "Detecting new trajectory in Rect(" << col << ", 0, " << srcMat.cols - col << ", " << srcMat.rows << ")" << endl;
 
 		Trajectory t(srcMat,Rect(col,0,srcMat.cols - col, srcMat.rows));
 		
-		cout << "Analysing the trajectory" << endl;
+		// cout << "Analysing the trajectory" << endl;
 		analyseTrajectory(t);
 
 		if (t.points.back().getX() >= (srcMat.cols-1) )

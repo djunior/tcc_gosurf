@@ -48,8 +48,8 @@
 
 \begin{figure}[h]
 \begin{center}
-  \includegraphics[width=\textwidth,height=\textheight,keepaspectratio]{timestack.jpg}
-  \caption[\small{Timestack em nível de cinza gerado a partir de um vídeo estabilizado de uma praia.}]{\label{FigTimestack} \small{Timestack de uma praia.}}
+  \includegraphics[width=\textwidth,keepaspectratio]{timestack.jpg}
+  \caption[\small{\textit{Timestack} resultante do pré-processamento a partir do vídeo de uma praia.}]{\label{FigTimestack} \small{\textit{Timestack} resultante do pré-processamento a partir do vídeo de uma praia.}}
 \end{center}
 \end{figure}
 
@@ -73,37 +73,38 @@
 
 \section{Detecção da Linha de Horizonte}
 
-\paragraph{}Uma etapa importante é a detecção da linha de horizonte a fim de viabilizar a detecção e remoção do céu na imagem. Esta operação é utilizada para facilitar o passo de \textit{thresholding} na etapa de processamento de imagem. Em alguns cenários, é difícil distinguir a região de céu da região de arrebentação utilizando apenas o nível de intensidade dos \textit{pixels} de cada região, pois a faixa de valores de intensidade de cada região se sobrepõem. A figura \ref{FigTimestackSkyFail1} exibe um \timestack com o céu incluído após aplicado um \textit{threshold} com valor de limite 150. Pode-se observar que parte do céu não foi removido pelo \textit{threshold}. Já a figura \ref{FigTimestackSkyFail2} exibe um \timestack com o céu incluído após aplicado um \textit{threshold} com valor de limite 120. Com este valor o céu foi removido completamente, mas a delimitação da região de arrebentação não foi bem definida, resultando em uma estimação de altura das ondas menor do que o esperado. Por este motivo, a segmentação é baseada não só no nível de intensidade dos \textit{pixels} mas como na sua localização no imagem. A detecção da linha de horizonte se mostra fundamental para obter localização desta região.
+\paragraph{}Uma etapa importante é a detecção da linha de horizonte a fim de viabilizar a detecção e remoção do céu na imagem. Esta operação é utilizada para facilitar o passo de \textit{thresholding} na etapa de processamento de imagem. Em alguns cenários, é difícil distinguir a região de céu da região de arrebentação utilizando apenas o nível de intensidade dos \textit{pixels} de cada região, pois a faixa de valores de intensidade de cada região se sobrepõem. A figura \ref{FigTimestackFail}a exibe um \timestack com o céu incluído após aplicado um \textit{threshold} com valor de limite 150. Pode-se observar que parte do céu não foi removido pelo \textit{threshold}. Já a figura \ref{FigTimestackFail}b exibe um \timestack com o céu incluído após aplicado um \textit{threshold} com valor de limite 120. Com este valor o céu foi removido completamente, mas a delimitação da região de arrebentação não foi bem definida, resultando em uma estimação de altura das ondas menor do que o esperado. Por este motivo, a segmentação é baseada não só no nível de intensidade dos \textit{pixels} mas como na sua localização no imagem. A detecção da linha de horizonte se mostra fundamental para obter localização desta região.
+
+% \begin{figure}[h]
+%   \centering
+%   \subfloat[\small{\textit{Timestack} sem remoção do céu (valor de \textit{threshold} 150)}]{\includegraphics[width=0.8\textwidth,keepaspectratio]{threshold_image_fail_1.jpg}
+%   \qquad
+%   \subfloat[\small{\textit{Timestack} sem remoção do céu (valor de \textit{threshold} 120)}]{\includegraphics[width=0.8\textwidth,keepaspectratio]{threshold_image_fail_2.jpg}}
+%   \caption[]{}
+%   \label{FigTimestackFail}
+% \end{figure}
+
+\paragraph{}A detecção do céu é realizada utilizando um detector de bordas de Canny para identificar a borda entre o céu e o mar em um \textit{frame} do vídeo (Figura \ref{FigFrameCanny}). Então, procura-se a primeira borda detectada pelo método de Canny, através do algoritmo descrito em \ref{AlgLineTracking}. A borda detectada corresponde a linha do horizonte. Todos os \textit{pixels} acima dessa linha são considerados como \textit{pixels} da região do céu, e serão removidos no passo seguinte.
 
 \begin{figure}[h]
-\begin{center}
-  \includegraphics[width=\textwidth,height=\textheight,keepaspectratio]{threshold_image_fail_1.jpg}
-  \caption[\small{\textit{Timestack} sem remoção do céu (valor de threshold 150)}]{\label{FigTimestackSkyFail1} \small{\textit{Timestack} sem remoção do céu (valor de threshold 150)}}
-\end{center}
-\end{figure}
-
-\begin{figure}[h]
-\begin{center}
-  \includegraphics[width=\textwidth,height=\textheight,keepaspectratio]{threshold_image_fail_2.jpg}
-  \caption[\small{\textit{Timestack} sem remoção do céu (valor de threshold 120)}]{\label{FigTimestackSkyFail2} \small{\textit{Timestack} sem remoção do céu (valor de threshold 120)}}
-\end{center}
-\end{figure}
-
-\paragraph{}A detecção do céu é realizada utilizando um detector de bordas de Canny para identificar a borda entre o céu e o mar em um \textit{frame} do vídeo (Figura \ref{FigTimestackSkyCanny}). Então, procura-se a primeira borda detectada pelo método de Canny, através do algoritmo descrito em \ref{AlgLineTracking}. A borda detectada corresponde a linha do horizonte. Todos os \textit{pixels} acima dessa linha são considerados como \textit{pixels} da região do céu, e serão removidos no passo seguinte.
-
-%TODO: atualizar essa imagem
-\begin{figure}[h]
-\begin{center}
-  \includegraphics[width=\textwidth,height=\textheight,keepaspectratio]{skydetector_after_canny.jpg}
-  \caption[\small{Timestack com bordas detectadas pelo método de Canny. A primeira borda identificada é a linha do horizonte.}]{\label{FigTimestackSkyCanny} \small{\textit{Timestack} com bordas detectadas.}}
-\end{center}
+  \centering
+  \includegraphics[width=0.8\textwidth,keepaspectratio]{simpletimestack_canny.jpg}
+  \caption[\small{\textit{Frame} do vídeo com bordas detectadas pelo método de Canny. A primeira borda identificada é a linha do horizonte.}]{\small{\textit{Frame} do vídeo com bordas detectadas pelo método de Canny. A primeira borda identificada é a linha do horizonte.}}
+  \label{FigFrameCanny}
 \end{figure}
 
 \section{Remoção do Céu}
 
-\paragraph{}O último passo da etapa de pré-processamento é a remoção do céu. Este passo utiliza duas entradas, a linha do horizonte detectada pelo passo anterior, e o \textit{frame} equalizado. A partir da linha do horizonte, considera-se todos os \textit{pixels} do \textit{frame} equalizado acima dessa linha como preto. 
+\paragraph{}O último passo da etapa de pré-processamento é a remoção do céu. Este passo utiliza duas entradas, a linha do horizonte detectada pelo passo anterior, e o \textit{frame} equalizado. A partir da linha do horizonte, considera-se todos os \textit{pixels} do \textit{frame} equalizado acima dessa linha como preto. A figura \ref{FigFrameSkyRemoved} exibe um \textit{frame} equalizado do vídeo original com o céu removido.
 
-\paragraph{}Sem a remoção do céu, é difícil definir um valor único de \textit{threshold} que será utilizado na etapa de processamento principal. Uma tarefa essencial é ser capaz de separar o céu, o mar e a faixa de espuma da arrebentação. Com o céu removido, ao operação de  \textit{threshold} produzirá resultados mais adequados para dar suporte às etapas de medição.
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=0.8\textwidth,keepaspectratio]{simpletimestack_sky_removed.jpg}
+  \caption[\small{\textit{Frame} equalizado com o céu removido}]{\small{\textit{Frame} equalizado com o céu removido}}
+  \label{FigFrameSkyRemoved}
+\end{figure}
+
+\paragraph{}Como dito anteriormente, sem a remoção do céu, é difícil definir um valor único de \textit{threshold} que será utilizado na etapa de processamento principal. Uma tarefa essencial é ser capaz de separar o céu, o mar e a faixa de espuma da arrebentação. Com o céu removido, ao operação de \textit{threshold} produzirá resultados mais adequados para dar suporte às etapas de medição.
 
 \section{Processamento Principal}
 
@@ -128,36 +129,34 @@
 \paragraph{}A primeira etapa de suavização é realizada utilizando um filtro passa-baixas gaussiano, implementado no domínio do espaço com máscara de tamanho 15, valor escolhido empiricamente após experimentar com imagens de diversos dias diferentes. Este efeito de suavização é importante para reduzir o nível de ruído na imagem, facilitando a identificação das bordas relevantes nos passos subsequentes. Outro efeito desejado é homogeneizar o nível de intensidade das regiões da imagem, de forma que o passo de \textit{thresholding} consiga segmentar a região de arrebentação do \timestack consistentemente. A figura \ref{FigGaussianBlurComparison} ilustra a diferença na segmentação da região de espuma com e sem o passo de suavização. A região de espuma detectada está marcada em vermelho. Nota-se que na figura \ref{FigGaussianBlurComparison}b a região de espuma detectada é influênciada por pequenas faixas de alta intensidade espalhadas na região do mar, enquanto a figura \ref{FigGaussianBlurComparison}a consegue filtrar essa influência e detectar uma região de espuma mais consistente.
 
 \begin{figure}[h]
-\subfloat[Região de espuma detectada em um \textit{timestack} suavizado.]{
-  \includegraphics[width=\textwidth,height=\textheight,keepaspectratio]{waveband_blur.png}
-}\par
-\subfloat[Região de espuma detectada em um \textit{timestack} não-suavizado.]{
-  \includegraphics[width=\textwidth,height=\textheight,keepaspectratio]{waveband_no_blur.png}
-}
-\caption[\small{Comparação da região de espuma detectada com e sem suaviazação.}]{
-  \label{FigGaussianBlurComparison} \small{Comparação da região de espuma detectada com e sem suaviazação.}
-}
+  \centering
+  \subfloat[Região de espuma detectada em um \textit{timestack} suavizado.]{\includegraphics[width=0.8\textwidth,keepaspectratio]{waveband_blur.png}}
+  \qquad
+  \subfloat[Região de espuma detectada em um \textit{timestack} não-suavizado.]{\includegraphics[width=0.8\textwidth,keepaspectratio]{waveband_no_blur.png}}
+  \caption[\small{Comparação da região de espuma detectada com e sem suaviazação.}]{\small{Comparação da região de espuma detectada com e sem suaviazação.}}
+  \label{FigGaussianBlurComparison} 
 \end{figure}
 
 %TODO: Adicionar imagem da primeira suavização
 
 \section{\textit{Thresholding}}
 
-\paragraph{}\textit{Thresholding} é o primeiro passo para realizar a segmentação. Neste passo separa-se a região de espuma do restante do mar, alterando todos os pixels com intensidade abaixo de 150 para 0, e todos os pixels acima deste valor para o valor de intensidade máximo. O valor limite foi escolhido empiricamente após a análise de diversas imagens, contemplando dias variados. Inicialmente foi considerado um método de decisão do valor de \threshold dinâmico, mas como discutido previamente, os passos de equalização e remoção do céu, realizados durante o pré-processamento permitem utilizar um valor de \threshold estático, indepentende da condição de iluminação no momento da aquisição do vídeo. Entretanto, dias altamente nublados podem causar problemas para o \textit{thresholding}, como pode ser visto na figura \ref{FigThreshold}. Nesta figura os valores de intensidade da região de espuma e da região do mar no entorno das ondas se sobrepõe. Neste caso, o \threshold com valor estático não é capaz de separar as duas regiões, impossibilitando a identificação das ondas do mar nos passos subsequentes.
+\paragraph{}\textit{Thresholding} é o primeiro passo para realizar a segmentação. Neste passo separa-se a região de espuma do restante do mar, alterando todos os pixels com intensidade abaixo de 150 para 0, e todos os pixels acima deste valor para o valor de intensidade máximo. O valor limite foi escolhido empiricamente após a análise de diversas imagens, contemplando dias variados. A figura \ref{FigThreshold} compara a região de espuma detectada após o passo de \textit{threshold} com valores diferentes. Pode-se notar na figura \ref{FigThreshold}a um borda mais estreita sobre a região de espuma observada, enquanto a figura \ref{FigThreshold}b exibe uma região detectada não condizente com o resultado esperado. Inicialmente foi considerado um método de decisão do valor de \threshold dinâmico, mas como discutido previamente, os passos de equalização e remoção do céu realizados durante o pré-processamento permitem utilizar um valor de \threshold estático, indepentende da condição de iluminação no momento da aquisição do vídeo. 
+
+\paragraph{}Entretanto, dias altamente nublados podem causar problemas para o \textit{thresholding}, como pode ser visto na figura \ref{FigThresholdFail}. Nesta figura os valores de intensidade da região de espuma e da região do mar no entorno das ondas se sobrepõe. Neste caso, o \threshold com valor estático não é capaz de separar as duas regiões, impossibilitando a identificação das ondas do mar nos passos subsequentes.
 
 \paragraph{}É importante notar que o \textit{thresholding} apenas isola as regiões cujo nível de intensidade está acima de um certo valor. Mais de uma região pode ser isolada durante esse processo, por exemplo, partes da região do mar pode estar mais clara que o esperado, e por isso serão preservadas pelo \threshold. O passo de segmentação é responsável por filtrar as regiões isoladas pelo \textit{thresholding}.
 
 
 %Atualizar essa figura
 \begin{figure}[h]
-\subfloat[\textit{Thresholding} ]{
-  \includegraphics[width=\textwidth,height=\textheight,keepaspectratio]{mainprocessing_threshold.jpg}
-}\par
-\subfloat[fig 2]{
-  \includegraphics[width=\textwidth,height=\textheight,keepaspectratio]{mainprocessing_threshold.jpg}
-}
-\caption[\small{\textit{Timestack} após aplicação de um \textit{threshold}.}]{
-  \label{FigThreshold} \small{\textit{Timestack} após aplicação de um \textit{threshold}.}
+  \centering
+  \subfloat[\small{Região de espuma detectada usando \textit{threshold} no valor 150.}]{\includegraphics[width=.4\textwidth,keepaspectratio]{waveband_threshold_150.png}}
+  \qquad
+  \subfloat[\small{Região de espuma detectada usando \textit{threshold} no valor 120.}]{\includegraphics[width=.4\textwidth,keepaspectratio]{waveband_threshold_120.png}}
+
+  \caption[\small{Trecho de um \textit{timestack} após aplicação de um \textit{threshold} com valores diferentes.}]{\small{Trecho de um \textit{timestack} após aplicação de um \textit{threshold} com valores diferentes.}
+  \label{FigThreshold}
 }
 \end{figure}
 
@@ -262,7 +261,7 @@
 
 \begin{figure}[h]
 \begin{center}
-  \includegraphics[width=\textwidth,height=\textheight,keepaspectratio]{result_wave.jpg}
+  \includegraphics[width=\textwidth,height=\textheight,keepaspectratio]{process_waves_result.jpg}
   \caption[\small{Ondas identificadas pelo autômato.}]{\label{FigWave} \small{Ondas identificadas pelo autômato.}}
 \end{center}
 \end{figure}

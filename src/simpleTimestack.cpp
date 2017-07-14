@@ -20,8 +20,9 @@ void simpleTimestack(VideoCapture& cap) {
 	bool isInit = false;
 
 	SkyRemoverFilter skyRemover;
-
+	int count = 0;
 	while(1) {
+		count++;
 		cap >> frame;
 		if (frame.data == NULL)
 			break;
@@ -31,18 +32,18 @@ void simpleTimestack(VideoCapture& cap) {
 		cvtColor(frame,greyFrame,COLOR_BGR2GRAY);
 
 		equalizeHist(greyFrame,eqFrame);
-
+		if (count == 100) {
+			imwrite("output_images/simpletimestack/simpletimestack_original.jpg",greyFrame);
+			imwrite("output_images/simpletimestack/simpletimestack_eqframe.jpg",eqFrame);
+		}
 
 		if (! isInit) {
-			FilterPipeline pipeline(greyFrame);
-
-			pipeline.addFilter(new CannyFilter(50));
-
-			pipeline.filter();
 
 			CannyFilter cf(50);
 			cf.setSourceMat(&greyFrame);
 			cf.filter();
+
+			imwrite("output_images/simpletimestack/simpletimestack_canny.jpg",(*cf.getFilteredImage()));
 
 			skyRemover.init((*cf.getFilteredImage()));
 
@@ -50,6 +51,9 @@ void simpleTimestack(VideoCapture& cap) {
 		}
 
 		skyRemover.process(eqFrame);
+
+		if (count == 100)
+			imwrite("output_images/simpletimestack/simpletimestack_sky_removed.jpg",(*skyRemover.getFilteredImage()));
 
 		t.process((*skyRemover.getFilteredImage()));
 
