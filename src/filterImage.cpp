@@ -101,7 +101,7 @@ void compareBlur(Mat& image) {
 
 	//Main processing
 	pipeline.addFilter(new GaussianBlurFilter(15));
-	pipeline.addFilter(new ThresholdFilter(120,0,255));
+	pipeline.addFilter(new ThresholdFilter(210,0,255));
 	pipeline.addFilter(new ImageOutput("output_images/process/process_threshold_120.jpg"));
 	
 	//Wave Detection

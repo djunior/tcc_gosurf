@@ -171,6 +171,9 @@ void WaveDetector::analyseTrajectory(Trajectory &t) {
 }
 
 void WaveDetector::extractWaveDetails() {
+
+	ofstream f;
+  	f.open("results.txt");
 	
 	Camera camera;
 
@@ -192,7 +195,8 @@ void WaveDetector::extractWaveDetails() {
 
 		double realHeight = camera.calculateRealHeight(bottom.getY(),top.getY());
 
-		// cout << "Found wave at " << halfway << " height " << height << " real height: " << realHeight << " m" << endl;
+		cout << "Found wave at " << halfway << " height " << height << " real height: " << realHeight << " m" << endl;
+		f << height << " px, " << realHeight << " m" << endl;
 	
 		if (i > 0) {
 			int lastHalfway = waves[i-1].getHalfway();
@@ -221,6 +225,8 @@ void WaveDetector::extractWaveDetails() {
 			// cout << "Time distance to last wave: " << diff << " px, " << time_diff << " s" << endl;
 		}
 	}
+
+	f.close();
 
 }
 

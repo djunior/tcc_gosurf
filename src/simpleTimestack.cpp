@@ -55,7 +55,9 @@ void simpleTimestack(VideoCapture& cap) {
 		if (count == 100)
 			imwrite("output_images/simpletimestack/simpletimestack_sky_removed.jpg",(*skyRemover.getFilteredImage()));
 
-		t.process((*skyRemover.getFilteredImage()));
+		// t.process((*skyRemover.getFilteredImage()));
+
+		t.process(eqFrame);
 
 		// waitKey(1);
 	}
