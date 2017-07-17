@@ -72,11 +72,11 @@ int main(int argc, char* argv[]) {
 	
 	stabilize(cap,&originalTimestack,&stableTimestack50);
 
-	originalTimestack.save(outputOriginal);
+	originalTimestack.save("output_images/ "+ file_without_extension + "_originalTimestack.jpg");
 
 	// stableTimestack0.save(outputStable + "timestack0/" + file_without_extension + "_stableTimestack.jpg");
 	// stableTimestack25.save(outputStable + "timestack25/" + file_without_extension + "_stableTimestack.jpg");
-	stableTimestack50.save(outputStable + "timestack50/" + file_without_extension + "_stableTimestack.jpg");
+	stableTimestack50.save("output_images/ "+ file_without_extension + "_stableTimestack.jpg");
 	// stableTimestack75.save(outputStable + "timestack75/" + file_without_extension + "_stableTimestack.jpg");
 	// stableTimestack100.save(outputStable + "timestack100/" + file_without_extension + "_stableTimestack.jpg");
 

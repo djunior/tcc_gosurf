@@ -69,37 +69,37 @@ struct Trajectory
 
 class StableVideoViewer : public ImageProcessor {
 private:
-        enum StableVideoViewer_State {
-            WAITING_FOR_ORIGINAL,
-            WAITING_FOR_STABLE
-        };
+    enum StableVideoViewer_State {
+        WAITING_FOR_ORIGINAL,
+        WAITING_FOR_STABLE
+    };
 
-        Mat original,stable;
-        StableVideoViewer_State state;
+    Mat original,stable;
+    StableVideoViewer_State state;
 
-        void postProcess() {
-            int vert_border = HORIZONTAL_BORDER_CROP * original.rows / original.cols; // get the aspect ratio correct
+    void postProcess() {
+        int vert_border = HORIZONTAL_BORDER_CROP * original.rows / original.cols; // get the aspect ratio correct
 
-            Mat s(stable,Range(vert_border, stable.rows-vert_border), Range(HORIZONTAL_BORDER_CROP, stable.cols-HORIZONTAL_BORDER_CROP));
+        Mat s(stable,Range(vert_border, stable.rows-vert_border), Range(HORIZONTAL_BORDER_CROP, stable.cols-HORIZONTAL_BORDER_CROP));
 
-            // Resize cur2 back to cur size, for better side by side comparison
-            resize(s, s, original.size());
+        // Resize cur2 back to cur size, for better side by side comparison
+        resize(s, s, original.size());
 
-            // Now draw the original and stablised side by side for coolness
-            Mat canvas = Mat::zeros(original.rows, original.cols*2+10, original.type());
+        // Now draw the original and stablised side by side for coolness
+        Mat canvas = Mat::zeros(original.rows, original.cols*2+10, original.type());
 
-            original.copyTo(canvas(Range::all(), Range(0, s.cols)));
-            s.copyTo(canvas(Range::all(), Range(s.cols+10, s.cols*2+10)));
+        original.copyTo(canvas(Range::all(), Range(0, s.cols)));
+        s.copyTo(canvas(Range::all(), Range(s.cols+10, s.cols*2+10)));
 
-            // If too big to fit on the screen, then scale it down by 2, hopefully it'll fit :)
-            if(canvas.cols > 1920) {
-                resize(canvas, canvas, Size(canvas.cols/2, canvas.rows/2));
-            }
-
-            imshow("before and after", canvas);
-
-            waitKey(1);
+        // If too big to fit on the screen, then scale it down by 2, hopefully it'll fit :)
+        if(canvas.cols > 1920) {
+            resize(canvas, canvas, Size(canvas.cols/2, canvas.rows/2));
         }
+
+        imshow("before and after", canvas);
+
+        waitKey(1);
+    }
 public:
     void process(Mat& mat) {
         switch (state) {
@@ -360,13 +360,17 @@ void stabilize(VideoCapture &cap, ImageProcessor* origProc, ImageProcessor* stab
 
         Mat cur2,originalGreyMat,stableGreyMat,originalTransposedMat,stableTransposedMat;
 
-        if (origProc != NULL && origProc != 0)
-       	    origProc->process(cur);
+        if (origProc != NULL && origProc != 0) {
+            cvtColor(cur,originalGreyMat,COLOR_BGR2GRAY);
+       	    origProc->process(originalGreyMat);
+        }
 
         warpAffine(cur, cur2, T, cur.size());
 
-        if (stableProc != NULL && stableProc != 0)
-            stableProc->process(cur2);
+        if (stableProc != NULL && stableProc != 0) {
+            cvtColor(cur2,stableGreyMat,COLOR_BGR2GRAY);
+            stableProc->process(stableGreyMat);
+        }
 
         // cur2 = cur2(Range(vert_border, cur2.rows-vert_border), Range(HORIZONTAL_BORDER_CROP, cur2.cols-HORIZONTAL_BORDER_CROP));
 
