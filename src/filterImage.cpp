@@ -59,76 +59,76 @@ int getMeanValue(Mat* m) {
 	return mean;
 }
 
-uchar calculateThresholdValue(Mat* originalMat, Mat* maskMat) {
-	int thresholdValue = 255;
-	for (int i = 0; i < originalMat->cols; i++) {
-		for (int j = 300; j < originalMat->rows; j++) {
-			if (maskMat->at<uchar>(j,i) > 0) {
-				uchar value = originalMat->at<uchar>(j,i);
-				// cout << "Comparing " << (int) value << " with " << (int) thresholdValue << endl;
-				if (value < thresholdValue && value > 0)
-					thresholdValue = value;
-				break;
-			}
-		}
-	}
-	cout << "Returning thresholdValue: " << (int) thresholdValue << endl;
-	return thresholdValue;
-}
+// uchar calculateThresholdValue(Mat* originalMat, Mat* maskMat) {
+// 	int thresholdValue = 255;
+// 	for (int i = 0; i < originalMat->cols; i++) {
+// 		for (int j = 300; j < originalMat->rows; j++) {
+// 			if (maskMat->at<uchar>(j,i) > 0) {
+// 				uchar value = originalMat->at<uchar>(j,i);
+// 				// cout << "Comparing " << (int) value << " with " << (int) thresholdValue << endl;
+// 				if (value < thresholdValue && value > 0)
+// 					thresholdValue = value;
+// 				break;
+// 			}
+// 		}
+// 	}
+// 	cout << "Returning thresholdValue: " << (int) thresholdValue << endl;
+// 	return thresholdValue;
+// }
 
-void convertToGreyscale(Mat& input, Mat& output) {
-	for (int i = 0; i < input.cols; i++) {
-		for (int j = 0; j < input.rows; j++) {
-			Vec3b bgrValue = input.at<Vec3b>(j,i);
-			float b = (float) bgrValue[0] / 255;
-			float g = (float) bgrValue[1] / 255;
-			float r = (float) bgrValue[2] / 255;
-			float value = 255 * (0.35*r + 0.5*g + 0.15*b);
-			// cout << "Value: " << value << endl;
-			output.at<uchar>(j,i) = (uchar) value;
-		}
-	}
-}
+// void convertToGreyscale(Mat& input, Mat& output) {
+// 	for (int i = 0; i < input.cols; i++) {
+// 		for (int j = 0; j < input.rows; j++) {
+// 			Vec3b bgrValue = input.at<Vec3b>(j,i);
+// 			float b = (float) bgrValue[0] / 255;
+// 			float g = (float) bgrValue[1] / 255;
+// 			float r = (float) bgrValue[2] / 255;
+// 			float value = 255 * (0.35*r + 0.5*g + 0.15*b);
+// 			// cout << "Value: " << value << endl;
+// 			output.at<uchar>(j,i) = (uchar) value;
+// 		}
+// 	}
+// }
 
-void compareBlur(Mat& image) {
-	Mat greyImage(image.size(),CV_8UC1);
+// void compareBlur(Mat& image) {
+// 	Mat greyImage(image.size(),CV_8UC1);
 
-	cout << "Analysing image with size: " << image.cols << ", " << image.rows << endl;
+// 	cout << "Analysing image with size: " << image.cols << ", " << image.rows << endl;
 
-	cvtColor(image,greyImage,COLOR_BGR2GRAY);
+// 	cvtColor(image,greyImage,COLOR_BGR2GRAY);
 
-	FilterPipeline pipeline(&greyImage);
+// 	FilterPipeline pipeline(&greyImage);
 
-	//Main processing
-	pipeline.addFilter(new GaussianBlurFilter(15));
-	pipeline.addFilter(new ThresholdFilter(210,0,255));
-	pipeline.addFilter(new ImageOutput("output_images/process/process_threshold_120.jpg"));
+// 	//Main processing
+// 	pipeline.addFilter(new GaussianBlurFilter(15));
+// 	pipeline.addFilter(new ThresholdFilter(210,0,255));
+// 	pipeline.addFilter(new ImageOutput("output_images/process/process_threshold_120.jpg"));
 	
-	//Wave Detection
-	pipeline.addFilter(new WaveBandFinder(WaveBandFinder::WBF_MODE_THRESHOLD));
+// 	//Wave Detection
+// 	pipeline.addFilter(new WaveBandFinder(WaveBandFinder::WBF_MODE_THRESHOLD));
 	
-	// Debug
-	FilterPipeline* auxPipeline = new FilterPipeline();
-	auxPipeline->addFilter(new WaveBandDebugger(image));
-	auxPipeline->addFilter(new ImageOutput("output_images/process/process_waveband_120.jpg"));
-	pipeline.addFilter(auxPipeline);
+// 	// Debug
+// 	FilterPipeline* auxPipeline = new FilterPipeline();
+// 	auxPipeline->addFilter(new WaveBandDebugger(image));
+// 	auxPipeline->addFilter(new ImageOutput("output_images/process/process_waveband_120.jpg"));
+// 	pipeline.addFilter(auxPipeline);
 
-	WaveDetector* wd = new WaveDetector();
-	pipeline.addFilter(wd);
+// 	WaveDetector* wd = new WaveDetector();
+// 	pipeline.addFilter(wd);
 
-	pipeline.filter();
+// 	pipeline.filter();
 
-	Mat debug = image.clone();
-	wd->drawWaves(debug);
+// 	Mat debug = image.clone();
+// 	wd->drawWaves(debug);
 
-	ImageOutput wavesOutput("output_images/process/process_waves_result_120.jpg");
-	wavesOutput.setSourceMat(&debug);
-	wavesOutput.filter();
+// 	ImageOutput wavesOutput("output_images/process/process_waves_result_120.jpg");
+// 	wavesOutput.setSourceMat(&debug);
+// 	wavesOutput.filter();
 
-	wd->save("waves.txt");	
-}
+// 	wd->save("waves.txt");	
+// }
 
-void process(Mat& image) {
+void main_process(Mat& image, Mat& outputMat) {
 
 	Mat greyImage(image.size(),CV_8UC1);
 
@@ -144,40 +144,42 @@ void process(Mat& image) {
 	pipeline.addFilter(new ThresholdFilter(150,0,255));
 	pipeline.addFilter(new ImageOutput("output_images/process/process_threshold.jpg"));
 	
-	//Wave Detection
+	//Wave Band Detection
 	pipeline.addFilter(new WaveBandFinder(WaveBandFinder::WBF_MODE_THRESHOLD));
-	
+
 	// Debug
 	FilterPipeline* auxPipeline = new FilterPipeline();
 	auxPipeline->addFilter(new WaveBandDebugger(image));
 	auxPipeline->addFilter(new ImageOutput("output_images/process/process_waveband.jpg"));
 	pipeline.addFilter(auxPipeline);
 
-	WaveDetector* wd = new WaveDetector();
-	pipeline.addFilter(wd);
+	pipeline.addFilter(new ImageOutput("output_images/process/process_breakzone.jpg"));
 
 	pipeline.filter();
 
-	Mat debug = image.clone();
-	wd->drawWaves(debug);
+	pipeline.getOutputMat()->copyTo(outputMat);
+}
+
+void detectAnalyzeWaves(Mat& originalMat, Mat& breakzoneMat) {
+	cout << "Detect and analyze waves" << endl;
+	ImageOutput breakzoneOutput("output_images/process/process_breakzone.jpg");
+	breakzoneOutput.setSourceMat(&breakzoneMat);
+	breakzoneOutput.filter();	
+
+	WaveDetector wd;
+	wd.setSourceMat(&breakzoneMat);
+	wd.filter();
+
+	Mat debug = originalMat.clone();
+	wd.drawWaves(debug);
 
 	ImageOutput wavesOutput("output_images/process/process_waves_result.jpg");
 	wavesOutput.setSourceMat(&debug);
 	wavesOutput.filter();
 
-	wd->save("waves.txt");
+	wd.save("waves.txt");
+
 }
-
-// void completeProcess(Mat& image) {
-// 	Mat greyImage(image.size(),CV_8UC1);
-// 	cvtColor(image,greyImage,COLOR_BGR2GRAY);
-
-// 	FilterPipeline filterPipeline;
-// 	filterPipeline.setSourceMat(&greyImage);
-
-// 	// Pre Processing
-
-// }
 
 int main(int argc, char* argv[]) {
 
@@ -193,9 +195,11 @@ int main(int argc, char* argv[]) {
 	image = imread(path);
 
 	// convertToGreyscale(image,greyImage);
+	Mat breakzoneMat = Mat::zeros(image.cols,image.rows,CV_8UC1);
 
-	process(image);
-	compareBlur(image);
+	main_process(image,breakzoneMat);
+	detectAnalyzeWaves(image,breakzoneMat);
+	// compareBlur(image);
 
 	// processMain(&greyImage,image);
 	char* mode = getenv ("DEBUG");

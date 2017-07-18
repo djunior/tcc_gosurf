@@ -68,60 +68,65 @@
 \contentsline {paragraph}{}{13}
 \contentsline {paragraph}{}{13}
 \contentsline {chapter}{\numberline {3}Algoritmo de Medi\c c\~ao de Altura das Ondas do Mar}{15}
-\contentsline {section}{\numberline {3.1}Algoritmo de Processamento de Imagens}{15}
 \contentsline {paragraph}{}{15}
-\contentsline {section}{\numberline {3.2}Pr\'e-Processamento}{15}
-\contentsline {paragraph}{}{15}
-\contentsline {paragraph}{}{15}
-\contentsline {paragraph}{}{15}
+\contentsline {section}{\numberline {3.1}Pr\'e-Processamento}{15}
 \contentsline {paragraph}{}{16}
-\contentsline {section}{\numberline {3.3}\textit {Timestack}}{17}
+\contentsline {paragraph}{}{16}
+\contentsline {paragraph}{}{16}
+\contentsline {section}{\numberline {3.2}\textit {Timestack}}{16}
+\contentsline {paragraph}{}{16}
 \contentsline {paragraph}{}{17}
 \contentsline {paragraph}{}{17}
 \contentsline {paragraph}{}{17}
 \contentsline {paragraph}{}{17}
-\contentsline {paragraph}{}{17}
-\contentsline {section}{\numberline {3.4}Aparato Instrumental}{18}
+\contentsline {section}{\numberline {3.3}Aparato Instrumental}{18}
 \contentsline {paragraph}{}{18}
-\contentsline {section}{\numberline {3.5}Estabiliza\c c\~ao de V\IeC {\'\i }deo}{18}
+\contentsline {paragraph}{}{18}
 \contentsline {paragraph}{}{18}
 \contentsline {paragraph}{}{19}
-\contentsline {section}{\numberline {3.6}Convers\~ao para N\IeC {\'\i }vel de Cinza}{19}
 \contentsline {paragraph}{}{19}
-\contentsline {paragraph}{}{19}
-\contentsline {section}{\numberline {3.7}Equaliza\c c\~ao de Histograma}{19}
-\contentsline {paragraph}{}{19}
-\contentsline {section}{\numberline {3.8}Detec\c c\~ao da Linha de Horizonte}{20}
+\contentsline {section}{\numberline {3.4}Estabiliza\c c\~ao de V\IeC {\'\i }deo}{20}
 \contentsline {paragraph}{}{20}
-\contentsline {paragraph}{}{21}
-\contentsline {section}{\numberline {3.9}Remo\c c\~ao do C\'eu}{21}
-\contentsline {paragraph}{}{21}
-\contentsline {paragraph}{}{21}
-\contentsline {section}{\numberline {3.10}Processamento Principal}{22}
+\contentsline {paragraph}{}{20}
+\contentsline {section}{\numberline {3.5}Convers\~ao para N\IeC {\'\i }vel de Cinza}{22}
 \contentsline {paragraph}{}{22}
-\contentsline {section}{\numberline {3.11}Suaviza\c c\~ao}{23}
+\contentsline {paragraph}{}{22}
+\contentsline {section}{\numberline {3.6}Equaliza\c c\~ao de Histograma}{22}
+\contentsline {paragraph}{}{22}
+\contentsline {section}{\numberline {3.7}Detec\c c\~ao da Linha de Horizonte}{22}
+\contentsline {paragraph}{}{22}
 \contentsline {paragraph}{}{23}
-\contentsline {section}{\numberline {3.12}\textit {Thresholding}}{23}
-\contentsline {paragraph}{}{23}
+\contentsline {section}{\numberline {3.8}Remo\c c\~ao do C\'eu}{24}
 \contentsline {paragraph}{}{24}
+\contentsline {paragraph}{}{24}
+\contentsline {section}{\numberline {3.9}Processamento Principal}{25}
 \contentsline {paragraph}{}{25}
-\contentsline {section}{\numberline {3.13}Segmenta\c c\~ao e Detec\c c\~ao de Bordas}{25}
 \contentsline {paragraph}{}{25}
-\contentsline {section}{\numberline {3.14}An\'alise e Indentifica\c c\~ao das Ondas Mar\IeC {\'\i }timas}{26}
-\contentsline {paragraph}{}{26}
-\contentsline {section}{\numberline {3.15}Rastreamento da Linha de Ondas}{26}
-\contentsline {paragraph}{}{26}
+\contentsline {section}{\numberline {3.10}Suaviza\c c\~ao}{25}
+\contentsline {paragraph}{}{25}
+\contentsline {section}{\numberline {3.11}\textit {Thresholding}}{26}
 \contentsline {paragraph}{}{26}
 \contentsline {paragraph}{}{27}
 \contentsline {paragraph}{}{27}
-\contentsline {section}{\numberline {3.16}Identifica\c c\~ao das Ondas}{29}
+\contentsline {section}{\numberline {3.12}Segmenta\c c\~ao e Detec\c c\~ao de Bordas}{28}
+\contentsline {paragraph}{}{28}
+\contentsline {paragraph}{}{28}
 \contentsline {paragraph}{}{29}
-\contentsline {chapter}{\numberline {4}Implementa\c c\~ao do Algoritmo}{31}
-\contentsline {chapter}{\numberline {5}Dados Experimentais}{32}
-\contentsline {chapter}{\numberline {6}Conclus\~oes}{33}
-\contentsline {chapter}{Bibliografia}{34}
-\contentsline {chapter}{\numberline {A}O que \'e um ap\^endice}{36}
-\contentsline {paragraph}{}{36}
-\contentsline {chapter}{\numberline {B}Encaderna\c c\~ao do Projeto de Gradua\c c\~ao}{37}
-\contentsline {chapter}{\numberline {C}O que \'e um anexo}{39}
-\contentsline {paragraph}{}{39}
+\contentsline {section}{\numberline {3.13}An\'alise e Identifica\c c\~ao das Ondas Mar\IeC {\'\i }timas}{29}
+\contentsline {paragraph}{}{29}
+\contentsline {section}{\numberline {3.14}Rastreamento da Linha de Ondas}{30}
+\contentsline {paragraph}{}{30}
+\contentsline {paragraph}{}{30}
+\contentsline {paragraph}{}{30}
+\contentsline {paragraph}{}{31}
+\contentsline {section}{\numberline {3.15}Identifica\c c\~ao das Ondas}{32}
+\contentsline {paragraph}{}{32}
+\contentsline {chapter}{\numberline {4}Implementa\c c\~ao do Algoritmo}{35}
+\contentsline {chapter}{\numberline {5}Dados Experimentais}{36}
+\contentsline {chapter}{\numberline {6}Conclus\~oes}{37}
+\contentsline {chapter}{Bibliografia}{38}
+\contentsline {chapter}{\numberline {A}O que \'e um ap\^endice}{40}
+\contentsline {paragraph}{}{40}
+\contentsline {chapter}{\numberline {B}Encaderna\c c\~ao do Projeto de Gradua\c c\~ao}{41}
+\contentsline {chapter}{\numberline {C}O que \'e um anexo}{43}
+\contentsline {paragraph}{}{43}

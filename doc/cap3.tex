@@ -26,11 +26,10 @@
 \paragraph{}Para construir um \timestack, é necessário fixar uma das dimensões espaciais de cada imagem do vídeo, obtendo assim um conjunto de funções unidimensionais. O \timestack deste vídeo é definido então como uma função bidimensional \(s_{Y}(x,t)\) ou \(s_{X}(t,y)\), onde \(x\) e \(y\) são coordenadas espaciais; \(t\) é uma coordenada temporal; as amplitudes \(s_{X}\) e \(s_{Y}\) são a intensidade ou nível de cinza do vídeo \(g(x,y,t)\) quando são fixados os valores \(x = X\) e \(y = Y\), respectivamente. Dessa forma, a relação entre um \timestack e um vídeo é dada por: \(s_{Y}(x,t)=g(x,Y,t)\) e \(s_{X}(t,y) = g(X,y,t)\).
 
 \begin{figure}[h]
-\begin{center}
+  \centering
   \includegraphics[width=\textwidth,keepaspectratio]{timestack.jpg}
   \caption[\small{\textit{Timestack} resultante do pré-processamento a partir do vídeo de uma praia.}]{\small{\textit{Timestack} resultante do pré-processamento a partir do vídeo de uma praia.}}
   \label{FigTimestack}
-\end{center}
 \end{figure}
 
 \paragraph{}Note que, na prática, a coordenada temporal \(t\) cumpre o papel de uma coordenada espacial quando o \timestack é exibido como uma imagem, mas sua interpretação continua sendo temporal. Como é possível notar na figura \ref{FigTimestack}, cada onda aparenta crescer a medida que se desloca da esquerda para a direita e de cima para baixo. Isso ocorre pois o deslocamento horizontal representa a evolução temporal da onda, representa eventos que estão ocorrendo sequencialmente, primeiro a onda cresce até que chega no seu ponto máximo e quebra. O deslocamento vertical representa o avanço da onda até quebrar na areia da praia.
@@ -45,18 +44,40 @@
 
 \paragraph{}Como mencionado anteriormente este projeto foi concebido como parte do sistema de monitoramento de praias \textit{GoSurf}, sendo o monitoramento por imagens apenas uma parte do sistema. Esse sistema foi criado para a disciplina Projeto Integrado no ano letivo 2015.1, em conjunto com outro aluno, Filipe Barretto. Para este fim foi desenvolvido um aparato instrumental que adquire dos dados e os analisa previamente por meio de uma central de processamento de dados, e por fim os envia para um servidor na nuvem. O servidor finaliza o processamento dos dados e disponibiliza para os resultados para os usuários por um aplicativo \textit{Android}.
 
-%Neste (Não está claro para mim se é o GoSurf ou o PdG)%
-\paragraph{} Neste projeto as imagens foram adquiridas de duas formas: através de câmeras de \textit{smartphones} comuns e através da câmera montada no \textit{hardware} apresentado anteriormente. Embora para este projeto a câmera de \textit{smartphones} atenda o requisito, o aparato instrumental é fundamental para o projeto \textit{GoSurf} completo porque agrega sensores extra além da câmera. Outra vantagem do aparato sensorial é a capacidade de realizar o pré-processamento localmente, o que reduz drasticamente o volume de dados que devem ser enviado ao servidor. Por exemplo, um vídeo de 125MB é reduzido para uma imagem de 657KB.
+\paragraph{}No projeto de graduação as imagens foram adquiridas de duas formas: através de câmeras de \textit{smartphones} comuns e através da câmera montada no \textit{hardware} apresentado anteriormente. Embora para este projeto a câmera de \textit{smartphones} atenda o requisito, o aparato instrumental é fundamental para o projeto \textit{GoSurf} completo porque agrega sensores extra além da câmera. Outra vantagem do aparato sensorial é a capacidade de realizar o pré-processamento localmente, o que reduz drasticamente o volume de dados que devem ser enviado ao servidor. Por exemplo, um vídeo de 125MB é reduzido para uma imagem de 657KB.
 
+\paragraph{}A central de processamento utilizada no projeto GoSurf e no projeto de graduação é um Raspberry Pi, um pequeno computador implementado em uma única placa. O Raspberry Pi é um computador completo, sendo possível instalar diversos sistemas operacionais diferentes. Neste projeto seguiu-se a recomendação oficial e foi utilizado o sistema operacional Raspbian - um sistema operacional Linux baseado em Debian. Por ser baseado em Linux, pode-se utilizar a biblioteca OpenCV para agilizar a implementação do projeto de graduação.
+
+\paragraph{}Um dos motivos para a escolha do Raspberry Pi foi a facilidade de integrar com uma câmera. Existe um módulo de câmera oficial para o Raspberry Pi \ref{RaspberryCamera}, que foi a câmera escolhida para este projeto. Utilizando este módulo e o sistema operacional Raspbian, a integração com o projeto é trivial, basta conectar a câmera à central de processamento. Esta câmera é capaz de capturar vídeos com resolução 1080p a 30 \textit{frames} por segundo, a mesma qualidade de vídeo utilizada em capturas de vídeo com \textit{smartphones}. O módulo de câmera possui ponto focal fixo na faixa de 1 metro até o infinito, o que não é um problema para o algoritmo pois os objetos de estudo, as ondas do mar, estão localizados nesta faixa. O campo de visão vertical desta câmera é de 41.41 graus (mais ou menos 0.11 graus). Este dado será importante durante a conversão da altura das ondas estimada em \textit{pixels} para metros.
+
+\paragraph{}O Raspberry Pi ainda conta com um conjunto de pinos de entrada e saída de uso genérico (\textit{GPIOs}). Uma desvantagem do Raspberry Pi com relação a outras centrais de processamento é que ele não possuí \textit{GPIOs} analógicos, somente pinos digitais. Entretanto, como será comentado a seguir, é possível contornar esta desvantagem utilizando conversores analógico-digitais. Estes pinos foram utilizados para ligar os sensores periféricos no projeto GoSurf, um termômetro/higrômetro e um anemômetro. Um circuito simples (Figura \ref{FigPCB}) foi projetado para ligar os sensores à central de processamento. O termômetro / higrômetro utilizado foi o DHT22, que pode ser lido diretamente por um pino digital. Por este motivo ele pode ser ligado diretamente aos pinos da central de processamento, acrescentando somente um resistor \textit{pullup} de 1k$\Omega$ entre sua alimentação e o pino de leitura. O anemômetro escolhido foi o C2192, que possuí um pino de leitura analógico. Para utilizá-lo com o Raspberry Pi foi necessário adicionar um conversor analógico-digital (MCP 3201). Este conversor foi escolhido por apresentar resolução adequada ao projeto (12 \textit{bits}) e possuir interface de saída SPI (\textit{Serial Peripheral Interface} ou Interface Periférica Serial). O Raspberry Pi implementa uma comunicação SPI em pinos específicos, o que torna fácil integrar os dois componentes. Por fim, foi necessário adicionar uma alimentação externa ao circuito, pois o anemômetro precisa de uma alimentação de 7 a 12 volts e a central de processamento só é capaz de fornecer 5V. Foram adicionados um par de pilhas de 4.5V, resultando em uma alimentação total de 9V que atende ao requisito. 
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=.8\textwidth,keepaspectratio]{pcb.png}
+  \caption[\small{Circuito que conecta os sensores à central de processamento.}]{\small{Circuito que conecta os sensores à central de processamento.}}
+  \label{FigPCB}
+\end{figure}
 %Observe que a intenção desta seção de aparato instrumental é mostrar o hardware utilizado. Aqui você apenas mencionou que existe um hardware. Descreva aqui o hardware do seu experimento.
 
 \section{Estabilização de Vídeo}
 
 \paragraph{}A estabilização do vídeo é fundamental para a criação de um \timestack fiel ao cenário real. Esta necessidade surge uma vez que o \timestack é criado selecionando a coluna central de cada \textit{frame} do vídeo, tornando importante que esta coluna corresponda ao mesmo conjunto de \textit{pixels} de quadro a quadro. Caso a câmera se desloque horizontalmente no decorrer do vídeo, o conjunto de \textit{pixels} não será o mesmo, e com isso o \timestack formado não será uma representação fiel em duas dimensões do vídeo capturado. A estabilidade na direção vertical é importante para que a estimativa de altura das ondas seja fiel a altura real. Um deslocamento vertical da câmera resulta em um deslocamento das colunas do \timestack, que por sua vez podem embutir erros na identificação dos pontos de máximo e mínimo de cada onda.
 
-\paragraph{}Primeiro experimentou-se realizar a estabilização do vídeo utilizando técnicas de processamento de imagens. Foi testado um procedimento simples descrito por Nghia Ho \cite{Ho2014}. Embora este procedimento apresente bons resultados para vídeos gravados manualmente, foi observado que quando aplicado o procedimento em vídeos gravados já com alta estabilidade o procedimento introduzia erros no \timestack resultante. Então, concluiu-se que basta utilizar um ponto de montagem para a câmera, como um tripé, para atingir a estabilidade necessária para a extração fiel dos dados desejados.
+\paragraph{}Primeiro experimentou-se realizar a estabilização do vídeo utilizando técnicas de processamento de imagens. Foi testado um procedimento simples descrito por Nghia Ho \cite{Ho2014}. Embora este procedimento apresente bons resultados para vídeos gravados manualmente (figura \ref{FigStabilization}a e \ref{FigStabilization}b), foi observado que quando aplicado o procedimento em vídeos gravados já com alta estabilidade o procedimento não apresentava resultados significativos (Figura \ref{FigStabilization}c e \ref{FigStabilization}d). Entretanto, o processo de estabilização é custoso, aumentando o tempo de execução do pré-processamento (na figura \ref{FigStabilization} o tempo de execução do pré-processamento foi 8.5 vezes maior.). Como o pré-processamento será executado em um dispositivo com poder de processamento limitado, a performance desta etapa é crucial. Então, concluiu-se que basta utilizar um ponto de montagem para a câmera, como um tripé, para atingir a estabilidade necessária para a extração fiel dos dados desejados.
 
-%Colocar imagens descritivas deste último parágrafo e referenciá-las. O texto explica o problema mas não permite ao leitor construir uma imagem mental do problema.
+\begin{figure}[h]
+  \centering
+  \subfloat[\small{\textit{Timestack} gerado a partir de um vídeo gravado manualmente.}]{\includegraphics[width=.45\textwidth,keepaspectratio]{IMG_0798_2_originalTimestack.jpg}}
+  \qquad
+  \subfloat[\small{\textit{Timestack} gerado a partir de um vídeo gravado manualmente e estabilizado por \textit{software}.}]{\includegraphics[width=.45\textwidth,keepaspectratio]{IMG_0798_2_stableTimestack.jpg}}
+  \qquad
+  \subfloat[\small{\textit{Timestack} gerado a partir de um vídeo gravado com ponto de montagem fixo.}]{\includegraphics[width=.45\textwidth,keepaspectratio]{IMG_0896_cutted_originalTimestack.jpg}}
+  \qquad
+  \subfloat[\small{\textit{Timestack} gerado a partir de um vídeo gravado com ponto de montagem fixo e estabilizado por \textit{software}.}]{\includegraphics[width=.45\textwidth,keepaspectratio]{IMG_0896_cutted_stableTimestack.jpg}}
+  \caption[\small{Comparação entre \textit{timestack} gerado a partir de um vídeo gravado manualmente e o mesmo vídeo estabilizado. O céu foi preservado para facilitar a comparação da estabilização.}]{\small{Comparação entre \textit{timestack} gerado a partir de um vídeo gravado manualmente e o mesmo vídeo estabilizado. O céu foi preservado para facilitar a comparação da estabilização.}}
+  \label{FigStabilization}
+\end{figure}
 
 \section{Conversão para Nível de Cinza}
 
@@ -89,14 +110,15 @@
   \label{FigTimestackFail}
 \end{figure}
 
-\paragraph{}A detecção do céu é realizada utilizando um detector de bordas de Canny para identificar a borda entre o céu e o mar em um \textit{frame} do vídeo (Figura \ref{FigFrameCanny}). Então, procura-se a primeira borda detectada pelo método de Canny, através do algoritmo descrito em \ref{AlgLineTracking}. A borda detectada corresponde a linha do horizonte. Todos os \textit{pixels} acima dessa linha são considerados como \textit{pixels} da região do céu, e serão removidos no passo seguinte.
-
-%Colocar a imagem original junto com a figura abaixo.
+\paragraph{}A detecção do céu é realizada utilizando um detector de bordas de Canny para identificar a borda entre o céu e o mar em um \textit{frame} do vídeo (Figura \ref{FigFrameCanny}). Então, procura-se a primeira borda transversal detectada pelo método de Canny, através do algoritmo descrito em \ref{AlgLineTracking}. A borda detectada corresponde a linha do horizonte. Todos os \textit{pixels} acima dessa linha são considerados como \textit{pixels} da região do céu, e serão removidos no passo seguinte.
 
 \begin{figure}[h]
   \centering
-  \includegraphics[width=0.8\textwidth,keepaspectratio]{simpletimestack_canny.jpg}
-  \caption[\small{\textit{Frame} do vídeo com bordas detectadas pelo método de Canny. A primeira borda identificada é a linha do horizonte.}]{\small{\textit{Frame} do vídeo com bordas detectadas pelo método de Canny. A primeira borda identificada é a linha do horizonte.}}
+  \subfloat[\small{\textit{Frame} do vídeo original.}]{\includegraphics[width=0.45\textwidth,keepaspectratio]{simpletimestack_original.jpg}}
+  \qquad
+  \subfloat[\small{\textit{Frame} do vídeo com bordas detectadas pelo método de Canny.}]{\includegraphics[width=0.45\textwidth,keepaspectratio]{simpletimestack_canny.jpg}}
+  
+  \caption[\small{Comparação de um \textit{frame} original do vídeo com o mesmo \textit{frame} com as bordas detectadas pelo método de Canny. A primeira borda transversal é a linha do horizonte.}]{\small{Comparação de um \textit{frame} original do vídeo com o mesmo \textit{frame} com as bordas detectadas pelo método de Canny. A primeira linha transversal na figura b é a linha do horizonte.}}
   \label{FigFrameCanny}
 \end{figure}
 
@@ -124,13 +146,13 @@
 
 \paragraph{}A etapa de processamento principal tem como objetivo extrair a linha de arrebentação (figura \ref{FigLinhaArrebentacao}) de um \timestack gerado pelo pré-processamento. A linha de arrebentação é definida como a linha que delimita a região de espuma do restante do mar. Uma característica marcante dessas duas regiões é que a região de espuma apresenta a maioria dos \textit{pixels} com intensidade alta, enquanto o restante do mar apresenta a maioria dos \textit{pixels} com intensidade baixa. Esta característica será explorada para separar a região de espuma do restante da imagem. Em seguida, a borda superior desta região, que corresponde a linha de arrebentação, será analisada para identificar as ondas do mar presentes na imagem e medir a sua altura e periodicidade.
 
-%Colocar junto com a imagem a seguir, a imagem equalizada e sem céu que foi utilizada.
-
 \begin{figure}[h]
-\begin{center}
-  \includegraphics[width=\textwidth,height=\textheight,keepaspectratio]{mainprocessing_breakzone_line.jpg}
-  \caption[\small{Linha de arrebentação detectada pelo processamento principal.}]{\label{FigLinhaArrebentacao} \small{Linha de arrebentação detectada pelo processamento principal.}}
-\end{center}
+  \centering
+  \subfloat[\small{\textit{Timestack} gerado pelo pré-processamento.}]{\includegraphics[width=0.45\textwidth,keepaspectratio]{breakzone_timestack.png}}
+  \qquad
+  \subfloat[\small{Linha de arrebentação detectada pelo processamento principal.}]{\includegraphics[width=0.45\textwidth,keepaspectratio]{process_breakzone.png}}
+  \caption[\small{Linha de arrebentação detectada pelo processamento principal.}]{ \small{Linha de arrebentação detectada pelo processamento principal.}}
+  \label{FigLinhaArrebentacao}
 \end{figure}
 
 \paragraph{}As etapas de suavização, \textit{thresholding}, segmentação e detecção de bordas, que compõe o Processamento Principal, serão descritas nas seções a seguir.
@@ -158,8 +180,6 @@
 
 \paragraph{}É importante notar que o \textit{thresholding} apenas isola as regiões cujo nível de intensidade está acima de um certo valor. Mais de uma região pode ser isolada durante esse processo, por exemplo, partes da região do mar pode estar mais clara que o esperado, e por isso serão preservadas pelo \threshold. O passo de segmentação é responsável por filtrar as regiões isoladas pelo \textit{thresholding}.
 
-%Atualizar essa figura
-
 \begin{figure}[h]
   \centering
   \subfloat[\small{Região de espuma detectada usando \textit{threshold} no valor 150.}]{\includegraphics[width=.4\textwidth,keepaspectratio]{waveband_threshold_150.png}}
@@ -172,15 +192,30 @@
 
 \section{Segmentação e Detecção de Bordas}
 
-\paragraph{}O último passo do processamento principal é a segmentação. Este passo tem como objetivo identificar a região de espuma dentre as regiões isoladas pelo \textit{thresholding}, e identificar a sua borda externa para ser analisada pela próxima etapa. Primeiro, deve-se identificar todas as regiões isoladas pelo \textit{thresholding}. Como a imagem está binarizada, isto é, todos \textit{pixels} possuem a intensidade mínima ou máxima, as regiões isoladas serão os conjuntos de \textit{pixels} contínuos com intensidade máxima. 
+\paragraph{}O último passo do processamento principal é a segmentação. Este passo tem como objetivo identificar a região de espuma dentre as regiões isoladas pelo \textit{thresholding}, e identificar a sua borda externa para ser analisada pela próxima etapa. Primeiro, deve-se identificar todas as regiões isoladas pelo \textit{thresholding}. Como a imagem está binarizada, isto é, todos \textit{pixels} possuem a intensidade mínima ou máxima, as regiões isoladas pelo \textit{thresholding} serão os conjuntos de \textit{pixels} contínuos com intensidade máxima. Neste momento a biblioteca OpenCV agiliza a implementação pois é capaz de realizar a identificação das regiões e a detecção de bordas das mesmas de uma só vez. Para isso utilizou-se a função \textit{findContours}, que produz um vetor com todos contornos das regiões isoladas pelo \textit{thresholding}.
 
-%Mostrar um pseudo código, ou mesmo o código, de como isso foi implementado.
+\paragraph{}Em seguida, calcula-se a área de cada região, a fim de encontrar a região com a maior área. Novamente a biblioteca OpenCV se mostra uma escolha correta para este projeto, pois disponibiliza a função \textit{contourArea} que cálcula uma área de um contorno qualquer identificada pela função \textit{findContours}. Para encontrar a maior região basta percorrer o vetor de contornos obtidos anteriormente, calcular a área de cada elemento do vetor e preservar o índice o elemento de maior área (algoritmo \ref{AlgArea}).
 
-\paragraph{}Em seguida, calcula-se a área de cada região, a fim de encontrar a região com a maior área. 
+\begin{algorithm}
+  \caption{Algoritmo de Busca da Região de Maior Área}
+  \label{AlgArea}
+\begin{algorithmic}
+\Procedure{EncontraMaiorArea}{vetor de contornos}
+\State $indice \gets 0$
+\State $maiorArea \gets 0$
+\For{ contornos c no vetor de contornos } 
+        \State $area \gets contourArea(c)$ \Comment Função \textit{contourArea} do OpenCV
+        \If {$ area > maiorArea $}
+            \State $maiorArea \gets area$
+            \State $indice \gets indice de c$
+        \EndIf
+\EndFor
+\State retorna $indice$
+\EndProcedure
+\end{algorithmic}
+\end{algorithm}
 
-%Mostrar um pseudo código, ou mesmo o código, de como isso foi implementado.
-
-\paragraph{}Em condições normais a região de maior área será a região de espuma da imagem, então pode-se descartar todas as outras regiões. Por fim basta identificar as bordas da região restante utilizando um método de detecção de bordas. Para facilitar a implementação foi utilizado o método de Suzuki \cite{Suzuki85} para detecção da borda, pois esse método já está implementado na biblioteca \textit{OpenCV}. Outro método considerado para esta tarefa é o detector de bordas de Canny, já utilizado no passo de detecção da linha do horizonte, mas que neste caso não obteve resultados tão bons quanto o método de Suzuki.
+\paragraph{}Em condições normais a região de maior área será a região de espuma da imagem, então pode-se descartar todas as outras regiões. Por fim basta identificar as bordas da região restante utilizando um método de detecção de bordas. Novamente, para facilitar a implementação foi utilizado o método de Suzuki \cite{Suzuki85} para detecção da borda, pois é o método utilizado na função \textit{findContours} da biblioteca OpenCV. Outro método considerado para esta tarefa é o detector de bordas de Canny, já utilizado no passo de detecção da linha do horizonte, entretanto pela agilidade fornecida pelo OpenCV foi preterido em relação ao método de Suzuki.
 
 %Mostrar imagem da borda detectada com Suzuki e com Canny.
 

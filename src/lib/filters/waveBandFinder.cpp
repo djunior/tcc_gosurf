@@ -187,7 +187,7 @@ void WaveBandFinder::findByThreshold() {
 
     Mat dst(srcMat.rows,srcMat.cols,CV_8UC1,Scalar::all(0));
 
-	drawContours( dst, contours,largest_contour_index, color, 1, 8 );
+	drawContours( dst, contours, largest_contour_index, color, 1, 8 );
 
 	filteredMat = dst.clone();
 }

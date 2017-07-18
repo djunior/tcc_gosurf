@@ -7,6 +7,7 @@
 #include "timestack.h"
 #include "processorPipeline.hpp"
 #include "stabilize.h"
+#include "preProcessor.hpp"
 
 using namespace tcc;
 using namespace std;
@@ -34,6 +35,8 @@ int main(int argc, char* argv[]) {
 
 	VideoCapture cap(path.c_str());
 
+	PreProcessor originalPreProcessor(cap);
+	PreProcessor stablePreProcessor(cap);
 	// simpleTimestack(cap);
 	// if (1 == 1)
 	// 	return 0;
@@ -44,14 +47,13 @@ int main(int argc, char* argv[]) {
 	// DownsampledTimestack originalTimestack(cap,8);
 	// DownsampledTimestack stableTimestack(cap,8);
 
-	Timestack originalTimestack(cap);
 
 	// Timestack stableTimestack0(cap);
 	// stableTimestack0.setHorizontalPercent(0);
 	// Timestack stableTimestack25(cap);
 	// stableTimestack25.setHorizontalPercent(25);
-	Timestack stableTimestack50(cap);
-	stableTimestack50.setHorizontalPercent(50);
+	// Timestack stableTimestack50(cap);
+	// stableTimestack50.setHorizontalPercent(50);
 	// Timestack stableTimestack75(cap);
 	// stableTimestack75.setHorizontalPercent(75);
 	// Timestack stableTimestack100(cap);
@@ -69,14 +71,19 @@ int main(int argc, char* argv[]) {
 	// Size S = Size((int) cap.get(CV_CAP_PROP_FRAME_WIDTH), (int) cap.get(CV_CAP_PROP_FRAME_HEIGHT));
 
 	// videoWriter.open(videoOutputPath, ex, cap.get(CV_CAP_PROP_FPS), S, true);
+	clock_t begin = clock();
+	stabilize(cap,&originalPreProcessor,&stablePreProcessor);
 	
-	stabilize(cap,&originalTimestack,&stableTimestack50);
+	clock_t end = clock();
+  	double elapsed_secs = double(end - begin) / CLOCKS_PER_SEC;
 
-	originalTimestack.save("output_images/ "+ file_without_extension + "_originalTimestack.jpg");
+  	cout << "Pre processor duration: " << elapsed_secs << endl;
+
+	originalPreProcessor.save("output_images/ "+ file_without_extension + "_originalTimestack.jpg");
 
 	// stableTimestack0.save(outputStable + "timestack0/" + file_without_extension + "_stableTimestack.jpg");
 	// stableTimestack25.save(outputStable + "timestack25/" + file_without_extension + "_stableTimestack.jpg");
-	stableTimestack50.save("output_images/ "+ file_without_extension + "_stableTimestack.jpg");
+	stablePreProcessor.save("output_images/ "+ file_without_extension + "_stableTimestack.jpg");
 	// stableTimestack75.save(outputStable + "timestack75/" + file_without_extension + "_stableTimestack.jpg");
 	// stableTimestack100.save(outputStable + "timestack100/" + file_without_extension + "_stableTimestack.jpg");
 

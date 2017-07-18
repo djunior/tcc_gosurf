@@ -9,75 +9,11 @@
 #include "skyRemoverFilter.hpp"
 #include "imageOutput.hpp"
 
+#include "preProcessor.hpp"
+
 using namespace tcc;
 using namespace std;
 using namespace cv;
-
-class PreProcessor : ImageProcessor {
-private:
-	Timestack timestack;
-	
-	SkyRemoverFilter skyRemover;
-	
-	bool isInit;
-	
-	void init(Mat &m) {
-		if (isInit)
-			return;
-
-		CannyFilter cf(50);
-		cf.setSourceMat(&m);
-		cf.filter();
-
-		imwrite("output_images/simpletimestack/simpletimestack_canny.jpg",(*cf.getFilteredImage()));
-
-		skyRemover.init((*cf.getFilteredImage()));
-
-		isInit = true;
-	}
-
-public:
-	PreProcessor(VideoCapture &cap) : timestack(cap) {
-		isInit = false;
-	}
-
-	void generateTimestack(VideoCapture &cap) {
-		cout << "Generate timestack" << endl;
-		Mat frame;
-		while(true) {
-			cap >> frame;
-			if (frame.data == NULL)
-				break;
-
-			process(frame);
-		}
-		save("output_images/timestack.jpg");
-	}
-	
-	void process(Mat &m) {
-		Mat greyFrame, eqFrame;
-
-		// Passo 1 - converter para nível de cinza
-		cvtColor(m,greyFrame,COLOR_BGR2GRAY);
-
-		// Passo 2.1 - detecção da linha de horizonte
-		init(greyFrame);
-
-		// Passo 2.2 - Equalização de Histograma
-		equalizeHist(greyFrame,eqFrame);
-
-		// Passo 3 - Remoção do Céu
-		skyRemover.process(eqFrame);
-
-		// Passo 4 - adicionar frame ao timestack
-		timestack.process((*skyRemover.getFilteredImage()));
-	}
-
-	void save(string path) {
-		cout << "PreProcessor::save" << endl;
-		timestack.save(path);
-	}
-};
 
 void simpleTimestack(VideoCapture& cap) {
 	// Mat frame;
@@ -134,8 +70,15 @@ int main(int argc, char** argv) {
 
 	VideoCapture cap(path);
 
+	clock_t begin = clock();
+
 	PreProcessor pp(cap);
 	pp.generateTimestack(cap);
+
+	clock_t end = clock();
+  	double elapsed_secs = double(end - begin) / CLOCKS_PER_SEC;
+
+  	cout << "Pre processor duration: " << elapsed_secs << endl;
 
 	// simpleTimestack(cap);
 

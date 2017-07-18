@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015) (preloaded format=pdflatex 2016.4.27)  14 JUL 2017 20:53
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015) (preloaded format=pdflatex 2016.4.27)  18 JUL 2017 14:25
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -726,7 +726,7 @@ File: ./figuras/pre_processamento_pipeline.png Graphic file (type png)
 
 <use ./figuras/pre_processamento_pipeline.png>
 Package pdftex.def Info: ./figuras/pre_processamento_pipeline.png used on input
- line 12.
+ line 9.
 (pdftex.def)             Requested size: 426.79134pt x 96.58453pt.
 
 <./figuras/pre_processamento_frame.png, id=111, 783.92876pt x 181.67876pt>
@@ -734,168 +734,236 @@ File: ./figuras/pre_processamento_frame.png Graphic file (type png)
 
 <use ./figuras/pre_processamento_frame.png>
 Package pdftex.def Info: ./figuras/pre_processamento_frame.png used on input li
-ne 14.
+ne 11.
 (pdftex.def)             Requested size: 426.79134pt x 98.91176pt.
+ [15
 
-
-LaTeX Warning: `h' float specifier changed to `ht'.
-
-[15
-
-] [16 <./figuras/pre_processamento_pipeline.png> <./figuras/pre_processamento_f
-rame.png>] [17] <./figuras/timestack.jpg, id=124, 4213.7425pt x 722.7pt>
+ <./figuras/pre_processamento_pipeline.png> <./figuras/pre_processamento_frame.
+png>] [16]
+<./figuras/timestack.jpg, id=121, 4213.7425pt x 722.7pt>
 File: ./figuras/timestack.jpg Graphic file (type jpg)
 
 <use ./figuras/timestack.jpg>
-Package pdftex.def Info: ./figuras/timestack.jpg used on input line 41.
+Package pdftex.def Info: ./figuras/timestack.jpg used on input line 30.
 (pdftex.def)             Requested size: 426.79134pt x 73.18951pt.
- [18 <./figuras/timestack.jpg>] [19]
-<./figuras/process_threshold_150.jpg, id=132, 4209.7275pt x 722.7pt>
+ [17 <./figuras/timestack.jpg>] [18]
+
+LaTeX Warning: Reference `RaspberryCamera' on page 19 undefined on input line 5
+1.
+
+[19] <./figuras/pcb.png, id=132, 456.2646pt x 295.8252pt>
+File: ./figuras/pcb.png Graphic file (type png)
+
+<use ./figuras/pcb.png>
+Package pdftex.def Info: ./figuras/pcb.png used on input line 57.
+(pdftex.def)             Requested size: 341.43436pt x 221.37633pt.
+ [20 <./figuras/pcb.png>]
+<./figuras/IMG_0798_2_originalTimestack.jpg, id=137, 1888.05376pt x 722.7pt>
+File: ./figuras/IMG_0798_2_originalTimestack.jpg Graphic file (type jpg)
+
+<use ./figuras/IMG_0798_2_originalTimestack.jpg>
+Package pdftex.def Info: ./figuras/IMG_0798_2_originalTimestack.jpg used on inp
+ut line 71.
+(pdftex.def)             Requested size: 192.0548pt x 73.50931pt.
+
+<./figuras/IMG_0798_2_stableTimestack.jpg, id=138, 1888.05376pt x 722.7pt>
+File: ./figuras/IMG_0798_2_stableTimestack.jpg Graphic file (type jpg)
+
+<use ./figuras/IMG_0798_2_stableTimestack.jpg>
+Package pdftex.def Info: ./figuras/IMG_0798_2_stableTimestack.jpg used on input
+ line 73.
+(pdftex.def)             Requested size: 192.0548pt x 73.50931pt.
+
+<./figuras/IMG_0896_cutted_originalTimestack.jpg, id=139, 1546.77875pt x 722.7p
+t>
+File: ./figuras/IMG_0896_cutted_originalTimestack.jpg Graphic file (type jpg)
+ <use ./figuras/IMG_0896_cutted_originalTimestack.jpg>
+Package pdftex.def Info: ./figuras/IMG_0896_cutted_originalTimestack.jpg used o
+n input line 75.
+(pdftex.def)             Requested size: 192.0548pt x 89.73076pt.
+
+<./figuras/IMG_0896_cutted_stableTimestack.jpg, id=140, 1546.77875pt x 722.7pt>
+File: ./figuras/IMG_0896_cutted_stableTimestack.jpg Graphic file (type jpg)
+<use ./figuras/IMG_0896_cutted_stableTimestack.jpg>
+Package pdftex.def Info: ./figuras/IMG_0896_cutted_stableTimestack.jpg used on 
+input line 77.
+(pdftex.def)             Requested size: 192.0548pt x 89.73076pt.
+ [21 <./figuras/IMG_0798_2_originalTimestack.jpg> <./figuras/IMG_0798_2_stableT
+imestack.jpg> <./figuras/IMG_0896_cutted_originalTimestack.jpg> <./figuras/IMG_
+0896_cutted_stableTimestack.jpg>] [22]
+<./figuras/process_threshold_150.jpg, id=147, 4209.7275pt x 722.7pt>
 File: ./figuras/process_threshold_150.jpg Graphic file (type jpg)
 
 <use ./figuras/process_threshold_150.jpg>
 Package pdftex.def Info: ./figuras/process_threshold_150.jpg used on input line
- 81.
+ 106.
 (pdftex.def)             Requested size: 426.79134pt x 73.26671pt.
 
-<./figuras/process_threshold_210.jpg, id=133, 4209.7275pt x 722.7pt>
+<./figuras/process_threshold_210.jpg, id=148, 4209.7275pt x 722.7pt>
 File: ./figuras/process_threshold_210.jpg Graphic file (type jpg)
 
 <use ./figuras/process_threshold_210.jpg>
 Package pdftex.def Info: ./figuras/process_threshold_210.jpg used on input line
- 83.
+ 108.
 (pdftex.def)             Requested size: 426.79134pt x 73.26671pt.
- [20 <./figuras/process_threshold_150.jpg> <./figuras/process_threshold_210.jpg
->]
-<./figuras/simpletimestack_canny.jpg, id=137, 1284.8pt x 722.7pt>
+
+<./figuras/simpletimestack_original.jpg, id=149, 1284.8pt x 722.7pt>
+File: ./figuras/simpletimestack_original.jpg Graphic file (type jpg)
+
+<use ./figuras/simpletimestack_original.jpg>
+Package pdftex.def Info: ./figuras/simpletimestack_original.jpg used on input l
+ine 117.
+(pdftex.def)             Requested size: 192.0548pt x 108.02538pt.
+
+<./figuras/simpletimestack_canny.jpg, id=150, 1284.8pt x 722.7pt>
 File: ./figuras/simpletimestack_canny.jpg Graphic file (type jpg)
 
 <use ./figuras/simpletimestack_canny.jpg>
 Package pdftex.def Info: ./figuras/simpletimestack_canny.jpg used on input line
- 92.
-(pdftex.def)             Requested size: 341.43436pt x 192.05493pt.
+ 119.
+(pdftex.def)             Requested size: 192.0548pt x 108.02538pt.
 
-<./figuras/simpletimestack_sky_removed.jpg, id=138, 1284.8pt x 722.7pt>
+
+LaTeX Warning: `h' float specifier changed to `ht'.
+
+[23 <./figuras/process_threshold_150.jpg> <./figuras/process_threshold_210.jpg>
+] <./figuras/simpletimestack_sky_removed.jpg, id=154, 1284.8pt x 722.7pt>
 File: ./figuras/simpletimestack_sky_removed.jpg Graphic file (type jpg)
 
 <use ./figuras/simpletimestack_sky_removed.jpg>
 Package pdftex.def Info: ./figuras/simpletimestack_sky_removed.jpg used on inpu
-t line 103.
+t line 131.
 (pdftex.def)             Requested size: 341.43436pt x 192.05493pt.
-
-
-LaTeX Warning: `h' float specifier changed to `ht'.
-
-<./figuras/diagrama_processamento.png, id=139, 1231.60126pt x 369.38pt>
+ [24 <./figuras/simpletimestack_original.jpg> <./figuras/simpletimestack_canny.
+jpg> <./figuras/simpletimestack_sky_removed.jpg>]
+<./figuras/diagrama_processamento.png, id=159, 1231.60126pt x 369.38pt>
 File: ./figuras/diagrama_processamento.png Graphic file (type png)
 
 <use ./figuras/diagrama_processamento.png>
 Package pdftex.def Info: ./figuras/diagrama_processamento.png used on input lin
-e 114.
+e 142.
 (pdftex.def)             Requested size: 426.78217pt x 127.99986pt.
- [21 <./figuras/simpletimestack_canny.jpg>]
-<./figuras/mainprocessing_breakzone_line.jpg, id=143, 2053.6725pt x 722.7pt>
-File: ./figuras/mainprocessing_breakzone_line.jpg Graphic file (type jpg)
 
-<use ./figuras/mainprocessing_breakzone_line.jpg>
-Package pdftex.def Info: ./figuras/mainprocessing_breakzone_line.jpg used on in
-put line 123.
-(pdftex.def)             Requested size: 426.7715pt x 150.18352pt.
+<./figuras/breakzone_timestack.png, id=160, 949.5475pt x 722.7pt>
+File: ./figuras/breakzone_timestack.png Graphic file (type png)
+
+<use ./figuras/breakzone_timestack.png>
+Package pdftex.def Info: ./figuras/breakzone_timestack.png used on input line 1
+51.
+(pdftex.def)             Requested size: 192.0548pt x 146.1695pt.
+
+Underfull \hbox (badness 10000) in paragraph at lines 151--151
+[]\OT1/cmr/m/n/10 (a) |\OT1/cmr/m/it/10.95 Ti-mes-tack \OT1/cmr/m/n/10.95 ge-ra
+do pelo pr^^Se-
+ []
+
+<./figuras/process_breakzone.png, id=161, 949.5475pt x 722.7pt>
+File: ./figuras/process_breakzone.png Graphic file (type png)
+
+<use ./figuras/process_breakzone.png>
+Package pdftex.def Info: ./figuras/process_breakzone.png used on input line 153
+.
+(pdftex.def)             Requested size: 192.0548pt x 146.1695pt.
 
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
-[22 <./figuras/simpletimestack_sky_removed.jpg> <./figuras/diagrama_processamen
-to.png>] <./figuras/waveband_blur.png, id=147, 349.305pt x 147.55125pt>
+[25 <./figuras/diagrama_processamento.png>]
+<./figuras/waveband_blur.png, id=165, 349.305pt x 147.55125pt>
 File: ./figuras/waveband_blur.png Graphic file (type png)
 
 <use ./figuras/waveband_blur.png>
-Package pdftex.def Info: ./figuras/waveband_blur.png used on input line 134.
+Package pdftex.def Info: ./figuras/waveband_blur.png used on input line 166.
 (pdftex.def)             Requested size: 341.43436pt x 144.23448pt.
 
-<./figuras/waveband_no_blur.png, id=148, 349.305pt x 147.55125pt>
+<./figuras/waveband_no_blur.png, id=166, 349.305pt x 147.55125pt>
 File: ./figuras/waveband_no_blur.png Graphic file (type png)
 
 <use ./figuras/waveband_no_blur.png>
-Package pdftex.def Info: ./figuras/waveband_no_blur.png used on input line 136.
+Package pdftex.def Info: ./figuras/waveband_no_blur.png used on input line 168.
 
 (pdftex.def)             Requested size: 341.43436pt x 144.23448pt.
 
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
-[23 <./figuras/mainprocessing_breakzone_line.jpg>]
+[26 <./figuras/breakzone_timestack.png> <./figuras/process_breakzone.png>]
 
-LaTeX Warning: Reference `FigThresholdFail' on page 24 undefined on input line 
-147.
+LaTeX Warning: Reference `FigThresholdFail' on page 27 undefined on input line 
+179.
 
-[24 <./figuras/waveband_blur.png> <./figuras/waveband_no_blur.png>]
-<./figuras/waveband_threshold_150.png, id=158, 208.78pt x 144.54pt>
+[27 <./figuras/waveband_blur.png> <./figuras/waveband_no_blur.png>]
+<./figuras/waveband_threshold_150.png, id=175, 208.78pt x 144.54pt>
 File: ./figuras/waveband_threshold_150.png Graphic file (type png)
 
 <use ./figuras/waveband_threshold_150.png>
 Package pdftex.def Info: ./figuras/waveband_threshold_150.png used on input lin
-e 155.
+e 185.
 (pdftex.def)             Requested size: 170.71393pt x 118.19272pt.
 
-Underfull \hbox (badness 1629) in paragraph at lines 155--155
+Underfull \hbox (badness 1629) in paragraph at lines 185--185
 []\OT1/cmr/m/n/10 (a) |\OT1/cmr/m/n/10.95 Regi~ao de es-puma de-tec-tada
  []
 
-<./figuras/waveband_threshold_120.png, id=159, 208.78pt x 144.54pt>
+<./figuras/waveband_threshold_120.png, id=176, 208.78pt x 144.54pt>
 File: ./figuras/waveband_threshold_120.png Graphic file (type png)
 
 <use ./figuras/waveband_threshold_120.png>
 Package pdftex.def Info: ./figuras/waveband_threshold_120.png used on input lin
-e 157.
+e 187.
 (pdftex.def)             Requested size: 170.71393pt x 118.19272pt.
 
-Underfull \hbox (badness 1484) in paragraph at lines 157--157
+Underfull \hbox (badness 1484) in paragraph at lines 187--187
 []\OT1/cmr/m/n/10 (b) |\OT1/cmr/m/n/10.95 Regi~ao de es-puma de-tec-tada
  []
 
-
-Overfull \hbox (6.32051pt too wide) in paragraph at lines 171--171
-[]\OT1/cmr/bx/n/17.28 An^^Salise e In-den-ti-fica^^Xc~ao das On-das Mar^^S^^Pti
-mas 
- []
-
-[25 <./figuras/waveband_threshold_150.png> <./figuras/waveband_threshold_120.pn
-g>] <./figuras/diagrama_analise.png, id=165, 1091.07625pt x 310.15875pt>
+[28 <./figuras/waveband_threshold_150.png> <./figuras/waveband_threshold_120.pn
+g>] <./figuras/diagrama_analise.png, id=182, 1091.07625pt x 310.15875pt>
 File: ./figuras/diagrama_analise.png Graphic file (type png)
 
 <use ./figuras/diagrama_analise.png>
-Package pdftex.def Info: ./figuras/diagrama_analise.png used on input line 177.
+Package pdftex.def Info: ./figuras/diagrama_analise.png used on input line 229.
 
 (pdftex.def)             Requested size: 426.78331pt x 121.3211pt.
- [26 <./figuras/diagrama_analise.png>]
-[27] [28]
-<./figuras/automato_identificacao_onda.png, id=176, 929.4725pt x 207.77625pt>
+
+
+LaTeX Warning: `h' float specifier changed to `ht'.
+
+[29] [30 <./figuras/diagrama_analise.png>] [31]
+<./figuras/automato_identificacao_onda.png, id=194, 929.4725pt x 207.77625pt>
 File: ./figuras/automato_identificacao_onda.png Graphic file (type png)
 
 <use ./figuras/automato_identificacao_onda.png>
 Package pdftex.def Info: ./figuras/automato_identificacao_onda.png used on inpu
-t line 254.
+t line 297.
 (pdftex.def)             Requested size: 426.7825pt x 95.40385pt.
- [29 <./figuras/automato_identificacao_onda.png>]
-<./figuras/process_waves_result.png, id=180, 1394.20876pt x 722.7pt>
+
+
+LaTeX Warning: `h' float specifier changed to `ht'.
+
+[32] <./figuras/process_waves_result.png, id=198, 1394.20876pt x 722.7pt>
 File: ./figuras/process_waves_result.png Graphic file (type png)
 
 <use ./figuras/process_waves_result.png>
 Package pdftex.def Info: ./figuras/process_waves_result.png used on input line 
-263.
+306.
 (pdftex.def)             Requested size: 426.79668pt x 221.23369pt.
-) [30 <./figuras/process_waves_result.png>]
+
+
+LaTeX Warning: `h' float specifier changed to `ht'.
+
+) [33 <./figuras/automato_identificacao_onda.png>] [34 <./figuras/process_waves
+_result.png>]
 Cap\'{\i }tulo 4.
-[31
+[35
 
 ]
 Cap\'{\i }tulo 5.
-[32
+[36
 
 ]
 Cap\'{\i }tulo 6.
-[33
+[37
 
 ] (./tcc_davidbrittojr.bbl
 Underfull \hbox (badness 10000) in paragraph at lines 33--36
@@ -909,7 +977,7 @@ Underfull \hbox (badness 1527) in paragraph at lines 33--36
 06 Ju-nho
  []
 
-[34
+[38
 
 
 ]
@@ -929,9 +997,9 @@ Underfull \hbox (badness 10000) in paragraph at lines 60--62
 []\OT1/cmr/m/n/12 HO, N., ``SIM-PLE VI-DEO STA-BI-LI-ZA-TION USING OPENCV'',
  []
 
-) [35]
+) [39]
 Ap\^endice A.
-(./ApendiceA.tex) [36
+(./ApendiceA.tex) [40
 
 ]
 Ap\^endice B.
@@ -948,7 +1016,7 @@ Final-eps-converted-to.pdf ./figuras/Capa_do_Projeto_Final.eps>
 (epstopdf)             \includegraphics on input line 9.
 Package epstopdf Info: Output file is already uptodate.
 
-<./figuras/Capa_do_Projeto_Final-eps-converted-to.pdf, id=206, 420.57124pt x 52
+<./figuras/Capa_do_Projeto_Final-eps-converted-to.pdf, id=226, 420.57124pt x 52
 0.94624pt>
 File: ./figuras/Capa_do_Projeto_Final-eps-converted-to.pdf Graphic file (type p
 df)
@@ -961,11 +1029,11 @@ Overfull \hbox (50.6844pt too wide) in paragraph at lines 9--9
  [] 
  []
 
-) [37
+) [41
 
-] [38 <./figuras/Capa_do_Projeto_Final-eps-converted-to.pdf>]
+] [42 <./figuras/Capa_do_Projeto_Final-eps-converted-to.pdf>]
 Ap\^endice C.
-(./ApendiceC.tex) [39
+(./ApendiceC.tex) [43
 
 ] (./tcc_davidbrittojr.aux)
 
@@ -973,13 +1041,13 @@ LaTeX Warning: There were undefined references.
 
  ) 
 Here is how much of TeX's memory you used:
- 12544 strings out of 493089
- 210327 string characters out of 6134842
- 292519 words of memory out of 5000000
- 15740 multiletter control sequences out of 15000+600000
+ 12586 strings out of 493089
+ 211741 string characters out of 6134842
+ 291552 words of memory out of 5000000
+ 15775 multiletter control sequences out of 15000+600000
  12746 words of font info for 47 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 55i,10n,92p,1696b,486s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 55i,10n,92p,1807b,486s stack positions out of 5000i,500n,10000p,200000b,80000s
 </usr/local/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb
 ></usr/local/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmbxti10.pf
 b></usr/local/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmcsc10.pf
@@ -994,10 +1062,10 @@ texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/t
 exlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/local/tex
 live/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb></usr/local/texl
 ive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmti12.pfb>
-Output written on tcc_davidbrittojr.pdf (52 pages, 2953989 bytes).
+Output written on tcc_davidbrittojr.pdf (56 pages, 4790425 bytes).
 PDF statistics:
- 314 PDF objects out of 1000 (max. 8388607)
- 168 compressed objects within 2 object streams
+ 335 PDF objects out of 1000 (max. 8388607)
+ 177 compressed objects within 2 object streams
  0 named destinations out of 1000 (max. 500000)
- 101 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 136 words of extra memory for PDF output out of 10000 (max. 10000000)
 

@@ -360,10 +360,10 @@ void stabilize(VideoCapture &cap, ImageProcessor* origProc, ImageProcessor* stab
 
         Mat cur2,originalGreyMat,stableGreyMat,originalTransposedMat,stableTransposedMat;
 
-        if (origProc != NULL && origProc != 0) {
-            cvtColor(cur,originalGreyMat,COLOR_BGR2GRAY);
-       	    origProc->process(originalGreyMat);
-        }
+        // if (origProc != NULL && origProc != 0) {
+        //     cvtColor(cur,originalGreyMat,COLOR_BGR2GRAY);
+       	//     origProc->process(originalGreyMat);
+        // }
 
         warpAffine(cur, cur2, T, cur.size());
 
