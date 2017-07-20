@@ -40,15 +40,15 @@
 
 \section{Aparato Instrumental}
 
-% Está esquecendo do seu trabalho de projeto integrado. Trazer ele para cá fazendo referência aos seus colegas co-autores.
-
 \paragraph{}Como mencionado anteriormente este projeto foi concebido como parte do sistema de monitoramento de praias \textit{GoSurf}, sendo o monitoramento por imagens apenas uma parte do sistema. Esse sistema foi criado para a disciplina Projeto Integrado no ano letivo 2015.1, em conjunto com outro aluno, Filipe Barretto. Para este fim foi desenvolvido um aparato instrumental que adquire dos dados e os analisa previamente por meio de uma central de processamento de dados, e por fim os envia para um servidor na nuvem. O servidor finaliza o processamento dos dados e disponibiliza para os resultados para os usuários por um aplicativo \textit{Android}.
 
-\paragraph{}No projeto de graduação as imagens foram adquiridas de duas formas: através de câmeras de \textit{smartphones} comuns e através da câmera montada no \textit{hardware} apresentado anteriormente. Embora para este projeto a câmera de \textit{smartphones} atenda o requisito, o aparato instrumental é fundamental para o projeto \textit{GoSurf} completo porque agrega sensores extra além da câmera. Outra vantagem do aparato sensorial é a capacidade de realizar o pré-processamento localmente, o que reduz drasticamente o volume de dados que devem ser enviado ao servidor. Por exemplo, um vídeo de 125MB é reduzido para uma imagem de 657KB.
+\paragraph{}No projeto de graduação as imagens foram adquiridas de duas formas: através de câmeras de \textit{smartphones} comuns e através da câmera montada no \textit{hardware} apresentado anteriormente. Embora para este projeto a câmera de \textit{smartphones} atenda o requisito, o aparato instrumental é fundamental para o projeto \textit{GoSurf} completo porque agrega sensores extras além da câmera. Outra vantagem do aparato sensorial é a capacidade de realizar o pré-processamento localmente, o que reduz o volume de dados que devem ser enviado ao servidor. Por exemplo, um vídeo de 125MB é reduzido para uma imagem de 657KB.
 
-\paragraph{}A central de processamento utilizada no projeto GoSurf e no projeto de graduação é um Raspberry Pi, um pequeno computador implementado em uma única placa. O Raspberry Pi é um computador completo, sendo possível instalar diversos sistemas operacionais diferentes. Neste projeto seguiu-se a recomendação oficial e foi utilizado o sistema operacional Raspbian - um sistema operacional Linux baseado em Debian. Por ser baseado em Linux, pode-se utilizar a biblioteca OpenCV para agilizar a implementação do projeto de graduação.
+\paragraph{}A central de processamento utilizada no projeto GoSurf e no projeto de graduação é um Raspberry Pi, um pequeno computador implementado em uma única placa. O Raspberry Pi é um computador completo, sendo possível instalar diversos sistemas operacionais diferentes. Neste projeto seguiu-se a recomendação oficial e foi utilizado o sistema operacional Raspbian - um sistema operacional Linux baseado em Debian. Por ser baseado em Linux, pode-se utilizar a biblioteca de processamento gráfico OpenCV para agilizar a implementação do projeto de graduação.
 
-\paragraph{}Um dos motivos para a escolha do Raspberry Pi foi a facilidade de integrar com uma câmera. Existe um módulo de câmera oficial para o Raspberry Pi \ref{RaspberryCamera}, que foi a câmera escolhida para este projeto. Utilizando este módulo e o sistema operacional Raspbian, a integração com o projeto é trivial, basta conectar a câmera à central de processamento. Esta câmera é capaz de capturar vídeos com resolução 1080p a 30 \textit{frames} por segundo, a mesma qualidade de vídeo utilizada em capturas de vídeo com \textit{smartphones}. O módulo de câmera possui ponto focal fixo na faixa de 1 metro até o infinito, o que não é um problema para o algoritmo pois os objetos de estudo, as ondas do mar, estão localizados nesta faixa. O campo de visão vertical desta câmera é de 41.41 graus (mais ou menos 0.11 graus). Este dado será importante durante a conversão da altura das ondas estimada em \textit{pixels} para metros.
+%Essa referência não está sendo reconhecida
+
+\paragraph{}Um dos motivos para a escolha do Raspberry Pi foi a facilidade de integrar com uma câmera. Existe um módulo de câmera oficial para o Raspberry Pi \ref{RaspberryCamera}, que foi a câmera escolhida para este projeto. Utilizando este módulo e o sistema operacional Raspbian, a integração com o projeto é trivial, basta conectar a câmera à central de processamento. Esta câmera é capaz de capturar vídeos com resolução 1080x720 a 30 \textit{frames} por segundo, a mesma qualidade de vídeo utilizada em capturas de vídeo com \textit{smartphones}. O módulo de câmera possui ponto focal fixo na faixa de 1 metro até o infinito, o que não é um problema para o algoritmo pois os objetos de estudo, as ondas do mar, estão localizados nesta faixa. O campo de visão vertical desta câmera é de 41.41 graus (mais ou menos 0.11 graus). Este dado será importante durante a conversão da altura das ondas estimada em \textit{pixels} para metros.
 
 \paragraph{}O Raspberry Pi ainda conta com um conjunto de pinos de entrada e saída de uso genérico (\textit{GPIOs}). Uma desvantagem do Raspberry Pi com relação a outras centrais de processamento é que ele não possuí \textit{GPIOs} analógicos, somente pinos digitais. Entretanto, como será comentado a seguir, é possível contornar esta desvantagem utilizando conversores analógico-digitais. Estes pinos foram utilizados para ligar os sensores periféricos no projeto GoSurf, um termômetro/higrômetro e um anemômetro. Um circuito simples (Figura \ref{FigPCB}) foi projetado para ligar os sensores à central de processamento. O termômetro / higrômetro utilizado foi o DHT22, que pode ser lido diretamente por um pino digital. Por este motivo ele pode ser ligado diretamente aos pinos da central de processamento, acrescentando somente um resistor \textit{pullup} de 1k$\Omega$ entre sua alimentação e o pino de leitura. O anemômetro escolhido foi o C2192, que possuí um pino de leitura analógico. Para utilizá-lo com o Raspberry Pi foi necessário adicionar um conversor analógico-digital (MCP 3201). Este conversor foi escolhido por apresentar resolução adequada ao projeto (12 \textit{bits}) e possuir interface de saída SPI (\textit{Serial Peripheral Interface} ou Interface Periférica Serial). O Raspberry Pi implementa uma comunicação SPI em pinos específicos, o que torna fácil integrar os dois componentes. Por fim, foi necessário adicionar uma alimentação externa ao circuito, pois o anemômetro precisa de uma alimentação de 7 a 12 volts e a central de processamento só é capaz de fornecer 5V. Foram adicionados um par de pilhas de 4.5V, resultando em uma alimentação total de 9V que atende ao requisito. 
 
@@ -58,6 +58,7 @@
   \caption[\small{Circuito que conecta os sensores à central de processamento.}]{\small{Circuito que conecta os sensores à central de processamento.}}
   \label{FigPCB}
 \end{figure}
+
 %Observe que a intenção desta seção de aparato instrumental é mostrar o hardware utilizado. Aqui você apenas mencionou que existe um hardware. Descreva aqui o hardware do seu experimento.
 
 \section{Estabilização de Vídeo}
@@ -138,10 +139,9 @@
 \section{Processamento Principal}
 
 \begin{figure}[h]
-\begin{center}
+  \centering
   \includegraphics[width=\textwidth,height=\textheight,keepaspectratio]{diagrama_processamento.png}
   \caption[\small{Diagrama de Bloco da etapa de processamento principal.}]{\label{FigDiagramaProc} \small{Diagrama de Bloco da etapa de processamento principal.}}
-\end{center}
 \end{figure}
 
 \paragraph{}A etapa de processamento principal tem como objetivo extrair a linha de arrebentação (figura \ref{FigLinhaArrebentacao}) de um \timestack gerado pelo pré-processamento. A linha de arrebentação é definida como a linha que delimita a região de espuma do restante do mar. Uma característica marcante dessas duas regiões é que a região de espuma apresenta a maioria dos \textit{pixels} com intensidade alta, enquanto o restante do mar apresenta a maioria dos \textit{pixels} com intensidade baixa. Esta característica será explorada para separar a região de espuma do restante da imagem. Em seguida, a borda superior desta região, que corresponde a linha de arrebentação, será analisada para identificar as ondas do mar presentes na imagem e medir a sua altura e periodicidade.
@@ -159,7 +159,14 @@
 
 \section{Suavização}
 
-\paragraph{}A primeira etapa de suavização é realizada utilizando um filtro passa-baixas gaussiano, implementado no domínio do espaço com máscara de tamanho 15, valor escolhido empiricamente após experimentar com imagens de diversos dias diferentes. Este efeito de suavização é importante para reduzir o nível de ruído na imagem, facilitando a identificação das bordas relevantes nos passos subsequentes. Outro efeito desejado é homogeneizar o nível de intensidade das regiões da imagem, de forma que o passo de \textit{thresholding} consiga segmentar a região de arrebentação do \timestack consistentemente. A figura \ref{FigGaussianBlurComparison} ilustra a diferença na segmentação da região de espuma com e sem o passo de suavização. A região de espuma detectada está marcada em vermelho. Nota-se que na figura \ref{FigGaussianBlurComparison}b a região de espuma detectada é influenciada por pequenas faixas de alta intensidade espalhadas na região do mar, enquanto a figura \ref{FigGaussianBlurComparison}a consegue filtrar essa influência e detectar uma região de espuma mais uniforme.
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=.8\textwidth,keepaspectratio]{process_gaussian.jpg}
+  \caption[\small{\textit{Timestack} gerado pelo pré-processamento suavizado pelo filtro gaussiano.}]{\small{\textit{Timestack} gerado pelo pré-processamento suavizado pelo filtro gaussiano.}}
+  \label{FigBlur}
+\end{figure}
+
+\paragraph{}A primeira etapa de suavização é realizada utilizando um filtro passa-baixas gaussiano, implementado no domínio do espaço com máscara de tamanho 15, valor escolhido empiricamente após experimentar com imagens de diversos dias diferentes. A figura \ref{FigBlur} ilustra um \textit{timestack} suavizado pelo processo descrito. Este efeito de suavização é importante para reduzir o nível de ruído na imagem, facilitando a identificação das bordas relevantes nos passos subsequentes. Outro efeito desejado é homogeneizar o nível de intensidade das regiões da imagem, de forma que o passo de \textit{thresholding} consiga segmentar a região de arrebentação do \timestack consistentemente. A figura \ref{FigGaussianBlurComparison} ilustra a diferença na segmentação da região de espuma com e sem o passo de suavização. A região de espuma detectada está marcada em vermelho. Nota-se que na figura \ref{FigGaussianBlurComparison}b a região de espuma detectada é influenciada por pequenas faixas de alta intensidade espalhadas na região do mar, enquanto a figura \ref{FigGaussianBlurComparison}a consegue filtrar essa influência e detectar uma região de espuma mais uniforme.
 
 \begin{figure}[h]
   \centering
@@ -170,15 +177,9 @@
   \label{FigGaussianBlurComparison} 
 \end{figure}
 
-%TODO: Adicionar imagem da primeira suavização
-
 \section{\textit{Thresholding}}
 
 \paragraph{}\textit{Thresholding} é o primeiro passo para realizar a segmentação. Neste passo separa-se a região de espuma do restante do mar, alterando todos os \textit{pixels} com intensidade abaixo de 150 para 0, e todos os \textit{pixels} acima deste valor para o valor de intensidade máximo. O valor limite foi escolhido empiricamente após a análise de diversas imagens, contemplando dias variados. A figura \ref{FigThreshold} compara a região de espuma detectada após o passo de \textit{threshold} com valores diferentes. Pode-se notar na figura \ref{FigThreshold}a uma borda mais estreita sobre a região de espuma observada, enquanto a figura \ref{FigThreshold}b exibe uma região detectada não condizente com o resultado esperado. Inicialmente foi considerado um método de decisão do valor de \threshold dinâmico, mas como discutido previamente, os passos de equalização e remoção do céu realizados durante o pré-processamento permitem utilizar um valor de \threshold estático, independente da condição de iluminação no momento da aquisição do vídeo. 
-
-\paragraph{}Entretanto, dias muito nublados podem causar problemas para o \textit{thresholding}, como pode ser visto na figura \ref{FigThresholdFail}. Nesta figura os valores de intensidade da região de espuma e da região do mar no entorno das ondas se sobrepõe. Neste caso, o \threshold com valor estático não é capaz de separar as duas regiões, impossibilitando a identificação das ondas do mar nos passos subsequentes.
-
-\paragraph{}É importante notar que o \textit{thresholding} apenas isola as regiões cujo nível de intensidade está acima de um certo valor. Mais de uma região pode ser isolada durante esse processo, por exemplo, partes da região do mar pode estar mais clara que o esperado, e por isso serão preservadas pelo \threshold. O passo de segmentação é responsável por filtrar as regiões isoladas pelo \textit{thresholding}.
 
 \begin{figure}[h]
   \centering
@@ -190,11 +191,30 @@
 }
 \end{figure}
 
+\paragraph{}Entretanto, dias muito nublados podem causar problemas para o \textit{thresholding}, como pode ser visto na figura \ref{FigThresholdFail}. Nesta figura os valores de intensidade da região de espuma e da região do mar no entorno das ondas se sobrepõe. Neste caso, o \threshold com valor estático não é capaz de separar as duas regiões, impossibilitando a identificação das ondas do mar nos passos subsequentes.
+
+\begin{figure}[h]
+  \centering
+  \subfloat[\small{\textit{Timestack} gerado pelo pré-processamento do vídeo de um dia nublado.}]{\includegraphics[width=.8\textwidth,keepaspectratio]{IMG_0882.jpg}}
+  \qquad
+  \subfloat[\small{Resultado do \textit{threshold} aplicado ao \textit{timestack} acima.}]{\includegraphics[width=.8\textwidth,keepaspectratio]{process_threshold_fail.jpg}}
+  \caption[\small{\textit{Timestack} e \textit{threshold} do vídeo de um dia nublado.}]{\small{\textit{Timestack} e \textit{threshold} do vídeo de um dia nublado.}}
+  \label{FigThresholdFail}
+\end{figure}
+
+\paragraph{}É importante notar que o \textit{thresholding} apenas isola as regiões cujo nível de intensidade está acima de um certo valor. Mais de uma região pode ser isolada durante esse processo, por exemplo, partes da região do mar pode estar mais clara que o esperado, e por isso serão preservadas pelo \threshold. O passo de segmentação é responsável por filtrar as regiões isoladas pelo \textit{thresholding}.
+
 \section{Segmentação e Detecção de Bordas}
 
-\paragraph{}O último passo do processamento principal é a segmentação. Este passo tem como objetivo identificar a região de espuma dentre as regiões isoladas pelo \textit{thresholding}, e identificar a sua borda externa para ser analisada pela próxima etapa. Primeiro, deve-se identificar todas as regiões isoladas pelo \textit{thresholding}. Como a imagem está binarizada, isto é, todos \textit{pixels} possuem a intensidade mínima ou máxima, as regiões isoladas pelo \textit{thresholding} serão os conjuntos de \textit{pixels} contínuos com intensidade máxima. Neste momento a biblioteca OpenCV agiliza a implementação pois é capaz de realizar a identificação das regiões e a detecção de bordas das mesmas de uma só vez. Para isso utilizou-se a função \textit{findContours}, que produz um vetor com todos contornos das regiões isoladas pelo \textit{thresholding}.
+\paragraph{}O último passo do processamento principal é a segmentação. Este passo tem como objetivo identificar a região de espuma dentre as regiões isoladas pelo \textit{thresholding}, e identificar a sua borda externa para ser analisada pela próxima etapa. Primeiro, deve-se identificar todas as regiões isoladas pelo \textit{thresholding}. Como a imagem está binarizada, isto é, todos \textit{pixels} possuem a intensidade mínima ou máxima, as regiões isoladas pelo \textit{thresholding} serão os conjuntos de \textit{pixels} contínuos com intensidade máxima. Neste momento a biblioteca OpenCV agiliza a implementação pois é capaz de realizar a identificação das regiões e a detecção de bordas das mesmas de uma só vez. Para isso se utilizou a função \textit{findContours}, que produz um vetor com todos contornos das regiões isoladas pelo \textit{thresholding} através do método de detecção de bordas de Suzuki \cite{Suzuki85}.
 
-\paragraph{}Em seguida, calcula-se a área de cada região, a fim de encontrar a região com a maior área. Novamente a biblioteca OpenCV se mostra uma escolha correta para este projeto, pois disponibiliza a função \textit{contourArea} que cálcula uma área de um contorno qualquer identificada pela função \textit{findContours}. Para encontrar a maior região basta percorrer o vetor de contornos obtidos anteriormente, calcular a área de cada elemento do vetor e preservar o índice o elemento de maior área (algoritmo \ref{AlgArea}).
+\paragraph{}Em seguida, calcula-se a área de cada região, a fim de encontrar a região com a maior área. Novamente a biblioteca OpenCV se mostra uma escolha correta para este projeto, pois disponibiliza a função \textit{contourArea} que calcula uma área de um contorno qualquer identificada pela função \textit{findContours}. A função \textit{contourArea} calcula a área através do cálculo do momento de ordem zero ($m_{00}$) da imagem formada pelo contorno. Seja uma imagem descrita por uma matriz $s(x,y)$ contendo a intensidade de cada ponto $(x,y)$ da imagem, o seu momento de ordem zero pode ser descrito pela equação:
+
+\[
+  m_{00} = \sum_{x,y}(s(x,y))
+\]
+
+\noindent{}Então pode-se calcular o momento de um contorno ao invés de uma imagem utilizando o Teorema de Green, que relaciona o cálculo da integral de linha de um contorno fechado com o cálculo da integral dupla da superfície limitada por este contorno. Finalmente, para encontrar a maior região basta percorrer o vetor de contornos obtidos anteriormente, calcular a área de cada elemento do vetor e preservar o índice o elemento de maior área (algoritmo \ref{AlgArea}).
 
 \begin{algorithm}
   \caption{Algoritmo de Busca da Região de Maior Área}
@@ -215,9 +235,16 @@
 \end{algorithmic}
 \end{algorithm}
 
-\paragraph{}Em condições normais a região de maior área será a região de espuma da imagem, então pode-se descartar todas as outras regiões. Por fim basta identificar as bordas da região restante utilizando um método de detecção de bordas. Novamente, para facilitar a implementação foi utilizado o método de Suzuki \cite{Suzuki85} para detecção da borda, pois é o método utilizado na função \textit{findContours} da biblioteca OpenCV. Outro método considerado para esta tarefa é o detector de bordas de Canny, já utilizado no passo de detecção da linha do horizonte, entretanto pela agilidade fornecida pelo OpenCV foi preterido em relação ao método de Suzuki.
+\paragraph{}Em condições normais a região de maior área será a região de espuma da imagem, então pode-se descartar todas as outras regiões. Por fim basta identificar as bordas da região restante utilizando um método de detecção de bordas. Novamente, a utilização da biblioteca OpenCV permitiu realizar a detecção de bordas e identificação das regiões isoladas em um único passo, ou seja, não foi necessário realizar mais nenhuma operação para obter as bordas da região de espuma. Outro método considerado para esta tarefa foi o detector de bordas de Canny (figura \ref{FigCannySuzuki}), já utilizado no passo de detecção da linha do horizonte, entretanto pela agilidade fornecida pelo OpenCV o método de Canny foi preterido.
 
-%Mostrar imagem da borda detectada com Suzuki e com Canny.
+\begin{figure}[h]
+  \centering
+  \subfloat[\small{Região de espuma detectada pelo método de Canny.}]{\includegraphics[width=0.45\textwidth,keepaspectratio]{process_waveband_canny.png}}
+  \qquad
+  \subfloat[\small{Região de espuma detectada pelo método de Suzuki (função findContours).}]{\includegraphics[width=0.45\textwidth,keepaspectratio]{process_waveband_suzuki.png}}
+  \caption[\small{Comparação dos métodos de Canny e Suzuki para detecção de bordas.}]{\small{Comparação dos métodos de Canny e Suzuki para detecção de bordas.}}
+  \label{FigCannSuzuki}
+\end{figure}
 
 \section{Análise e Identificação das Ondas Marítimas}
 
@@ -283,7 +310,8 @@
 
 \section{Identificação das Ondas}
 
-\paragraph{}O último passo para estimar a altura das ondas em um \timestack é identificar as ondas na linha rastreada no passo anterior. Para isso, calcula-se a derivada da sequência discreta $s[n]$, da seguinte forma:
+\paragraph{}O último passo para estimar a altura das ondas em um \timestack é 
+identificar as ondas na linha rastreada no passo anterior. Para isso, calcula-se a derivada da sequência discreta $s[n]$, da seguinte forma:
 
 \[
   s'[n] = s[n] - s[n-1], \text{para n $>$ 0}
@@ -292,17 +320,15 @@
 \noindent{}A sequência $s'[n]$ indica quais trechos da sequência original $s[n]$ são crescentes, decrescentes ou constantes. Então, ao caminhar sobre a sequência derivada $s'[n]$, é trivial determinar quais são as faces crescentes das ondas. Em um cenário ideal, o ponto inicial de uma face crescente corresponde ao ponto mínimo local de uma onda, e o último ponto crescente desta face corresponde ao ponto de máximo local, determinando assim a altura da onda. Entretanto, em uma imagem não ideal podem existir trechos que a derivada é $0$, ou até mesmo negativa, antes da sequência tornar a crescer. A figura \ref{FigAutomato} descreve um autômato que reconhece uma onda considerando as condições descritas anteriormente.
 
 \begin{figure}[h]
-\begin{center}
+  \centering
   \includegraphics[width=\textwidth,height=\textheight,keepaspectratio]{automato_identificacao_onda.png}
   \caption[\small{Autômato Finito Determinístico que identifica uma onda em uma linha de arrebentação.}]{\label{FigAutomato} \small{Autômato Finito Determinístico que identifica uma onda em uma linha de arrebentação.}}
-\end{center}
 \end{figure}
 
 \noindent{}O estado 0 do autômato procura pela primeira derivada $s'[n]$ positiva, marcando o ponto equivalente de $s[n]$ como o mínimo da onda e avançando para o estado 1. O estado 1 procura pela primeira derivada negativa de $s'[n]$, marcando o ponto equivalente de $s[n]$ como candidato ao ponto máximo da onda e andando para o estado 2. Então, os estados 2 e 3 buscam por "buracos" ou \textit{gaps} no trecho de derivada positiva, onde a derivada se torna negativa por um curto período e depois $s[n]$ torna a crescer. O estado 2 procura por novos pontos de máximo, trechos onde a derivada é positiva, e o estado 3 procura por trechos de derivada negativa. Quando o estado 3 encontrar uma derivada positiva, o autômato retorna para o estado 2. Enquanto o estado 3 encontrar derivadas não-positivas um contador de tamanho do \textit{gap} é incrementado. Quando o tamanho do \textit{gap} é superior a um certo limite, o autômato avança para o estado 4, identificando assim que um candidato a uma onda foi encontrado, delimitado pelos pontos de mínimo e máximo encontrados anteriormente. Este candidato apenas será considerado uma onda se sua altura estiver dentro de uma faixa de controle, isto é, são descartadas ondas muito pequenas ou muito grandes. A figura \ref{FigWave} mostra os pares de pontos máximo e mínimo identificados pelo autômato em uma linha de arrebentação aplicados no \timestack original. As linhas verdes unem os pares de pontos encontrados, e as linhas vermelhas evidencia a altura em \textit{pixels} da onda identificada. 
 
 \begin{figure}[h]
-\begin{center}
+  \centering
   \includegraphics[width=\textwidth,height=\textheight,keepaspectratio]{process_waves_result.png}
   \caption[\small{Ondas identificadas pelo autômato.}]{\label{FigWave} \small{Ondas identificadas pelo autômato.}}
-\end{center}
 \end{figure}

@@ -2,6 +2,7 @@
 #include "opencv/cv.h"
 #include <opencv2/core/core.hpp>
 #include <opencv2/highgui/highgui.hpp>
+#include "cannyFilter.h"
 
 /*
  * 
@@ -172,6 +173,12 @@ void WaveBandFinder::findByThreshold() {
     vector<Vec4i> hierarchy;
     double largest_area;
     int largest_contour_index;
+
+    CannyFilter cf;
+    cf.setSourceMat(&srcMat);
+    cf.filter();
+
+    imwrite("output_images/process/process_waveband_canny.jpg",(*cf.getFilteredImage()));
 
     findContours( srcMat, contours, hierarchy, CV_RETR_CCOMP, CV_CHAIN_APPROX_SIMPLE );
 
