@@ -13,12 +13,12 @@ Trajectory::Trajectory() {
 
 Trajectory::Trajectory(cv::Mat& m) {
 	findFirstPoint(m);
-	fill(m);
+	trackLine(m);
 }
 
 Trajectory::Trajectory(cv::Mat& m, cv::Rect area) {
 	findFirstPoint(m,area);
-	fill(m,area);
+	trackLine(m,area);
 }
 
 Trajectory::~Trajectory() {
@@ -26,12 +26,10 @@ Trajectory::~Trajectory() {
 }
 
 bool Trajectory::addPoint(int x, int y) {
-	Trajectory::Point p;
-	p.x = x;
-	p.y = y;
+	Trajectory::Point p(x,y);
 
 	for (int i = 0; i < points.size(); i++)
-		if (points[i].x == x && points[i].y == y)
+		if (points[i].getX() == x && points[i].getY() == y)
 			return false;
 
 	points.push_back(p);
@@ -64,26 +62,32 @@ int Trajectory::calculateHeight(int bottom, int top) {
 	return points[bottom].getY() - points[top].getY();
 }
 
-void Trajectory::calculateDerivative(std::vector<Point>& d) {
+void Trajectory::calculateDerivative(Trajectory& t) {
 	for (int i = 0; i < points.size(); i++) {
-	
 		int x = points[i].getX();
 		int y = points[i].getY();
 
 		if (i > 0) {
 			int dX = x - points[i-1].getX();
 			int dY = y - points[i-1].getY();
-			Point p(dX, dY);
-			d.push_back(p);
+			t.addPoint(dX,dY);
 		}
 	}
 }
 
-void Trajectory::fill(Mat& m) {
-	fill(m,Rect(0,0,m.cols,m.rows));
+void Trajectory::calculateDerivative(std::vector<Point>& d) {
+	Trajectory t;
+	calculateDerivative(t);
+	for (int i = 0; i < t.points.size(); i++) {
+		d.push_back(t.points[i]);
+	}
 }
 
-void Trajectory::fill(Mat& m, Rect roi) {
+void Trajectory::trackLine(Mat& m) {
+	trackLine(m,Rect(0,0,m.cols,m.rows));
+}
+
+void Trajectory::trackLine(Mat& m, Rect roi) {
 	while(true)
 		if (! findNextPoint(m,roi))
 			break;
@@ -97,27 +101,27 @@ bool Trajectory::findNextPoint(Mat& m,Rect roi) {
 	return findNextPoint(m,1,roi);
 }
 
-bool Trajectory::findNextPoint(Mat& m, int threshold, Rect roi) {
+bool Trajectory::findNextPoint(Mat& m, int radius, Rect roi) {
 	Trajectory::Point currentPoint = points.back();
 
 	if (currentPoint.getX() >= (roi.x + roi.width - 2))
 		return false;
 
-	int MAX_THRESHOLD = 3;
+	int MAX_RADIUS = 3;
 
-	int beginY = currentPoint.getY() - threshold > (roi.y + 2) ? currentPoint.getY() - threshold : roi.y + 2;
-	int endY = currentPoint.getY() + threshold < (roi.y + roi.height - 2) ? currentPoint.getY() + threshold : roi.y + roi.height - 2;
+	int beginY = currentPoint.getY() - radius > (roi.y + 2) ? currentPoint.getY() - radius : roi.y + 2;
+	int endY = currentPoint.getY() + radius < (roi.y + roi.height - 2) ? currentPoint.getY() + radius : roi.y + roi.height - 2;
 
-	int beginX = currentPoint.getX() - threshold > (roi.x + 2) ? currentPoint.getX() - threshold : roi.x + 2;
-	int endX = currentPoint.getX() + threshold < (roi.x + roi.width - 2) ? currentPoint.getX() + threshold : roi.x + roi.width - 2;
+	int beginX = currentPoint.getX() - radius > (roi.x + 2) ? currentPoint.getX() - radius : roi.x + 2;
+	int endX = currentPoint.getX() + radius < (roi.x + roi.width - 2) ? currentPoint.getX() + radius : roi.x + roi.width - 2;
 
 	for (int i = beginY; i <= endY; i++)
 		for (int j = beginX; j <= endX; j++)
 			if (m.at<uchar>(i,j) > 0 && addPoint(j,i))
 				return true;
 
-	if (threshold < MAX_THRESHOLD)
-		return findNextPoint(m,threshold+1,roi);
+	if (radius < MAX_RADIUS)
+		return findNextPoint(m,radius+1,roi);
 
 	return false;
 }

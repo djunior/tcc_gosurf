@@ -1,0 +1,430 @@
+\lstset { %
+    language=C++,
+    backgroundcolor=\color{black!5}, % set backgroundcolor
+    basicstyle=\footnotesize,% basic font setting
+}
+
+% Introdução implementação
+\paragraph{}Este capítulo apresentará a implementação do algoritmo discutido no Capítulo 3. Como introduzido anteriormente, a biblioteca de processamento gráfico OpenCV foi utilizada para agilizar a implementação do projeto, as proximas seções apresentarão como a biblioteca foi utilizada para implementar cada etapa do projeto.
+
+%Introdução OpenCV
+\paragraph{}A biblioteca OpenCV \cite{OpenCVOrg} (\textit{Open Source Computer Vision Library}) é uma biblioteca de aprendizado de máquina e visão computacional, distribuída sob a licensa BSD, livre para o desenvolvimento de aplicações academicas e comerciais. Ela foi projetada para ser computacionalmente eficiente e tem foco em aplicações em tempo real. Esta biblioteca implementa diversos algoritmos de visão computacional e aprendizado de máquina (mais de 2500 algoritmos implementados \cite{OpenCVAbout}), incluindo a grande maioria dos algoritmos descritos nos Capítulos 2 e 3. A biblioteca oferece interface de desenvolvimento nas linguagens de programação C++, Python e Java. Para este projeto de graduação a linguagem de programação escolhida foi a linguagem C++, por dois motivos: das três linguagens é a com melhor performance e é a linguagem que o autor possui maior familiaridade.
+
+%Mat
+\paragraph{}O OpenCV apresenta uma estrutura chamada Mat \cite{OpenCVMat} para representar uma matriz qualquer. Esta estrutura será amplamente utilizada no projeto pois é a estrutura que representa uma imagem. As suas propriedades mais importantes são:
+
+\begin{enumerate}
+	\item Número de linhas e número de colunas - determina o comprimento e largura da imagem.
+
+	\item Tipo de elemento da matriz - determina se cada elemento da matriz será um caracter sem sinal ou um \textit{float} / \textit{double}.
+
+	\item Número de canais - determina se cada elemento da matriz será representado com um único valor (nível de cinza) ou com três valores (sistema de cores RGB).
+\end{enumerate}
+
+\noindent{}Neste projeto a maiorias dos Mats utilizados serão do tipo caracter sem sinal e com apenas um canal. Em determinados momentos as matrizes são convertidas para três canais apenas para facilitar a depuração de algum processo intermediário do projeto, como na figura \ref{FigThreshold} onde é desejável exibir uma imagem com cores para visualizar etapas diferentes do projeto sobre a mesma imagem (nessa figura a região de espuma em vermelho sobre o \textit{timestack} original para verificar se a identificação foi correta).
+
+\section{Pré-Processamento}
+
+%Leitura do vídeo do filesystem
+\paragraph{}O pré-processamento inicia pela leitura de um vídeo no \textit{filesystem}. A leitura do vídeo é realizada pela função \textit{imread}. Esta função aceita um parâmetro: uma \textit{string} contendo o caminho no \textit{filesystem} para encontrar o vídeo desejado. Esta função pode retornar um objeto do tipo Mat (quando o arquivo lido é uma imagem) ou um objeto do tipo VideoCapture (quando o objeto lido é um vídeo). O objeto VideoCapture é uma estrutura de dados que representa um vídeo. Para este projeto as propriedades mais importantes dessa estrutura são o número de \textit{frames} por segundo e a duração do vídeo. O número de frames por segundo será utilizado posteriormente para converter a posição no eixo horizontal das ondas encontradas no \textit{timestack} em valores temporais, ou seja, quantos segundos após o início do vídeo as ondas quebraram.
+
+\paragraph{}A partir de um objeto VideoCapture é possível obter um objeto Mat que representa cada \textit{frame} do vídeo, através do operador de deslocamento a esquerda. Pode-se iterar por todos os \textit{frames} do vídeo em um laço \textit{while} da seguinte forma:
+
+\begin{lstlisting}
+// Lendo vídeo do filesystem
+cv::VideoCapture videoCapture = cv::imread("caminho no filesystem"); 
+while (true) { // Laço para iterar sobre as frames do vídeo
+	Mat frame;
+	videoCapture >> frame;
+
+	// Se frame.data == NULL o laço chegou no final do vídeo
+	if (frame.data == NULL) 
+		break;
+
+	// frame pronto para realizar alguma operação
+}
+\end{lstlisting}
+
+%Conversão para nível de cinza
+\paragraph{}Uma vez obtido cada \textit{frame} do vídeo, pode-se implementar o \textit{pipeline} exibido na figura \ref{FigDiagramaPreProc}b. Primeiro, converte-se o \textit{frame} originalmente colorido para nível de cinza. Isto é realizado pela função \textit{cv::cvtColor}. Esta função aceita três parâmetros: um objeto Mat de entrada, um objeto Mat de saída (onde será guardado o resultado da função) e um valor enumerado representando a represetando a operação de conversão que será realizada - \textit{COLOR\_BGR2GRAY} para converter uma imagem no sistema RGB em nível de cinza e \textit{COLOR\_GRAY2BGR} para converter uma imagem em nível de cinza para sistema RGB. O código abaixo exemplifica o uso desta função ao converter um \textit{frame} colorido para nível de cinza:
+
+\begin{lstlisting}
+Mat greyFrame;
+cv::cvtColor(frame,greyFrame,COLOR_BGR2GRAY);
+\end{lstlisting}
+
+%Equalização
+\paragraph{}Após alterar o sistema de cores do \textit{frame}, o próximo passo é equalizar o seu histograma. O uso da biblioteca OpenCV apresenta uma vantagem neste passo pois a função \textit{equalizeHist} calcula o histograma de um objeto Mat de entrada e já o equaliza com apenas uma única chamada de função. Esta função aceita dois parâmetros: o objeto Mat de entrada que será equalizado em um outro objeto Mat onde será guardado o resultado da operação. É importante observar que está função opera apenas sobre objetos Mat com um canal, isto é, em nível de cinza. O código abaixo exemplifica o uso desta função, equalizando um \textit{frame} em nível de cinza:
+
+\begin{lstlisting}
+Mat equalizedFrame;
+cv::equalizeHist(greyFrame,equalizedFrame);
+\end{lstlisting}
+
+%Detecção da Linha do Horizonte
+\paragraph{}A detecção da linha do horizonte é realizada sobre o \textit{frame} em nível de cinza não equalizado. Como discutido no capítulo anterior, é necessário realizar primeiro um passo de detecção de bordas com o método de Canny e então detectar a primeira linha transversal na imagem através do algoritmo \ref{AlgLineTracking}. Primeiro, para detectar as bordas com o algoritmo de Canny utiliza-se a função \textit{Canny} da biblioteca OpenCV. Esta função recebe quatro parâmetros: um objeto Mat de entrada, um objeto Mat de saída, um \textit{double} que representa o valor de \textit{threshold} inferior e um \textit{double} que representa o valor de \textit{threshold} superior. O código abaixo exemplifica o uso desta função:
+
+\begin{lstlisting}
+Mat edgeFrame;
+double lowThreshold = 50.0;
+double highThreshold = 150.0;
+cv::Canny(greyFrame,edgeFrame,lowThreshold,hightThreshold);
+\end{lstlisting}
+
+\paragraph{}Em seguida busca-se pelo primeiro ponto não nulo na primeira coluna da imagem. Em condições normais espera-se que este ponto esteja logo na primeira coluna da imagem, uma vez que a linha de horizonte deve sempre abranger toda o comprimento horizontal da imagem. O código abaixo demonstra como esta busca é implementada:
+
+\begin{lstlisting}
+for (int y = 0; y < edgeFrame.rows; y++) {
+	uchar value = edgeFrame.at<uchar>(y,0);
+	if (value > 0) { // valor não nulo
+		// primeiro ponto encontrado
+		break;
+	}
+}
+\end{lstlisting}
+
+\noindent{}Uma vez encontrado o primeiro ponto, utiliza-se o algoritmo \ref{AlgLineTracking} para rastrear o restante da linha até o final do comprimeiro horizontal da imagem. Para representar as linhas detectadas por este algoritmo foi criado uma classe Trajectory. Esta classe cumpre três funções básicas para este projeto:
+
+\begin{enumerate}
+	\item Implementa os algoritmos de rastreamento de uma linha \ref{AlgFirstPoint} e \ref{AlgLineTracking}.
+
+	\item Mantém um vetor ordenado com os pontos encontrados pelos algoritmos de rastreamento de linha.
+
+	\item Calcula a derivada do seu vetor de pontos ordenados.
+\end{enumerate}
+
+\noindent{}Para representar cada ponto individual criou-se uma classe interna a classe Trajectory denominada Trajectory::Point. O diagrama \ref{DiagTrajectory} apresenta interface de cada classe e demonstra a relação entre as duas.
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=0.8\textwidth,keepaspectratio]{class_diagram_trajectory.png}
+	\caption[\small{Diagrama das classes Trajectory e Trajectory::Point.}]{\small{Diagrama das classes Trajectory e Trajectory::Point.}}
+	\label{DiagTrajectory}
+\end{figure}
+
+\paragraph{}O algoritmo \ref{AlgFirstPoint} é implementado no método Trajectory::findFirstPoint(cv::Mat\&,cv::Rect) conforme o código abaixo:
+
+\begin{lstlisting}
+void Trajectory::findFirstPoint(cv::Mat& mat, cv::Rect roi) {
+	int width = mat.cols;
+	int height = mat.rows;
+
+	for (int i = (1+roi.x); i < (roi.x + roi.width - 1); i++) {
+		Mat col = mat.col(i);
+
+		bool found = false;
+		for (int j = (roi.y); j < (roi.y+roi.height - 1); j++) {
+			if (col.at<uchar>(j) > 0) {
+				found = true;
+				addPoint(i,j);
+				break;
+			}
+		}
+
+		if (found)
+			break;
+
+	}	
+}
+\end{lstlisting}
+
+\noindent{}O parâmetro mat define qual a imagem onde o método deve procurar pelo primeiro ponto. O método Trajectory::addPoint verifica se este ponto já foi adicionado ao vetor de pontos do objeto Trajectory, e em caso negativo o adiciona ao final do vetor. O parâmetro roi define uma região retangular que é a região de interesse sobre a qual o método operará. O primeiro ponto deve ser procurado dentro da região definida pelo parâmetro roi. Caso o parâmetro roi seja omitido, a região interesse considerada será a imagem inteira.
+
+\paragraph{}O algoritmo \ref{AlgLineTracking} é implementado nos métodos Trajectory::trackLine(cv::Mat\&,cv::Rect) e Trajectory::findNextPoint(cv::Mat\&,int,cv::Rect), conforme o código abaixo:
+
+\begin{lstlisting}
+void Trajectory::trackLine(Mat& m, Rect roi) {
+	while(true)
+		if (! findNextPoint(m,1,roi))
+			break;
+}
+
+bool Trajectory::findNextPoint(Mat& m, int radius, Rect roi) {
+	Trajectory::Point currentPoint = points.back();
+
+	if (currentPoint.getX() >= (roi.x + roi.width - 1))
+		return false;
+
+	int MAX_RADIUS = 3;
+
+	int beginY = currentPoint.getY() - radius > (roi.y) ? currentPoint.getY() - radius : roi.y;
+	int endY = currentPoint.getY() + radius < (roi.y + roi.height - 1) ? currentPoint.getY() + radius : roi.y + roi.height - 1;
+
+	int beginX = currentPoint.getX() - radius > (roi.x) ? currentPoint.getX() - radius : roi.x;
+	int endX = currentPoint.getX() + radius < (roi.x + roi.width - 1) ? currentPoint.getX() + radius : roi.x + roi.width - 1;
+
+	for (int i = beginX; i <= endX; i++)
+		for (int j = beginY; j <= endY; j++)
+			if (m.at<uchar>(j,i) > 0 && addPoint(i,j))
+				return true;
+
+	if (radius < MAX_RADIUS)
+		return findNextPoint(m,radius+1,roi);
+
+	return false;
+}
+\end{lstlisting}
+
+\noindent{}Novamente o parâmetro mat define qual a imagem onde o método deve procurar pelo próximo ponto, e o parâmetro roi é a região de interesse na imagem que delimita a região onde o método deve procurar pelo ponto. O parâmetro radius indica qual é o raio de busca do algoritmo, isto é, quão distânte do último ponto encontrado o método deve procurar por um ponto novo. Como no método Trajectory::findFirstPoint(cv::Mat\&,cv::Rect) o parâmetro roi pode ser omitido, assumindo então que a região de interesse é a imagem inteira. O parâmetro radius pode ser omitido também, neste caso assume-se o valor de raio igual a um, que é menor raio possível.
+
+%Remoção do Céu
+\paragraph{}O último passo realizado sobre cada \textit{frame} é a remoção do céu. Este passo é realizado baseado na linha do horizonte rastreada no passo anterior e no \textit{frame} equalizado obtido na etapa de equalização de histograma. Basta então percorrer todos os \textit{pixels} do \textit{frame} equalizado, e alterar o valor de intensidade dos \textit{pixels} acima da linha de horizonte detectada para zero. O código abaixo ilustra como esse passo é realizado:
+
+\begin{lstlisting}
+Trajectory trajectory;
+Rect roi(0,0,1,edgeFrame.rows);
+trajectory.findFirstPoint(edgeFrame,roi);
+trajectory.trackLine();
+for (int i = 0; i < trajectory.points.size(); i++) {
+	Trajectory::Point p = trajectory.getPoint(i);
+	for (int j = 0; j < p.getY(); j++) {
+		equalizedFrame.at<uchar>(j,i) = 0;
+	}
+}
+\end{lstlisting}
+
+\noindent{}Onde a variável edgeFrame é um objeto Mat resultante do passo de detecção de linha do horizonte, e a variável equalizedFrame é o objeto Mat resultante do passo de equalização de histograma.
+
+\paragraph{}Como este passo é realizado para todos os \textit{frames} do vídeo, é possível otimizá-lo, aproveitando-se do fato que a estabilidade do vídeo é garantida no momento da sua captura. O fato do vídeo ser estável implica que a linha do horizonte sempre estará na mesma posição \textit{frame} a \textit{frame}, então não é necessário detectar uma nova linha do horizonte para cada \textit{frame} do vídeo, basta identifica-la uma única vez e utilizá-la para remover o céu de todos os \textit{frames}. Durante o processamento do primeiro \textit{frame} monta-se um objeto Mat do mesmo tamanho do \textit{frame} que servirá como uma máscara. Então, uma vez detectada a linha do horizonte, altera-se a máscara de forma que todos os \textit{pixels} abaixo da linha do horizonte possuam valor de intensidade máximo e todos os \textit{pixels} acima da linha do horizonte tenham intensidade mínima. O código abaixo mostra como montar a máscara :
+
+\begin{lstlisting}
+Trajectory trajectory;
+cv::Rect roi(0,0,1,edgeFrame.rows);
+trajectory.findFirstPoint(edgeFrame,roi);
+trajectory.trackLine();
+
+cv::Mat skyRemoverMask = cv::Mat::ones(equalizedFrame.size(),equalizedFrame.type());
+
+for (int i = 0; i < trajectory.points.size(); i++) {
+	Trajectory::Point p = trajectory.getPoint(i);
+	for (int j = 0; j < p.getY(); j++) {
+		skyRemoverMask.at<uchar>(j,i) = 0;
+	}
+}
+\end{lstlisting}
+
+\noindent{}Para remover o céu aplica-se a máscara a cada \textit{frame} equalizado através do método Mat::copyTo(Mat,Mat). Este método copia um objeto Mat para outro, sendo que uma máscara pode ser especificada com o segundo parâmetro para definir quais \textit{pixels} do objeto original serão copiados. O código abaixo ilustra como esta função é utilizada em conjunto com a máscara criada anteriormente:
+
+\begin{lstlisting}
+cv::Mat skyRemovedFrame;
+equalizedFrame.copyTo(skyRemovedFrame,skyRemoverMask);
+\end{lstlisting}
+
+%Timestack
+\paragraph{}O último passo do pré-processamento é a geração do \textit{timestack} a partir dos \textit{frames} processados. Como discutido no Capítulo 3, um \textit{timestack} é formado pelo acumulo de uma mesma coluna de cada \textit{frame} de um vídeo. Então, para formar um \textit{timestack} genérico basta iterar por todos os \textit{frames} de um vídeo, selecionar uma coluna com o mesmo índice de cada \textit{frame} e o acumula-lo em um único objeto Mat. O código abaixo exibe como gerar um \textit{timestack} genérico que acumula a coluna central de cada \textit{frame}:
+
+\begin{lstlisting}
+cv::VideoCapture videoCapture = cv::imread("caminho no filesystem"); 
+
+// O método VideoCapture::get obtém um propriedade do vídeo
+// especificada pelo segundo parâmetro
+int frameHeight = videoCapture.get(cv::CV_CAP_PROP_FRAME_HEIGHT); 
+
+// O terceiro parâmetro (cv::CV_8UC1) especifica o tipo e número de canais
+// do objeto Mat que será criado.
+cv::Mat timestack(0,frameHeight,cv::CV_8UC1,0);
+
+while (true) {
+	cv::Mat frame;
+	videoCapture >> frame;
+
+	if (frame.data == NULL) 
+		break;
+
+	// O método Mat::col retorna a coluna do índice especificado 
+	// como parâmetro.
+	cv::Mat middleColumn = frame.col(frame.cols/2);
+
+	// O método Mat::push_back adiciona parâmetro Mat ao final do
+	// objeto Mat que está sendo aplicado.
+	timestack.push_back(middleColumn);
+}
+\end{lstlisting}
+
+\paragraph{}Os passos descritos até aqui compõem juntos o pré-processamento completo, como ilustrado a seguir:
+
+\begin{lstlisting}
+// Lendo o vídeo do filesystem
+cv::VideoCapture videoCapture = cv::imread("caminho no filesystem"); 
+
+int frameWidth = videoCapture.get(cv::CV_CAP_PROP_FRAME_WIDTH); 
+int frameHeight = videoCapture.get(cv::CV_CAP_PROP_FRAME_HEIGHT); 
+
+// Criando objeto Mat que irá guardar o timestack
+cv::Mat timestack(0,frameHeight,cv::CV_8UC1,0);
+
+// Criando objeto Mat que irá guardar a máscara de remoção do céu
+cv::Mat skyRemoverMask = cv::Mat::ones(cv::Size(frameWidth,frameHeight),cv::CV_8UC1);
+bool isMaskReady = false;
+
+// Iterando sobre os frames do vídeo
+while (true) {
+	cv::Mat frame;
+	videoCapture >> frame;
+
+	// Verificando se o frame é válido
+	if (frame.data == NULL) 
+		break;
+
+	// Conversão para nível de cinza
+	Mat greyFrame;
+	cv::cvtColor(frame,greyFrame,COLOR_BGR2GRAY);
+
+	// Se a máscara não estiver pronta (primeira execução),
+	// é necessário detectar a linha do horizonte
+	if (! isMaskReady) {
+		// Detecção da linha do horizonte
+		Mat edgeFrame;
+		double lowThreshold = 50.0;
+		double highThreshold = 150.0;
+		cv::Canny(greyFrame,edgeFrame,lowThreshold,hightThreshold);
+
+		// Construção da máscara para remoção da linha do horizonte
+		Trajectory trajectory;
+		cv::Rect roi(0,0,1,edgeFrame.rows);
+		trajectory.findFirstPoint(edgeFrame,roi);
+		trajectory.trackLine();
+
+		cv::Mat skyRemoverMask = cv::Mat::ones(equalizedFrame.size(),equalizedFrame.type());
+
+		for (int i = 0; i < trajectory.points.size(); i++) {
+			Trajectory::Point p = trajectory.getPoint(i);
+			for (int j = 0; j < p.getY(); j++) {
+				skyRemoverMask.at<uchar>(j,i) = 0;
+			}
+		}
+
+		// Alterando o valor da variável para otimização
+		isMaskReady = true;
+	}
+
+	// Equalizando o frame
+	Mat equalizedFrame;
+	cv::equalizeHist(greyFrame,equalizedFrame);
+
+	// Remoção do Céu
+	cv::Mat skyRemovedFrame;
+	equalizedFrame.copyTo(skyRemovedFrame,skyRemoverMask);
+
+	// Gerando o timestack
+	cv::Mat middleColumn = equalizedFrame.col(equalizedFrame.cols/2);
+	timestack.push_back(middleColumn);
+}
+\end{lstlisting}
+
+\section{Processamento Principal}
+
+\paragraph{}O processamento principal, como discutido no capítulo anterior, opera sobre um \textit{timestack} gerado pelo pré-processamento e tem como saída a linha de arrebentação da região de espuma do \textit{timestack}. Também foi discutido que o pré-processamento e o processamento principal podem ocorrer em dispositivos diferentes, o pré-processamento no aparato de \textit{hardware} que realiza a captura do vídeo e o processamento principal em um servidor na nuvem. Dito isso, o primeiro passo do processamento principal é a leitura de um \textit{timestack} no \textit{filesystem}. Assim como no pré-processamento, a leitura é feita pela função \textit{imread}. O código abaixo exemplifica como isto é feito:
+
+\begin{lstlisting}
+cv::Mat timestackMat = cv::imread("caminho para o timestack");
+\end{lstlisting}
+
+%Suavização
+\paragraph{}O passo de suavização é o primeiro passo realizado após a leitura do \textit{timestack} do \textit{filesystem}. Para isso é utilizada a função \textit{GaussianBlur} que aceita quatro parâmetros: um objeto Mat de entrada, um objeto Mat de saída, um objeto Size indicando o tamanho da máscara do filtro gaussiano, um valor double indicando o desvio padrão da máscara do filtro gaussiano. O código abaixo ilustra como está função é utilizada:
+
+\begin{lstlisting}
+cv::Size kernelSize(15,15);
+double standardDeviation = 0;
+cv::Mat blurredMat;
+cv::GaussianBlur(timestackMat,blurredMat,kernelSize,standardDeviation);
+\end{lstlisting}
+
+%Thresholding
+\paragraph{}A seguir é realizada o passo de \textit{thresholding}. Este passo é realizado utilizando a função \textit{threshold}, que recebe cinco parâmetros: um objeto Mat de entrada, um objeto Mat de saída, um valor double indicando o valor limite do \textit{threshold}, um valor double indicando qual é o valor máximo utilizado em \textit{threshold} de binarização, e um valor inteiro indicando qual o tipo de \textit{threshold} que será aplicado. Os tipos de \textit{threshold} disponíveis são: cv::THRESH_BINARY, cv::THRESH_BINARY_INV, cv::THRESH_TRUNC, cv::THRESH_TOZERO e cv::THRESH_TOZERO_INV. Neste projeto será utilizado o tipo cv::THRESH_BINARY. O código abaixo exibe como esta função é utilizada:
+
+\begin{lstlisting}
+double thresholdLimit = 150;
+double maxValue = 255;
+cv::Mat thresholdedMat;
+cv::threshold(blurredMat,thresholdedMat,thresholdLimit,maxValue,cv::THRESH_BINARY);
+\end{lstlisting}
+
+% \noindent{}O tipo de \textit{thresholding} cv::THRESH_BINARY indica que qualquer \texit{pixel} do objeto Mat de entrada com valor de intensidade acima do valor limite será alterado para o valor máximo, e qualquer \texit{pixel} do objeto Mat de entrada com valor de intensidade abaixo do valor limite será alterado para zero.
+
+% Segmentação e Detecção de Bordas
+\paragraph{}O último passo do processamento principal é a segmentação e a detecção de bordas. Um pouco da implementação deste passo já foi discutido no Capítulo 3. É utilizada a função \textit{findContours} para identificar as regiões isoladas pelo \textit{thresholding} e detectar as suas bordas, e em seguida a função \textit{contourArea} é utilizada para selecionar dentre as regiões identificadas qual é a região de maior área. Por último, a função \textit{drawContours} é utilizada para formar um objeto Mat com apenas a borda da região de espuma. A função \textit{findContours} recebe cinco parâmetros: um objeto Mat de entrada, um de vetor de vetores de objetos Point indicando os contornos encontrados, um vetor de vetores de inteiros indicando a relação de hierarquia entre os contornos, um inteiro indicando o modo de operação e um inteiro indicando o método de aproximação de contornos. Os modos de operação possíveis são: cv::CV_RETR_EXTERNAL, cv::CV_RETR_LIST, cv::CV_RETR_CCOMP e cv::CV_RETR_TREE. Os métodos de aproximação possíveis são: cv::CV_CHAIN_APPROX_NONE, cv::CV_CHAIN_APPROX_SIMPLE, cv::CV_CHAIN_APPROX_TC89_L1 e cv::CV_CHAIN_APPROX_TC89_KCOS. O código abaixo exibe como a função \textit{findContours} é utilizada:
+
+\begin{lstlisting}
+vector< vector<cv::Point> > contours;
+vector<cv::Vec4i> hierarchy;
+findContours( thresholdedMat, contours, hierarchy, cv::CV_RETR_CCOMP, cv::CV_CHAIN_APPROX_SIMPLE );
+\end{lstlisting}
+
+\noindent{}O modo de operação cv::CV_RETR_CCOMP organiza os contornos encontrados em dois níveis: contornos externos e contornos internos. Desta forma, é possível eliminar "buracos" dentro da região de espuma que podem surgir na operação de \textit{thresholding}. Em seguida, a área de cada contorno encontrado é calculada e então determina-se a região de maior utilizando a função \textit{contourArea}. Esta função recebe dois parâmetros: um vetor de objetos Point indicando o contorno que será calculado a área, e um valor boleano indicando se a área é orientada ou não. O código abaixo ilustra como esta função é utilizada:
+
+\begin{lstlisting}
+vector<cv::Point> contour;
+// ...
+double area = contourArea(contour,false);
+\end{lstlisting}
+
+\noindent{}Dado um vetor de contornos (vetor de vetores de objetos Point), pode-se determinar o contorno de maior área com o código abaixo:
+
+\begin{lstlisting}
+double largest_area = 0;
+double largest_contour_index = 0;
+for (int i = 0; i< contours.size(); i++) {
+   double area = contourArea(contours[i],false);
+   if (area > largest_area) {
+       largest_area = area;
+       largest_contour_index = i;
+    }
+}
+\end{lstlisting}
+
+\noindent{}Por último é criado um objeto Mat contendo apenas o maior contorno encontrado através da função \textit{drawContours}. Esta função recebe quatro parâmetros: um objeto Mat de saída, um vetor de contornos contendo todos os contornos detectados, um inteiro indicando o indíce do contorno que deve ser desenhado no objeto Mat e um objeto Color indicando a cor que deve ser desenhado. O código abaixo ilustra como está função é utilizada:
+
+\begin{lstlisting}
+cv::Scalar color( 255, 255, 255 );
+cv::Mat contourMat(thresholdedMat.rows,thresholdedMat.cols,cv::CV_8UC1,cv::Scalar::all(0));
+cv::drawContours( contourMat, contours, largest_contour_index, color );
+\end{lstlisting}
+
+\paragraph{}O processamento principal pode ser implementado por completo unindo os passos apresentados nesta seção, coforme o código abaixo:
+
+\begin{lstlisting}
+// Lendo imagem do filesystem
+cv::Mat timestackMat = cv::imread("caminho para o timestack");
+
+// Suavização
+cv::Size kernelSize(15,15);
+double standardDeviation = 0;
+cv::Mat blurredMat;
+cv::GaussianBlur(timestackMat,blurredMat,kernelSize,standardDeviation);
+
+// Threshold
+double thresholdLimit = 150;
+double maxValue = 255;
+cv::Mat thresholdedMat;
+cv::threshold(blurredMat,thresholdedMat,thresholdLimit,maxValue,cv::THRESH_BINARY);
+
+// Identificação dos Contornos
+vector< vector<cv::Point> > contours;
+vector<cv::Vec4i> hierarchy;
+findContours( thresholdedMat, contours, hierarchy, cv::CV_RETR_CCOMP, cv::CV_CHAIN_APPROX_SIMPLE );
+
+// Determinação da maior região
+double largest_area = 0;
+double largest_contour_index = 0;
+for (int i = 0; i< contours.size(); i++) {
+   double area = contourArea(contours[i],false);
+   if (area > largest_area) {
+       largest_area = area;
+       largest_contour_index = i;
+    }
+}
+
+// Geração o objeto Mat com apenas o contorno desejado
+cv::Scalar color( 255, 255, 255 );
+cv::Mat contourMat(thresholdedMat.rows,thresholdedMat.cols,cv::CV_8UC1,cv::Scalar::all(0));
+cv::drawContours( contourMat, contours, largest_contour_index, color );
+\end{lstlisting}
+
+\section{Análise e Identificação de Ondas Marítimas}
+
+%Rastreamento da Linha de Ondas
+\paragraph{}
+
+%Identificação das Ondas
+\paragraph{}

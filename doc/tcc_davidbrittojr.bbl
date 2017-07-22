@@ -56,6 +56,11 @@ FUSIELLO, A., \enquote{Elements of Geometric Computer Vision},
   http://homepages.inf.ed.ac.uk/rbf/CVonline/LOCAL\_COPIES/FUSIELLO4/tutorial.html,
   2017, (Acesso em 10 Junho 2017).
 
+\bibitem{RaspberryCamera}
+FOUNDATION, R.~P., \enquote{Camera Module},
+  https://www.raspberrypi.org/documentation/hardware/camera/, 2017, (Acesso em
+  15 Julho 2017).
+
 \bibitem{Ho2014}
 HO, N., \enquote{SIMPLE VIDEO STABILIZATION USING OPENCV},
   http://nghiaho.com/?p=2093, 2014, (Acesso em 04 Abril 2017).
@@ -64,5 +69,18 @@ HO, N., \enquote{SIMPLE VIDEO STABILIZATION USING OPENCV},
 SUZUKI, S., ABE, K., \enquote{Topological structural analysis of digitized
   binary images by border following.}, \emph{Computer Vision, Graphics, and
   Image Processing}, v.~30, n.~1, pp.~32--46, 1985.
+
+\bibitem{OpenCVOrg}
+OPENCV, \enquote{OpenCV Home Page}, http://opencv.org/, 2017, (Acesso em 20
+  Julho 2017).
+
+\bibitem{OpenCVAbout}
+OPENCV, \enquote{OpenCV About}, http://opencv.org/about.html, 2017, (Acesso em
+  20 Julho 2017).
+
+\bibitem{OpenCVMat}
+OPENCV, \enquote{Mat Class Reference},
+  http://docs.opencv.org/3.1.0/d3/d63/classcv\_1\_1Mat.html, 2017, (Acesso em
+  20 Julho 2017).
 
 \end{thebibliography}

@@ -38,7 +38,7 @@ public:
 
 		Trajectory t;
 		t.addPoint(0,y);
-		t.fill(m);
+		t.trackLine(m);
 		mask = Mat::ones(m.size(),CV_8UC1);
 
 		cout << "Trajectory size: " << t.points.size() << endl;
