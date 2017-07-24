@@ -5,10 +5,10 @@
 }
 
 % Introdução implementação
-\paragraph{}Este capítulo apresentará a implementação do algoritmo discutido no Capítulo 3. Como introduzido anteriormente, a biblioteca de processamento gráfico OpenCV foi utilizada para agilizar a implementação do projeto, as proximas seções apresentarão como a biblioteca foi utilizada para implementar cada etapa do projeto.
+\paragraph{}Este capítulo apresentará a implementação do algoritmo discutido no Capítulo 3. Como introduzido anteriormente, a biblioteca de processamento gráfico OpenCV foi utilizada para agilizar a implementação do projeto, as próximas seções apresentarão como a biblioteca foi utilizada para implementar cada etapa do projeto.
 
 %Introdução OpenCV
-\paragraph{}A biblioteca OpenCV \cite{OpenCVOrg} (\textit{Open Source Computer Vision Library}) é uma biblioteca de aprendizado de máquina e visão computacional, distribuída sob a licensa BSD, livre para o desenvolvimento de aplicações academicas e comerciais. Ela foi projetada para ser computacionalmente eficiente e tem foco em aplicações em tempo real. Esta biblioteca implementa diversos algoritmos de visão computacional e aprendizado de máquina (mais de 2500 algoritmos implementados \cite{OpenCVAbout}), incluindo a grande maioria dos algoritmos descritos nos Capítulos 2 e 3. A biblioteca oferece interface de desenvolvimento nas linguagens de programação C++, Python e Java. Para este projeto de graduação a linguagem de programação escolhida foi a linguagem C++, por dois motivos: das três linguagens é a com melhor performance e é a linguagem que o autor possui maior familiaridade.
+\paragraph{}A biblioteca OpenCV \cite{OpenCVOrg} (\textit{Open Source Computer Vision Library}) é uma biblioteca de aprendizado de máquina e visão computacional, distribuída sob a licença BSD, livre para o desenvolvimento de aplicações acadêmicas e comerciais. Ela foi projetada para ser computacionalmente eficiente e tem foco em aplicações em tempo real. Esta biblioteca implementa diversos algoritmos de visão computacional e aprendizado de máquina (mais de 2500 algoritmos implementados \cite{OpenCVAbout}), incluindo a grande maioria dos algoritmos descritos nos Capítulos 2 e 3. A biblioteca oferece interface de desenvolvimento nas linguagens de programação C++, Python e Java. Para este projeto de graduação a linguagem de programação escolhida foi a linguagem C++, por dois motivos: das três linguagens é a com melhor performance e é a linguagem que o autor possui maior familiaridade.
 
 %Mat
 \paragraph{}O OpenCV apresenta uma estrutura chamada Mat \cite{OpenCVMat} para representar uma matriz qualquer. Esta estrutura será amplamente utilizada no projeto pois é a estrutura que representa uma imagem. As suas propriedades mais importantes são:
@@ -16,17 +16,17 @@
 \begin{enumerate}
 	\item Número de linhas e número de colunas - determina o comprimento e largura da imagem.
 
-	\item Tipo de elemento da matriz - determina se cada elemento da matriz será um caracter sem sinal ou um \textit{float} / \textit{double}.
+	\item Tipo de elemento da matriz - determina se cada elemento da matriz será um char sem sinal ou um \textit{float} / \textit{double}.
 
 	\item Número de canais - determina se cada elemento da matriz será representado com um único valor (nível de cinza) ou com três valores (sistema de cores RGB).
 \end{enumerate}
 
-\noindent{}Neste projeto a maiorias dos Mats utilizados serão do tipo caracter sem sinal e com apenas um canal. Em determinados momentos as matrizes são convertidas para três canais apenas para facilitar a depuração de algum processo intermediário do projeto, como na figura \ref{FigThreshold} onde é desejável exibir uma imagem com cores para visualizar etapas diferentes do projeto sobre a mesma imagem (nessa figura a região de espuma em vermelho sobre o \textit{timestack} original para verificar se a identificação foi correta).
+\noindent{}Neste projeto a maiorias dos Mats utilizados serão do tipo char sem sinal e com apenas um canal. Em determinados momentos as matrizes são convertidas para três canais apenas para facilitar a depuração de algum processo intermediário do projeto, como na figura \ref{FigThreshold} onde é desejável exibir uma imagem com cores para visualizar etapas diferentes do projeto sobre a mesma imagem (nessa figura a região de espuma em vermelho sobre o \textit{timestack} original para verificar se a identificação foi correta).
 
 \section{Pré-Processamento}
 
 %Leitura do vídeo do filesystem
-\paragraph{}O pré-processamento inicia pela leitura de um vídeo no \textit{filesystem}. A leitura do vídeo é realizada pela função \textit{imread}. Esta função aceita um parâmetro: uma \textit{string} contendo o caminho no \textit{filesystem} para encontrar o vídeo desejado. Esta função pode retornar um objeto do tipo Mat (quando o arquivo lido é uma imagem) ou um objeto do tipo VideoCapture (quando o objeto lido é um vídeo). O objeto VideoCapture é uma estrutura de dados que representa um vídeo. Para este projeto as propriedades mais importantes dessa estrutura são o número de \textit{frames} por segundo e a duração do vídeo. O número de frames por segundo será utilizado posteriormente para converter a posição no eixo horizontal das ondas encontradas no \textit{timestack} em valores temporais, ou seja, quantos segundos após o início do vídeo as ondas quebraram.
+\paragraph{}O pré-processamento inicia pela leitura de um vídeo no \textit{filesystem}. A leitura do vídeo é realizada pela função \textit{imread}. Esta função aceita um parâmetro: uma \textit{string} contendo o caminho no \textit{filesystem} para encontrar o vídeo desejado. Esta função pode retornar um objeto do tipo Mat (quando o arquivo lido é uma imagem) ou um objeto do tipo VideoCapture (quando o objeto lido é um vídeo). O objeto VideoCapture é uma estrutura de dados que representa um vídeo. Para este projeto as propriedades mais importantes dessa estrutura são o número de \textit{frames} por segundo e a duração do vídeo. O número de \textit{frames} por segundo será utilizado posteriormente para converter a posição no eixo horizontal das ondas encontradas no \textit{timestack} em valores temporais, ou seja, quantos segundos após o início do vídeo as ondas quebraram.
 
 \paragraph{}A partir de um objeto VideoCapture é possível obter um objeto Mat que representa cada \textit{frame} do vídeo, através do operador de deslocamento a esquerda. Pode-se iterar por todos os \textit{frames} do vídeo em um laço \textit{while} da seguinte forma:
 
@@ -46,7 +46,7 @@ while (true) { // Laço para iterar sobre as frames do vídeo
 \end{lstlisting}
 
 %Conversão para nível de cinza
-\paragraph{}Uma vez obtido cada \textit{frame} do vídeo, pode-se implementar o \textit{pipeline} exibido na figura \ref{FigDiagramaPreProc}b. Primeiro, converte-se o \textit{frame} originalmente colorido para nível de cinza. Isto é realizado pela função \textit{cv::cvtColor}. Esta função aceita três parâmetros: um objeto Mat de entrada, um objeto Mat de saída (onde será guardado o resultado da função) e um valor enumerado representando a represetando a operação de conversão que será realizada - \textit{COLOR\_BGR2GRAY} para converter uma imagem no sistema RGB em nível de cinza e \textit{COLOR\_GRAY2BGR} para converter uma imagem em nível de cinza para sistema RGB. O código abaixo exemplifica o uso desta função ao converter um \textit{frame} colorido para nível de cinza:
+\paragraph{}Uma vez obtido cada \textit{frame} do vídeo, pode-se implementar o \textit{pipeline} exibido na figura \ref{FigDiagramaPreProc}b. Primeiro, converte-se o \textit{frame} originalmente colorido para nível de cinza. Isto é realizado pela função \textit{cv::cvtColor}. Esta função aceita três parâmetros: um objeto Mat de entrada, um objeto Mat de saída (onde será guardado o resultado da função) e um valor enumerado representando a representando a operação de conversão que será realizada - \textit{COLOR\_BGR2GRAY} para converter uma imagem no sistema RGB em nível de cinza e \textit{COLOR\_GRAY2BGR} para converter uma imagem em nível de cinza para sistema RGB. O código abaixo exemplifica o uso desta função ao converter um \textit{frame} colorido para nível de cinza:
 
 \begin{lstlisting}
 Mat greyFrame;
@@ -83,7 +83,7 @@ for (int y = 0; y < edgeFrame.rows; y++) {
 }
 \end{lstlisting}
 
-\noindent{}Uma vez encontrado o primeiro ponto, utiliza-se o algoritmo \ref{AlgLineTracking} para rastrear o restante da linha até o final do comprimeiro horizontal da imagem. Para representar as linhas detectadas por este algoritmo foi criado uma classe Trajectory. Esta classe cumpre três funções básicas para este projeto:
+\noindent{}Uma vez encontrado o primeiro ponto, utiliza-se o algoritmo \ref{AlgLineTracking} para rastrear o restante da linha até o final do comprimento horizontal da imagem. Para representar as linhas detectadas por este algoritmo foi criado uma classe Trajectory. Esta classe cumpre três funções básicas para este projeto:
 
 \begin{enumerate}
 	\item Implementa os algoritmos de rastreamento de uma linha \ref{AlgFirstPoint} e \ref{AlgLineTracking}.
@@ -331,7 +331,9 @@ cv::GaussianBlur(timestackMat,blurredMat,kernelSize,standardDeviation);
 \end{lstlisting}
 
 %Thresholding
-\paragraph{}A seguir é realizada o passo de \textit{thresholding}. Este passo é realizado utilizando a função \textit{threshold}, que recebe cinco parâmetros: um objeto Mat de entrada, um objeto Mat de saída, um valor double indicando o valor limite do \textit{threshold}, um valor double indicando qual é o valor máximo utilizado em \textit{threshold} de binarização, e um valor inteiro indicando qual o tipo de \textit{threshold} que será aplicado. Os tipos de \textit{threshold} disponíveis são: cv::THRESH_BINARY, cv::THRESH_BINARY_INV, cv::THRESH_TRUNC, cv::THRESH_TOZERO e cv::THRESH_TOZERO_INV. Neste projeto será utilizado o tipo cv::THRESH_BINARY. O código abaixo exibe como esta função é utilizada:
+\paragraph{}A seguir é realizada o passo de \textit{thresholding}. Este passo é realizado utilizando a função \textit{threshold}, que recebe cinco parâmetros: um objeto Mat de entrada, um objeto Mat de saída, um valor double indicando o valor limite do \textit{threshold}, um valor double indicando qual é o valor máximo utilizado em \textit{threshold} de binarização, e um valor inteiro indicando qual o tipo de \textit{threshold} que será aplicado. Os tipos de \textit{threshold} disponíveis são: 
+
+%cv::THRESH_BINARY, cv::THRESH_BINARY_INV, cv::THRESH_TRUNC, cv::THRESH_TOZERO e cv::THRESH_TOZERO_INV. Neste projeto será utilizado o tipo cv::THRESH_BINARY. O código abaixo exibe como esta função é utilizada:
 
 \begin{lstlisting}
 double thresholdLimit = 150;
@@ -343,7 +345,9 @@ cv::threshold(blurredMat,thresholdedMat,thresholdLimit,maxValue,cv::THRESH_BINAR
 % \noindent{}O tipo de \textit{thresholding} cv::THRESH_BINARY indica que qualquer \texit{pixel} do objeto Mat de entrada com valor de intensidade acima do valor limite será alterado para o valor máximo, e qualquer \texit{pixel} do objeto Mat de entrada com valor de intensidade abaixo do valor limite será alterado para zero.
 
 % Segmentação e Detecção de Bordas
-\paragraph{}O último passo do processamento principal é a segmentação e a detecção de bordas. Um pouco da implementação deste passo já foi discutido no Capítulo 3. É utilizada a função \textit{findContours} para identificar as regiões isoladas pelo \textit{thresholding} e detectar as suas bordas, e em seguida a função \textit{contourArea} é utilizada para selecionar dentre as regiões identificadas qual é a região de maior área. Por último, a função \textit{drawContours} é utilizada para formar um objeto Mat com apenas a borda da região de espuma. A função \textit{findContours} recebe cinco parâmetros: um objeto Mat de entrada, um de vetor de vetores de objetos Point indicando os contornos encontrados, um vetor de vetores de inteiros indicando a relação de hierarquia entre os contornos, um inteiro indicando o modo de operação e um inteiro indicando o método de aproximação de contornos. Os modos de operação possíveis são: cv::CV_RETR_EXTERNAL, cv::CV_RETR_LIST, cv::CV_RETR_CCOMP e cv::CV_RETR_TREE. Os métodos de aproximação possíveis são: cv::CV_CHAIN_APPROX_NONE, cv::CV_CHAIN_APPROX_SIMPLE, cv::CV_CHAIN_APPROX_TC89_L1 e cv::CV_CHAIN_APPROX_TC89_KCOS. O código abaixo exibe como a função \textit{findContours} é utilizada:
+\paragraph{}O último passo do processamento principal é a segmentação e a detecção de bordas. Um pouco da implementação deste passo já foi discutido no Capítulo 3. É utilizada a função \textit{findContours} para identificar as regiões isoladas pelo \textit{thresholding} e detectar as suas bordas, e em seguida a função \textit{contourArea} é utilizada para selecionar dentre as regiões identificadas qual é a região de maior área. Por último, a função \textit{drawContours} é utilizada para formar um objeto Mat com apenas a borda da região de espuma. A função \textit{findContours} recebe cinco parâmetros: um objeto Mat de entrada, um de vetor de vetores de objetos Point indicando os contornos encontrados, um vetor de vetores de inteiros indicando a relação de hierarquia entre os contornos, um inteiro indicando o modo de operação e um inteiro indicando o método de aproximação de contornos. Os modos de operação possíveis são: 
+
+%cv::CV_RETR_EXTERNAL, cv::CV_RETR_LIST, cv::CV_RETR_CCOMP e cv::CV_RETR_TREE. Os métodos de aproximação possíveis são: cv::CV_CHAIN_APPROX_NONE, cv::CV_CHAIN_APPROX_SIMPLE, cv::CV_CHAIN_APPROX_TC89_L1 e cv::CV_CHAIN_APPROX_TC89_KCOS. O código abaixo exibe como a função \textit{findContours} é utilizada:
 
 \begin{lstlisting}
 vector< vector<cv::Point> > contours;
@@ -351,7 +355,9 @@ vector<cv::Vec4i> hierarchy;
 findContours( thresholdedMat, contours, hierarchy, cv::CV_RETR_CCOMP, cv::CV_CHAIN_APPROX_SIMPLE );
 \end{lstlisting}
 
-\noindent{}O modo de operação cv::CV_RETR_CCOMP organiza os contornos encontrados em dois níveis: contornos externos e contornos internos. Desta forma, é possível eliminar "buracos" dentro da região de espuma que podem surgir na operação de \textit{thresholding}. Em seguida, a área de cada contorno encontrado é calculada e então determina-se a região de maior utilizando a função \textit{contourArea}. Esta função recebe dois parâmetros: um vetor de objetos Point indicando o contorno que será calculado a área, e um valor boleano indicando se a área é orientada ou não. O código abaixo ilustra como esta função é utilizada:
+
+%cv::CV_RETR_CCOMP
+\noindent{}O modo de operação  organiza os contornos encontrados em dois níveis: contornos externos e contornos internos. Desta forma, é possível eliminar "buracos" dentro da região de espuma que podem surgir na operação de \textit{thresholding}. Em seguida, a área de cada contorno encontrado é calculada e então determina-se a região de maior utilizando a função \textit{contourArea}. Esta função recebe dois parâmetros: um vetor de objetos Point indicando o contorno que será calculado a área, e um valor boleano indicando se a área é orientada ou não. O código abaixo ilustra como esta função é utilizada:
 
 \begin{lstlisting}
 vector<cv::Point> contour;
@@ -373,7 +379,7 @@ for (int i = 0; i< contours.size(); i++) {
 }
 \end{lstlisting}
 
-\noindent{}Por último é criado um objeto Mat contendo apenas o maior contorno encontrado através da função \textit{drawContours}. Esta função recebe quatro parâmetros: um objeto Mat de saída, um vetor de contornos contendo todos os contornos detectados, um inteiro indicando o indíce do contorno que deve ser desenhado no objeto Mat e um objeto Color indicando a cor que deve ser desenhado. O código abaixo ilustra como está função é utilizada:
+\noindent{}Por último é criado um objeto Mat contendo apenas o maior contorno encontrado através da função \textit{drawContours}. Esta função recebe quatro parâmetros: um objeto Mat de saída, um vetor de contornos contendo todos os contornos detectados, um inteiro indicando o índice do contorno que deve ser desenhado no objeto Mat e um objeto Color indicando a cor que deve ser desenhado. O código abaixo ilustra como está função é utilizada:
 
 \begin{lstlisting}
 cv::Scalar color( 255, 255, 255 );
@@ -423,8 +429,181 @@ cv::drawContours( contourMat, contours, largest_contour_index, color );
 
 \section{Análise e Identificação de Ondas Marítimas}
 
+\paragraph{}A última etapa do algoritmo é a análise e identificação das ondas marítimas. Esta etapa opera sobre a linha de arrebentação resultante do processamento principal e tem como resultado a altura estimada de cada onda identificada. 
+
 %Rastreamento da Linha de Ondas
-\paragraph{}
+\paragraph{}O primeiro passo a ser realizado é o rastreamento da linha de arrebentação. Neste passo é utilizada a mesma classe de rastreamento de linhas utilizada para detecção da linha do horizonte no pré-processamento, a classe Trajectory. Ao contrário da linha do horizonte, a linha de arrebentação não será uma linha reta, então é possível que o algoritmo de rastreamento implementado na classe Trajectory encontre um trecho da linha que ele não é capaz de rastrear. Nesses casos, interrompe-se o rastreamento até este ponto, as ondas neste trecho são identificadas e então o algoritmo de rastreamento reinicia na coluna seguinte ao ponto em que parou, buscando novamente um ponto inicial e rastreando o restante da linha a partir deste ponto. O rastreamento só termina quando o algoritmo chega até o final da linha, isto é, até que o último ponto da linha rastreada esteja na extremidade direita da imagem analisada. O código abaixo ilustra como o rastreamento da linha de arrebentação é implementado:
+
+\begin{lstlisting}
+// Imagem com a linha de arrebentação encontrada na etapa de processamento principal
+cv::Mat contourMat = imread("caminho no filesystem");
+
+// Variável que guarda qual a última coluna analisada
+int lastCol = 0;
+
+while(true) {
+
+	if (lastCol >= contourMat.cols-1) {
+		break;
+	}
+
+	Trajectory trajectory(contourMat,Rect(lastCol,0,contourMat.cols - col, contourMat.rows));
+
+	// Objeto Trajectory pronto para análise	
+
+	// Atualizando variável com a coluna seguinte a última coluna do objeto Trajectory
+	lastCol = trajectory.points.back().getX() + 1;
+}
+\end{lstlisting}
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=0.8\textwidth,keepaspectratio]{diagram_wave.png}
+	\caption[\small{Diagrama da classe Wave.}]{\small{Diagrama da classe Wave.}}
+	\label{DiagramWave}
+\end{figure}
 
 %Identificação das Ondas
-\paragraph{}
+\paragraph{}O último passo a ser realizado é a identificação das ondas marítimas. Este passo é realizado implementando o automato descrito no capítulo anterior (Figura \ref{FigAutomato}). O automato de identificação das ondas foi implementado em uma função analyseTrajectory, conforme o código abaixo:
+
+\begin{lstlisting}
+void analyseTrajectory(Trajectory& trajectory) {
+	vector<Trajectory::Point> derivative;
+
+	trajectory.calculateDerivative(derivative);
+
+	int state = 0; 
+	int bottom_index = 0;
+	int top_index = 0;
+	int gap_count = 0;
+
+	int GAP_THRESHOLD = 20;
+
+	// Vetor que guarda o resultado com as ondas identificadas
+	vector<Wave> detectedWaves;
+
+	for (int i = 1; i < derivative.size(); i++) {
+		int dX = derivative[i].getX();
+		int dY = derivative[i].getY();
+
+		switch(state) {
+			case 0:
+				if (dY < 0) {
+					state = 1;
+					bottom_index = i+1;
+				}
+
+				break;
+			case 1:
+				if (dY > 0) {
+					top_index = i+1;
+					state = 2;
+				}
+
+				break;
+			case 2:
+				if (dY > 0) {
+					
+					state = 3;
+					gap_count = 0;
+
+				} else {
+					if (trajectory.calculateHeight(bottom_index,top_index) < trajectory.calculateHeight(bottom_index,i+1))
+						top_index = i+1;
+				}
+
+				break;
+			case 3:
+
+				if (gap_count >= GAP_THRESHOLD) {
+					
+					detectWave(trajectory,bottom_index,top_index,detectedWaves);
+
+					gap_count = 0;
+					state = 0;
+					bottom_index = 0;
+					top_index = 0;
+
+				} else {
+
+					if (dY < 0) {
+						state = 2;
+
+						if (trajectory.calculateHeight(bottom_index,top_index) < trajectory.calculateHeight(bottom_index,i+1))
+							top_index = i+1;
+
+					} else {
+
+						gap_count++;
+
+					}
+				}
+				break;
+		}
+
+		if ( state > 0 && i == (derivative.size() - 1) ) {
+			detectWave(trajectory,bottom_index,top_index,detectedWaves);
+
+			state = 0;
+			gap_count = 0;
+			bottom_index = 0;
+			top_index = 0;
+		}
+
+	}
+}
+\end{lstlisting}
+
+\noindent{}A função detectWave utilizada na função analyseTrajectory verifica se um par de pontos identificados como pontos mínimos e máximos locais são elegíveis para formar uma onda. Para serem elegíveis, cada par de pontos devem atender 2 requisitos:
+
+\begin{enumerate}
+	\item A diferença de altura do par de pontos deve estar dentro de uma faixa limite, para impedir que anomalias sejam identificadas como ondas. Os valores limites máximo e mínimo são, respectivamente: 10 e 200.
+
+	\item O ponto mínimo detectado deve estar à direita do último ponto máximo detectado. Isto se deve pois o eixo horizontal da linha de arrebentação representa o eixo temporal, e sempre deve evoluir da esquerda para a direita. Portanto novas ondas devem sempre estar mais à direita de ondas já identificadas. Esta verificação é útil para evitar que a turbulência causada pela arrebentação da onda gere falsos-positivos, ou seja uma onda seja erroneamente detectada em decorrência da arrebentação de outra onda.
+\end{enumerate}
+
+\noindent{}O código abaixo exibe como a função detectWave é implementada:
+
+\begin{lstlisting}
+void detectWave(Trajectory& trajectory, int bottomIndex, int topIndex, vector<Wave>& detectedWaves) {
+	int MIN_HEIGHT_THRESHOLD = 10;
+	int MAX_HEIGHT_THRESHOLD = 200;
+	int height = trajectory.calculateHeight(bottomIndex,topIndex);
+
+	if ((height > MIN_HEIGHT_THRESHOLD && height < MAX_HEIGHT_THRESHOLD))
+		if (detectedWaves.size() == 0 || trajectory.getPoint(bottomIndex).getX() > detectedWaves.back().top.getX())
+			detectedWaves.push_back(Wave(trajectory.points[bottomIndex],trajectory.points[topIndex]));
+}
+\end{lstlisting}
+
+\paragraph{}O resultado deste automato é um vetor de objetos Wave (figura \ref{DiagramWave}), um objeto criado pelo autor que representa um par de pontos indicando o ponto mais baixo e o ponto mais alto de uma onda. A classe Wave implementa dois métodos: o método getHeight, que calcula a diferença de altura da onda em \textit{pixels}, e o método getHalfway, que calcula o ponto central horizontal da onda.
+
+\paragraph{}Por fim, a altura das ondas em \textit{pixels} é convertida para medidas do mundo real, em metros. Esta conversão é realizada baseado no método apresentado na seção \ref{sec:camera}. O código abaixo ilustra como as equações descritas na seção \ref{sec:camera} foram implementadas:
+
+\begin{lstlisting}
+// Função que calcula o angulo em radianos correspondente de um pixel na imagem.
+double calculateAngle(int pixel, double cameraAngle, double focalAngle, int imageHeight) {
+	double ang = cameraAngle - focalAngle/2 + ( (pixel * focalAngle) / imageHeight);
+	return ang * 3.14159265 / 180;
+}
+
+// Função que calcula a altura real em metros entre dois pixels
+double calculateRealHeight(int pixelTop, int pixelBottom, double cameraHeight, double cameraAngle, double focalAngle, int imageHeight) {
+	double angleBottom = calculateAngle(pixelBottom, cameraAngle, focalAngle, imageHeight);
+	double angleTop = calculateAngle(pixelTop, cameraAngle, focalAngle, imageHeight);
+	return cameraHeight * ( 1 - ( tan(angleTop) / tan(angleBottom) ) );
+}
+\end{lstlisting}
+
+\noindent{}A altura das ondas identificadas na linha de arrebentação pode ser calculada conforme o código abaixo:
+
+\begin{lstlisting}
+double cameraAngle, focalAngle, cameraHeight;
+int imageHeight = contourMat.rows;
+
+for (int i = 0; i < detectedWaves.size(); i++) {
+	double realWorldHeight = calculateRealHeight(detectedWaves[i].top.getY(),dectectedWaves[i].bottom.getY(),cameraHeight,cameraAngle,focalAngle,imageHeight);
+}
+\end{lstlisting}
+
+\noindent{}As variáveis cameraAngle, focalAngle e cameraHeight são parâmetros conhecidos da filmagem, medidos no momento da captura do vídeo.
