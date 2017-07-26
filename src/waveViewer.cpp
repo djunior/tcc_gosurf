@@ -6,6 +6,7 @@
 #include "opencv/cv.h"
 #include <fstream>
 
+#include "point.hpp"
 #include "trajectory.h"
 
 using namespace std;
@@ -29,7 +30,7 @@ double calculeSizeByAngle(int imageSize, double cameraHeight, double cameraAngle
 
 int main(int argc, char** argv) {
 
-	vector< pair<Trajectory::Point,Trajectory::Point> > waves;
+	vector< pair<tcc::Point,tcc::Point> > waves;
 
 	VideoCapture cap(argv[1]);
 
@@ -57,10 +58,10 @@ int main(int argc, char** argv) {
 	      sscanf(line_bottom.c_str(),"%i,%i",&bottom_x,&bottom_y);
 	      sscanf(line_top.c_str(),"%i,%i",&top_x,&top_y);
 
-	      Trajectory::Point bottom(bottom_x,bottom_y);
-	      Trajectory::Point top(top_x,top_y);
+	      tcc::Point bottom(bottom_x,bottom_y);
+	      tcc::Point top(top_x,top_y);
 
-	      pair<Trajectory::Point,Trajectory::Point> wave(bottom,top);
+	      pair<tcc::Point,tcc::Point> wave(bottom,top);
 	      waves.push_back(wave);
 
 	      int base,up;
@@ -85,22 +86,22 @@ int main(int argc, char** argv) {
     	// transpose(t_frame,frame);
 
 		for (int i = 0; i < waves.size(); i++) {
-			Trajectory::Point bottom = waves[i].first;
-			Trajectory::Point top = waves[i].second;
+			tcc::Point bottom = waves[i].first;
+			tcc::Point top = waves[i].second;
 
 			// float a = (top.x - bottom.x)/(top.y - bottom.y);
 			// float b = top.x - a*top.y;
 
-			if (frame_count >= bottom.y && frame_count <= top.y) {
+			if (frame_count >= bottom.getY() && frame_count <= top.getY()) {
 				// int top_y = a*frame_count + b;
 
-				Point bottom_p1(0,bottom.x);
-				Point bottom_p2(frame.cols,bottom.x);
+				cv::Point bottom_p1(0,bottom.getX());
+				cv::Point bottom_p2(frame.cols,bottom.getX());
 
 				line(frame,bottom_p1,bottom_p2,Scalar(0,0,255),2);
 
-				Point top_p1(0,top.x);
-				Point top_p2(frame.cols,top.x);
+				cv::Point top_p1(0,top.getX());
+				cv::Point top_p2(frame.cols,top.getX());
 
 				line(frame,top_p1,top_p2,Scalar(0,0,255),2);
 			}

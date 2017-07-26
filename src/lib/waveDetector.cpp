@@ -51,15 +51,15 @@ void WaveDetector::drawWaves(Mat &mat) {
 
 			// cout << "Drawing wave " << i << endl;
 
-			Trajectory::Point bottom = waves[i].bottom;
-			Trajectory::Point top = waves[i].top;
+			tcc::Point bottom = waves[i].bottom;
+			tcc::Point top = waves[i].top;
 
 			// cout << "Point 1(" << bottom.x << "," << bottom.y << ")" << endl;
 			// cout << "Point 2(" << top.x << "," << top.y << ")" << endl;
 
-			Point pt1(top.getX(), bottom.getY());
-			Point pt2(top.getX(), top.getY());
-			Point pt3(bottom.getX(), bottom.getY());
+			cv::Point pt1(top.getX(), bottom.getY());
+			cv::Point pt2(top.getX(), top.getY());
+			cv::Point pt3(bottom.getX(), bottom.getY());
 
 			line(mat,pt1,pt2,Scalar(0,0,255),3);
 			line(mat,pt3,pt2,Scalar(0,255,0),3);
@@ -71,37 +71,31 @@ void WaveDetector::drawWaves(Mat &mat) {
 
 	double average_y = average_sum / waves.size();
 
-	Point avP1(0,average_y);
-	Point avP2(mat.cols,average_y);
+	cv::Point avP1(0,average_y);
+	cv::Point avP2(mat.cols,average_y);
 
 	line(mat,avP1,avP2,Scalar(255,255,0),1);
 }
 
 void WaveDetector::analyseTrajectory(Trajectory &t) {
 
-	vector<Trajectory::Point> derivative;
+	Derivable derivative;
 
 	t.calculateDerivative(derivative);
 
+	cout << "Derivative size: " << derivative.points.size() << endl;
+
 	int state = 0; 
 	int bottom_index = 0;
+	int bottom_back_index = 0;
 	int top_index = 0;
 	int gap_count = 0;
 
 	int GAP_THRESHOLD = 20;
 
-	for (int i = 1; i < derivative.size(); i++) {
-		int dX = derivative[i].getX();
-		int dY = derivative[i].getY();
-
-		// debugMat.at<Vec3b>(t.points[i+1].x,t.points[i+1].y) = Vec3b(255,255,255);
-
-		// cout << "Index: " << i << endl;
-		// cout << "State: " << state << endl;
-		// cout << "dX: " << dX << endl;
-		// cout << "bottom index: " << bottom_index << endl;
-		// cout << "top index: " << top_index << endl;
-		// cout << "gap count: " << gap_count << endl << endl;
+	for (int i = 1; i < derivative.points.size(); i++) {
+		int dX = derivative.getPoint(i).getX();
+		int dY = derivative.getPoint(i).getY();
 
 		switch(state) {
 			case 0:
@@ -139,6 +133,7 @@ void WaveDetector::analyseTrajectory(Trajectory &t) {
 					gap_count = 0;
 					state = 0;
 					bottom_index = 0;
+					bottom_back_index = 0;
 					top_index = 0;
 
 				} else {
@@ -158,12 +153,13 @@ void WaveDetector::analyseTrajectory(Trajectory &t) {
 				break;
 		}
 
-		if ( state > 0 && i == (derivative.size() - 1) ) {
+		if ( state > 0 && i == (derivative.points.size() - 1) ) {
 			detectWave(t,bottom_index,top_index);
 
 			state = 0;
 			gap_count = 0;
 			bottom_index = 0;
+			bottom_back_index = 0;
 			top_index = 0;
 		}
 
@@ -186,8 +182,49 @@ void WaveDetector::extractWaveDetails() {
 
 	for (int i = 0; i < waves.size(); i++) {
 	
-		Trajectory::Point bottom = waves[i].bottom;
-		Trajectory::Point top = waves[i].top;
+		if (i < (waves.size()-1)) {
+
+			// int TIME_DISTANCE_THRESHOLD = 20;
+
+			// if (waves)
+
+			int pixel_distance = waves[i+1].bottom.getX() - waves[i].top.getX();
+			double time_distance = pixel_distance / 30;
+			cout << "Pixel distance (" << i << " to " << (i+1) << "): " << pixel_distance << ", time distance: " << time_distance << endl;
+
+			if (time_distance < 10) {
+				int new_bottom = (waves[i].bottom.getY() + waves[i+1].bottom.getY())/2;
+				cout << "Setting new bottom " << new_bottom << endl;
+				waves[i].bottom = Point(waves[i].bottom.getX(),new_bottom);
+			}
+			// int lastHalfway = waves[i-1].getHalfway();
+
+			// int diff = halfway - lastHalfway;
+
+			// if (diff < 600) {
+
+			// 	height_sum += height;
+			// 	height_count++;
+			
+			// } else {
+
+				// if (height_count > 0) {
+				// 	cout << "Number of waves on a series: " << height_count << endl;
+				// 	cout << "Average height: " << (int) height_sum / height_count << endl;
+				// }
+			// 	height_sum = 0;
+			// 	height_count = 0;
+			// }
+
+			// time_diff_sum += diff;
+
+			// double time_diff = diff / 30;
+
+			// cout << "Time distance to last wave: " << diff << " px, " << time_diff << " s" << endl;
+		}
+
+		tcc::Point bottom = waves[i].bottom;
+		tcc::Point top = waves[i].top;
 
 		int halfway = waves[i].getHalfway();
 
@@ -197,33 +234,6 @@ void WaveDetector::extractWaveDetails() {
 
 		cout << "Found wave at " << halfway << " height " << height << " real height: " << realHeight << " m" << endl;
 		f << height << " px, " << realHeight << " m" << endl;
-	
-		if (i > 0) {
-			int lastHalfway = waves[i-1].getHalfway();
-
-			int diff = halfway - lastHalfway;
-
-			if (diff < 600) {
-
-				height_sum += height;
-				height_count++;
-			
-			} else {
-
-				// if (height_count > 0) {
-				// 	cout << "Number of waves on a series: " << height_count << endl;
-				// 	cout << "Average height: " << (int) height_sum / height_count << endl;
-				// }
-				height_sum = 0;
-				height_count = 0;
-			}
-
-			time_diff_sum += diff;
-
-			double time_diff = diff / 30;
-
-			// cout << "Time distance to last wave: " << diff << " px, " << time_diff << " s" << endl;
-		}
 	}
 
 	f.close();
@@ -256,11 +266,11 @@ void WaveDetector::filter() {
 			break;
 		}
 
-		// cout << "Detecting new trajectory in Rect(" << col << ", 0, " << srcMat.cols - col << ", " << srcMat.rows << ")" << endl;
+		cout << "Detecting new trajectory in Rect(" << col << ", 0, " << srcMat.cols - col << ", " << srcMat.rows << ")" << endl;
 
 		Trajectory t(srcMat,Rect(col,0,srcMat.cols - col, srcMat.rows));
 		
-		// cout << "Analysing the trajectory" << endl;
+		cout << "Analysing the trajectory" << endl;
 		analyseTrajectory(t);
 
 		if (t.points.back().getX() >= (srcMat.cols-1) )
@@ -323,8 +333,8 @@ void WaveDetector::save(char* fname) {
   	f.open(fname);
 
   	for (int i = 0; i < waves.size(); i ++) {
-  		Trajectory::Point bottom = waves[i].bottom;
-  		Trajectory::Point top = waves[i].top;
+  		tcc::Point bottom = waves[i].bottom;
+  		tcc::Point top = waves[i].top;
 
   		f << bottom.getY() << "," << bottom.getX() << endl;
   		f << top.getY() << "," << top.getX() << endl;

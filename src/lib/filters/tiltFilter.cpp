@@ -33,7 +33,7 @@ void TiltFilter::filter() {
 
 	double ang = -1* atan( (double) abs(lastY - firstY) / (srcMat.cols-1) ) * 180 / PI;
 
-	Point center(srcMat.cols,srcMat.rows);
+	cv::Point center(srcMat.cols,srcMat.rows);
 
 	Mat r = getRotationMatrix2D(center,ang,1.0);
 

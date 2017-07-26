@@ -44,7 +44,7 @@ public:
 		cout << "Trajectory size: " << t.points.size() << endl;
 
 		for (int i = 0; i < t.points.size(); i++) {
-			Trajectory::Point p = t.getPoint(i);
+			tcc::Point p = t.getPoint(i);
 			// cout << "Point p(" << p.x << "," << p.y << ")" << endl;
 			for (int j = 0; j < p.getY(); j++) {
 				// cout << "setting mask at (" << i << "," << j << ")" << endl;

@@ -21,12 +21,9 @@ Trajectory::Trajectory(cv::Mat& m, cv::Rect area) {
 	trackLine(m,area);
 }
 
-Trajectory::~Trajectory() {
-	points.clear();
-}
 
 bool Trajectory::addPoint(int x, int y) {
-	Trajectory::Point p(x,y);
+	tcc::Point p(x,y);
 
 	for (int i = 0; i < points.size(); i++)
 		if (points[i].getX() == x && points[i].getY() == y)
@@ -41,46 +38,6 @@ int abs(int n) {
 	if (n < 0)
 		return -1*n;
 	return n;
-}
-
-bool Trajectory::isContinous(int x, int y) {
-	if (points.size() == 0)
-		return true;
-
-	Point p = points.back();
-
-	int dX = abs(p.x - x);
-	int dY = abs(p.y - y);
-
-	if (dX > 1 || dY > 1)
-		return false;
-
-	return true;
-}
-
-int Trajectory::calculateHeight(int bottom, int top) {
-	return points[bottom].getY() - points[top].getY();
-}
-
-void Trajectory::calculateDerivative(Trajectory& t) {
-	for (int i = 0; i < points.size(); i++) {
-		int x = points[i].getX();
-		int y = points[i].getY();
-
-		if (i > 0) {
-			int dX = x - points[i-1].getX();
-			int dY = y - points[i-1].getY();
-			t.addPoint(dX,dY);
-		}
-	}
-}
-
-void Trajectory::calculateDerivative(std::vector<Point>& d) {
-	Trajectory t;
-	calculateDerivative(t);
-	for (int i = 0; i < t.points.size(); i++) {
-		d.push_back(t.points[i]);
-	}
 }
 
 void Trajectory::trackLine(Mat& m) {
@@ -102,7 +59,7 @@ bool Trajectory::findNextPoint(Mat& m,Rect roi) {
 }
 
 bool Trajectory::findNextPoint(Mat& m, int radius, Rect roi) {
-	Trajectory::Point currentPoint = points.back();
+	tcc::Point currentPoint = points.back();
 
 	if (currentPoint.getX() >= (roi.x + roi.width - 2))
 		return false;
@@ -152,10 +109,6 @@ void Trajectory::findFirstPoint(Mat& m, cv::Rect roi) {
 			break;
 
 	}	
-}
-
-Trajectory::Point Trajectory::getPoint(int i) {
-	return points[i];
 }
 
 }
