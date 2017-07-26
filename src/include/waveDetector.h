@@ -17,7 +17,7 @@ public:
 	void save(char*);
 private:
 	std::vector<Trajectory*> trajectoryList;
-	void detectWave(Trajectory&,int,int);
+	bool detectWave(Trajectory&,int,int);
 	void fillTrajectory(Trajectory&);
 	void findFirstPoint(Trajectory&);
 	bool findNextPoint(Trajectory&);

@@ -23,22 +23,20 @@ WaveDetector::~WaveDetector() {
 	trajectoryList.clear();
 }
 
-void WaveDetector::detectWave(Trajectory& t, int bottom, int top) {
+bool WaveDetector::detectWave(Trajectory& t, int bottom, int top) {
 	int MIN_HEIGHT_THRESHOLD = 10;
 	int MAX_HEIGHT_THRESHOLD = 200;
 	int height = t.calculateHeight(bottom,top);
 
-	// cout << "Detecting wave from " << bottom << " to " << top << endl;
-	// cout << "Calculating height: " << height << endl;
-	
 	if ((height > MIN_HEIGHT_THRESHOLD && height < MAX_HEIGHT_THRESHOLD)) {
 		if (waves.size() == 0 || t.getPoint(bottom).getX() > waves.back().top.getX()) {
 			Wave wave(t.points[bottom],t.points[top]);
-			// waves.push_back(t.points[bottom]);
-			// waves.push_back(t.points[top]);
 			waves.push_back(wave);
+			return true;
 		}
 	}
+
+	return false;
 }
 
 void WaveDetector::drawWaves(Mat &mat) {
@@ -69,15 +67,48 @@ void WaveDetector::drawWaves(Mat &mat) {
 		}
 	}
 
-	double average_y = average_sum / waves.size();
+	// double average_y = average_sum / waves.size();
 
-	cv::Point avP1(0,average_y);
-	cv::Point avP2(mat.cols,average_y);
+	// cv::Point avP1(0,average_y);
+	// cv::Point avP2(mat.cols,average_y);
 
-	line(mat,avP1,avP2,Scalar(255,255,0),1);
+	// line(mat,avP1,avP2,Scalar(255,255,0),1);
+}
+
+void draw(Mat &mat, Trajectory &original, Derivable &derivative, int offset) {
+	for (int i = 0; i < derivative.points.size(); i++) {
+		tcc::Point p = derivative.points[i];
+
+		if (p.getY() < 0)
+			mat.at<Vec3b>(original.getPoint(i+offset).getY(),original.getPoint(i+offset).getX()) = Vec3b(0,0,255);
+		else if (p.getY() > 0)
+			mat.at<Vec3b>(original.getPoint(i+offset).getY(),original.getPoint(i+offset).getX()) = Vec3b(0,255,0);
+		else
+			mat.at<Vec3b>(original.getPoint(i+offset).getY(),original.getPoint(i+offset).getX()) = Vec3b(0,0,0);
+	}
+}
+
+void drawDerivative(Mat &m,Trajectory& original) {
+	Mat mat(m.rows,m.cols,CV_8UC3,Scalar::all(255));
+	Mat mat2(m.rows,m.cols,CV_8UC3,Scalar::all(255));
+
+	Derivable derivative;
+	original.calculateDerivative(derivative);
+
+	draw(mat,original,derivative,1);
+	imwrite("output_images/derivative.jpg",mat);
+
+	Derivable secondDerivative;
+	derivative.calculateDerivative(secondDerivative);
+
+	draw(mat2,original,secondDerivative,2);
+	imwrite("output_images/derivative2.jpg",mat2);
+
 }
 
 void WaveDetector::analyseTrajectory(Trajectory &t) {
+
+	drawDerivative(srcMat,t);
 
 	Derivable derivative;
 
@@ -90,6 +121,11 @@ void WaveDetector::analyseTrajectory(Trajectory &t) {
 	int bottom_back_index = 0;
 	int top_index = 0;
 	int gap_count = 0;
+	
+	int sea_level_y = 0;
+	int sea_level_count = 0;
+
+	// bool adjusted = false;
 
 	int GAP_THRESHOLD = 20;
 
@@ -102,6 +138,19 @@ void WaveDetector::analyseTrajectory(Trajectory &t) {
 				if (dY < 0) {
 					state = 1;
 					bottom_index = i+1;
+					// plateau_count = 0;
+				// } else if (dY == 0) {
+				// 	plateau_count++;
+				// 	if (plateau_count > 30 && ! adjusted) {
+				// 		if (waves.size() > 0) {
+				// 			adjusted = true;
+				// 			int averageY = (waves.back().bottom.getY() + t.points[i+1].getY())/2;
+				// 			cout << "Adjusting last wave bottom: " << waves.back().bottom.getY() << " to " << averageY << endl;
+				// 			waves.back().bottom = Point(waves.back().bottom.getX(),averageY);
+				// 		}
+				// 	}
+				// } else {
+				// 	plateau_count = 0;
 				}
 
 				break;
@@ -128,7 +177,29 @@ void WaveDetector::analyseTrajectory(Trajectory &t) {
 
 				if (gap_count >= GAP_THRESHOLD) {
 					
-					detectWave(t,bottom_index,top_index);
+					if (detectWave(t,bottom_index,top_index)) {
+
+						if (waves.size() > 1 && sea_level_count > 0) {
+							cout << "Adjusting sea level" << endl;
+							int averageY = sea_level_y / sea_level_count;
+							cout << "Old Y " << waves[waves.size()-2].bottom.getY() << endl;
+							cout << "averageY " << averageY << endl;
+							int x = waves[waves.size()-2].bottom.getX();
+							int y = (waves[waves.size()-2].bottom.getY() + averageY)/2;
+							cout << "New Y " << y << endl;
+							waves[waves.size()-2].bottom = Point(x,y);
+						}
+
+						sea_level_y = 0;
+						sea_level_count = 0;
+
+					} else {
+						// cout << "Bottom Index Y: " << t.getPoint(bottom_index).getY() << endl;
+						// cout << "Top Index Y: " << t.getPoint(top_index).getY() << endl;
+
+						sea_level_y += t.getPoint(bottom_index).getY();
+						sea_level_count++;
+					}
 
 					gap_count = 0;
 					state = 0;
@@ -154,7 +225,19 @@ void WaveDetector::analyseTrajectory(Trajectory &t) {
 		}
 
 		if ( state > 0 && i == (derivative.points.size() - 1) ) {
-			detectWave(t,bottom_index,top_index);
+			if (detectWave(t,bottom_index,top_index)) {
+				// if (waves.size() > 1) {
+				// 	int averageY = sea_level_y / sea_level_count;
+				// 	int x = waves[waves.size()-2].bottom.getX();
+				// 	int y = (waves[waves.size()-2].bottom.getY() + averageY)/2;
+				// 	waves[waves.size()-2].bottom = Point(x,y);
+				// }
+			} else {
+				// int averageY = sea_level_y / sea_level_count;
+				// int x = waves[waves.size()-1].bottom.getX();
+				// int y = (waves[waves.size()-1].bottom.getY() + averageY)/2;
+				// waves[waves.size()-1].bottom = Point(x,y);
+			}
 
 			state = 0;
 			gap_count = 0;
@@ -190,13 +273,13 @@ void WaveDetector::extractWaveDetails() {
 
 			int pixel_distance = waves[i+1].bottom.getX() - waves[i].top.getX();
 			double time_distance = pixel_distance / 30;
-			cout << "Pixel distance (" << i << " to " << (i+1) << "): " << pixel_distance << ", time distance: " << time_distance << endl;
+			// cout << "Pixel distance (" << i << " to " << (i+1) << "): " << pixel_distance << ", time distance: " << time_distance << endl;
 
-			if (time_distance < 10) {
-				int new_bottom = (waves[i].bottom.getY() + waves[i+1].bottom.getY())/2;
-				cout << "Setting new bottom " << new_bottom << endl;
-				waves[i].bottom = Point(waves[i].bottom.getX(),new_bottom);
-			}
+			// if (time_distance < 10) {
+			// 	int new_bottom = (waves[i].bottom.getY() + waves[i+1].bottom.getY())/2;
+			// 	cout << "Setting new bottom " << new_bottom << endl;
+			// 	waves[i].bottom = Point(waves[i].bottom.getX(),new_bottom);
+			// }
 			// int lastHalfway = waves[i-1].getHalfway();
 
 			// int diff = halfway - lastHalfway;

@@ -170,11 +170,17 @@ void detectAnalyzeWaves(Mat& originalMat, Mat& breakzoneMat) {
 	wd.setSourceMat(&breakzoneMat);
 	wd.filter();
 
-	Mat debug = originalMat.clone();
-	wd.drawWaves(debug);
+	Mat wavesTimestack = originalMat.clone();
+	wd.drawWaves(wavesTimestack);
+	imshow("waves timestack",wavesTimestack);
+
+	Mat wavesBreakzone = breakzoneMat.clone();
+	cvtColor(wavesBreakzone,wavesBreakzone,COLOR_GRAY2BGR);
+	wd.drawWaves(wavesBreakzone);
+	imshow("waves breakzone",wavesBreakzone);
 
 	ImageOutput wavesOutput("output_images/process/process_waves_result.jpg");
-	wavesOutput.setSourceMat(&debug);
+	wavesOutput.setSourceMat(&wavesTimestack);
 	wavesOutput.filter();
 
 	wd.save("waves.txt");
