@@ -266,44 +266,8 @@ void WaveDetector::extractWaveDetails() {
 	for (int i = 0; i < waves.size(); i++) {
 	
 		if (i < (waves.size()-1)) {
-
-			// int TIME_DISTANCE_THRESHOLD = 20;
-
-			// if (waves)
-
 			int pixel_distance = waves[i+1].bottom.getX() - waves[i].top.getX();
 			double time_distance = pixel_distance / 30;
-			// cout << "Pixel distance (" << i << " to " << (i+1) << "): " << pixel_distance << ", time distance: " << time_distance << endl;
-
-			// if (time_distance < 10) {
-			// 	int new_bottom = (waves[i].bottom.getY() + waves[i+1].bottom.getY())/2;
-			// 	cout << "Setting new bottom " << new_bottom << endl;
-			// 	waves[i].bottom = Point(waves[i].bottom.getX(),new_bottom);
-			// }
-			// int lastHalfway = waves[i-1].getHalfway();
-
-			// int diff = halfway - lastHalfway;
-
-			// if (diff < 600) {
-
-			// 	height_sum += height;
-			// 	height_count++;
-			
-			// } else {
-
-				// if (height_count > 0) {
-				// 	cout << "Number of waves on a series: " << height_count << endl;
-				// 	cout << "Average height: " << (int) height_sum / height_count << endl;
-				// }
-			// 	height_sum = 0;
-			// 	height_count = 0;
-			// }
-
-			// time_diff_sum += diff;
-
-			// double time_diff = diff / 30;
-
-			// cout << "Time distance to last wave: " << diff << " px, " << time_diff << " s" << endl;
 		}
 
 		tcc::Point bottom = waves[i].bottom;
@@ -324,22 +288,6 @@ void WaveDetector::extractWaveDetails() {
 }
 
 void WaveDetector::filter() {
-	// cout << "Filtering" << endl;
-
-	// Trajectory t(srcMat);
-	// vector<Trajectory> trajectories;
-
-	// trajectories[0] = Trajectory(srcMat);
-
-	// findFirstPoint(t);
-	// fillTrajectory(t);
-
-	// Mat debugMat(srcMat.size(),CV_8UC3,Scalar::all(0));
-
-
-	// cout << "Derivative size: " << derivative.size() << endl;
-
-	// cout << "Detecting waves" << endl;
 
 	int col = 0;
 
@@ -364,50 +312,7 @@ void WaveDetector::filter() {
 
 	extractWaveDetails();
 
-	// for (int i = 0; i < waves.size()-1; i = i + 2) {
-	// 	if ( (waves[i+1].y - waves[i].y) > 20) {
-	// 		cout << "Wave " << (i / 2) + 1 << " low = (" << waves[i].x << "," << waves[i].y << "), high = (" << waves[i+1].x << "," << waves[i+1].y << ")" << endl;
-
-	// 		Point pt1(waves[i].y,waves[i].x);
-	// 		Point pt2(waves[i+1].y,waves[i+1].x);
-
-	// 		line(debug2Mat,pt1,pt2,Scalar::all(255));
-	// 	}
-	// }
-
-	// cout << "Ploting bottom derivative point at (" << dBottom.x << "," << dBottom.y << ")" << endl;
-	// cout << "Ploting top derivative point at (" << dTop.x << "," << dTop.y << ")" << endl;
-
-	// line(debugMat, pt1, pt2, Scalar::all(255),5, 8, 0);
-	// for (int i = 0; i < srcMat.cols; i++) {
-	// 	debugMat.at<Vec3b>(bottom.x,i) = Vec3b(0,0,255);
-	// }
-
-	// cout << "Ploting bottom point at (" << bottom.x << "," << bottom.y << ")" << endl;
-	// debugMat.at<Vec3b>(bottom.x,bottom.y) = Vec3b(0,0,255);
-
-	// for (int i = 0; i < srcMat.cols; i++) {
-	// 	debugMat.at<Vec3b>(top.x,i) = Vec3b(0,255,0);
-	// }
-
-	// cout << "Ploting top point at (" << top.x << "," << top.y << ")" << endl;	
-	// debugMat.at<Vec3b>(top.x,top.y) = Vec3b(0,255,0);
-
-	// string path = "output_images/filtered/IMG_0732_derivative_debug.jpg";
-	// imwrite(path,debugMat);
-
 	filteredMat = srcMat.clone();
-
-	// resize
-	// resize(debugMat, debugMat, Size(debugMat.cols/2, debugMat.rows/2));
-	// imshow("debug mat",debugMat);
-
-	// resize(debug2Mat, debug2Mat, Size(debug2Mat.cols/2, debug2Mat.rows/2));
-	// imshow("debug mat 2",debug2Mat);
-	// 
-
-
-	// waitKey(0);
 
 }
 
