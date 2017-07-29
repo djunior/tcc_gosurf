@@ -19,11 +19,11 @@ private:
 	}
 
 	double calculateAngle(int pixel) {
-		cout << "CameraAngle: " << cameraAngle << endl;
-		cout << "Focal Angle: " << focalAngle/2 << endl;
-		cout << "Pixel angle: " << ( (pixel * focalAngle) / imageSize ) << endl;
+		// cout << "CameraAngle: " << cameraAngle << endl;
+		// cout << "Focal Angle: " << focalAngle/2 << endl;
+		// cout << "Pixel angle: " << ( (pixel * focalAngle) / imageSize ) << endl;
 		double ang = cameraAngle - focalAngle/2 + ( (pixel * focalAngle) / imageSize );
-		cout << "Calculating angle " << ang << endl;
+		// cout << "Calculating angle " << ang << endl;
 		return convertToRad(ang);
 	}
 
@@ -63,31 +63,31 @@ public:
 	double calculateRealHeight(int bottom, int top) {
 		bottom = imageSize - bottom;
 		top = imageSize - top;
-		cout << "Calculating real height: " << bottom << " to " << top << endl;
+		// cout << "Calculating real height: " << bottom << " to " << top << endl;
 
 		double angleBottom = calculateAngle(bottom);
 		double angleTop = calculateAngle(top);
 
-		cout << "Angle bottom: " << angleBottom << endl;
-		cout << "Angle Top: " << angleTop << endl;
+		// cout << "Angle bottom: " << angleBottom << endl;
+		// cout << "Angle Top: " << angleTop << endl;
 
-		cout << "Camera Height: " << cameraHeight << endl;
+		// cout << "Camera Height: " << cameraHeight << endl;
 
-		cout << "Focal Angle: " << focalAngle << endl;
+		// cout << "Focal Angle: " << focalAngle << endl;
 
-		cout << "Image Size: " << imageSize << endl;
+		// cout << "Image Size: " << imageSize << endl;
 
-		cout << "Camera Angle: " << cameraAngle << endl;
+		// cout << "Camera Angle: " << cameraAngle << endl;
 
-		cout << "tan(angleTop): " << tan(angleTop) << endl;
+		// cout << "tan(angleTop): " << tan(angleTop) << endl;
 
-		cout << "tan(angleBottom): " << tan(angleBottom) << endl;
+		// cout << "tan(angleBottom): " << tan(angleBottom) << endl;
 
-		cout << "( tan(angleTop) / tan(angleBottom) )" << ( tan(angleTop) / tan(angleBottom) ) << endl;
+		// cout << "( tan(angleTop) / tan(angleBottom) )" << ( tan(angleBottom) / tan(angleTop) ) << endl;
 
-		cout << "1 - ( tan(angleTop) / tan(angleBottom) )" << 1 - ( tan(angleBottom) / tan(angleTop) ) << endl;
+		// cout << "1 - ( tan(angleTop) / tan(angleBottom) )" << 1 - ( tan(angleBottom) / tan(angleTop) ) << endl;
 
-		return cameraHeight * ( 1 - ( tan(angleTop) / tan(angleBottom) ) );
+		return cameraHeight * ( 1 - ( tan(angleBottom) / tan(angleTop) ) );
 	}
 };
 

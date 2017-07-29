@@ -194,11 +194,13 @@ void WaveDetector::analyseTrajectory(Trajectory &t) {
 						sea_level_count = 0;
 
 					} else {
-						// cout << "Bottom Index Y: " << t.getPoint(bottom_index).getY() << endl;
-						// cout << "Top Index Y: " << t.getPoint(top_index).getY() << endl;
+						cout << "Bottom Index Y: " << t.getPoint(bottom_index).getY() << endl;
+						cout << "Top Index Y: " << t.getPoint(top_index).getY() << endl;
 
+						cout << "Old sea level : " << sea_level_y << ", count = " << sea_level_count << endl;
 						sea_level_y += t.getPoint(bottom_index).getY();
 						sea_level_count++;
+						cout << "New sea level : " << sea_level_y << ", count = " << sea_level_count << endl;
 					}
 
 					gap_count = 0;
