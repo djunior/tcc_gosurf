@@ -88,39 +88,39 @@
 \contentsline {section}{\numberline {3.4}Estabiliza\c c\~ao de V\IeC {\'\i }deo}{20}
 \contentsline {paragraph}{}{20}
 \contentsline {paragraph}{}{20}
-\contentsline {section}{\numberline {3.5}Convers\~ao para N\IeC {\'\i }vel de Cinza}{22}
-\contentsline {paragraph}{}{22}
+\contentsline {section}{\numberline {3.5}Convers\~ao para N\IeC {\'\i }vel de Cinza}{21}
+\contentsline {paragraph}{}{21}
 \contentsline {paragraph}{}{22}
 \contentsline {section}{\numberline {3.6}Equaliza\c c\~ao de Histograma}{22}
 \contentsline {paragraph}{}{22}
 \contentsline {section}{\numberline {3.7}Detec\c c\~ao da Linha de Horizonte}{22}
 \contentsline {paragraph}{}{22}
 \contentsline {paragraph}{}{23}
-\contentsline {section}{\numberline {3.8}Remo\c c\~ao do C\'eu}{24}
+\contentsline {section}{\numberline {3.8}Remo\c c\~ao do C\'eu}{23}
+\contentsline {paragraph}{}{23}
 \contentsline {paragraph}{}{24}
+\contentsline {section}{\numberline {3.9}Processamento Principal}{24}
 \contentsline {paragraph}{}{24}
-\contentsline {section}{\numberline {3.9}Processamento Principal}{25}
 \contentsline {paragraph}{}{25}
-\contentsline {paragraph}{}{25}
-\contentsline {section}{\numberline {3.10}Suaviza\c c\~ao}{25}
-\contentsline {paragraph}{}{25}
+\contentsline {section}{\numberline {3.10}Suaviza\c c\~ao}{26}
+\contentsline {paragraph}{}{26}
 \contentsline {section}{\numberline {3.11}\textit {Thresholding}}{26}
 \contentsline {paragraph}{}{26}
 \contentsline {paragraph}{}{27}
-\contentsline {paragraph}{}{28}
+\contentsline {paragraph}{}{27}
 \contentsline {section}{\numberline {3.12}Segmenta\c c\~ao e Detec\c c\~ao de Bordas}{28}
 \contentsline {paragraph}{}{28}
 \contentsline {paragraph}{}{28}
 \contentsline {paragraph}{}{29}
-\contentsline {section}{\numberline {3.13}An\'alise e Identifica\c c\~ao das Ondas Mar\IeC {\'\i }timas}{31}
-\contentsline {paragraph}{}{31}
+\contentsline {section}{\numberline {3.13}An\'alise e Identifica\c c\~ao das Ondas Mar\IeC {\'\i }timas}{30}
+\contentsline {paragraph}{}{30}
 \contentsline {section}{\numberline {3.14}Rastreamento da Linha de Ondas}{31}
 \contentsline {paragraph}{}{31}
 \contentsline {paragraph}{}{31}
+\contentsline {paragraph}{}{31}
 \contentsline {paragraph}{}{32}
-\contentsline {paragraph}{}{32}
-\contentsline {section}{\numberline {3.15}Identifica\c c\~ao das Ondas}{34}
-\contentsline {paragraph}{}{34}
+\contentsline {section}{\numberline {3.15}Identifica\c c\~ao das Ondas}{33}
+\contentsline {paragraph}{}{33}
 \contentsline {chapter}{\numberline {4}Implementa\c c\~ao do Algoritmo}{36}
 \contentsline {paragraph}{}{36}
 \contentsline {paragraph}{}{36}
@@ -140,17 +140,19 @@
 \contentsline {paragraph}{}{44}
 \contentsline {section}{\numberline {4.2}Processamento Principal}{46}
 \contentsline {paragraph}{}{46}
-\contentsline {paragraph}{}{46}
-\contentsline {paragraph}{}{46}
-\contentsline {paragraph}{}{46}
-\contentsline {section}{\numberline {4.3}An\'alise e Identifica\c c\~ao de Ondas Mar\IeC {\'\i }timas}{46}
-\contentsline {paragraph}{}{46}
 \contentsline {paragraph}{}{47}
-\contentsline {chapter}{\numberline {5}Dados Experimentais}{48}
-\contentsline {chapter}{\numberline {6}Conclus\~oes}{49}
-\contentsline {chapter}{Bibliografia}{50}
-\contentsline {chapter}{\numberline {A}O que \'e um ap\^endice}{52}
-\contentsline {paragraph}{}{52}
-\contentsline {chapter}{\numberline {B}Encaderna\c c\~ao do Projeto de Gradua\c c\~ao}{53}
-\contentsline {chapter}{\numberline {C}O que \'e um anexo}{55}
-\contentsline {paragraph}{}{55}
+\contentsline {paragraph}{}{47}
+\contentsline {paragraph}{}{47}
+\contentsline {paragraph}{}{49}
+\contentsline {section}{\numberline {4.3}An\'alise e Identifica\c c\~ao de Ondas Mar\IeC {\'\i }timas}{50}
+\contentsline {paragraph}{}{50}
+\contentsline {paragraph}{}{50}
+\contentsline {paragraph}{}{51}
+\contentsline {chapter}{\numberline {5}Dados Experimentais}{52}
+\contentsline {chapter}{\numberline {6}Conclus\~oes}{53}
+\contentsline {chapter}{Bibliografia}{54}
+\contentsline {chapter}{\numberline {A}O que \'e um ap\^endice}{56}
+\contentsline {paragraph}{}{56}
+\contentsline {chapter}{\numberline {B}Encaderna\c c\~ao do Projeto de Gradua\c c\~ao}{57}
+\contentsline {chapter}{\numberline {C}O que \'e um anexo}{59}
+\contentsline {paragraph}{}{59}

@@ -6,6 +6,8 @@
 #include "imageFilter.h"
 #include "wave.hpp"
 
+#include "coloredPoint.hpp"
+
 namespace tcc {
 
 class WaveDetector : public ImageFilter {
@@ -17,6 +19,7 @@ public:
 	void save(char*);
 private:
 	std::vector<Trajectory*> trajectoryList;
+	std::vector<tcc::ColoredPoint> adjustPointVector;
 	bool detectWave(Trajectory&,int,int);
 	void fillTrajectory(Trajectory&);
 	void findFirstPoint(Trajectory&);

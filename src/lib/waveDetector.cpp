@@ -52,20 +52,40 @@ void WaveDetector::drawWaves(Mat &mat) {
 			tcc::Point bottom = waves[i].bottom;
 			tcc::Point top = waves[i].top;
 
-			// cout << "Point 1(" << bottom.x << "," << bottom.y << ")" << endl;
-			// cout << "Point 2(" << top.x << "," << top.y << ")" << endl;
+			Scalar color1,color2;
+
+			if (i < (waves.size() -1)) {
+				ColoredPoint p = adjustPointVector[i];
+				color1 = color2 = p.color;
+
+				// line(mat,cv::Point(0,p.getY()),cv::Point(mat.cols,p.getY()),p.color,1);
+			} else {
+				color1 = Scalar(0,0,255);
+				color2 = Scalar(0,255,0);
+			}
 
 			cv::Point pt1(top.getX(), bottom.getY());
 			cv::Point pt2(top.getX(), top.getY());
 			cv::Point pt3(bottom.getX(), bottom.getY());
 
-			line(mat,pt1,pt2,Scalar(0,0,255),3);
-			line(mat,pt3,pt2,Scalar(0,255,0),3);
-
+			line(mat,pt1,pt2,color1,3);
+			line(mat,pt3,pt2,color2,3);
 
 			average_sum += bottom.getY();
 		}
 	}
+
+	cout << "Number of waves: " << waves.size() << endl;
+	cout << "Adjusted point vector size: " << adjustPointVector.size() << endl;
+
+	// for (int i = 0; i < adjustPointVector.size(); i++) {
+		// tcc::ColoredPoint p = adjustPointVector.back();
+
+		// cv::Point pt1(0,p.getY());
+		// cv::Point pt2(mat.cols,p.getY());
+
+		// line(mat,pt1,pt2,p.color,1);
+	// }
 
 	// double average_y = average_sum / waves.size();
 
@@ -179,28 +199,52 @@ void WaveDetector::analyseTrajectory(Trajectory &t) {
 					
 					if (detectWave(t,bottom_index,top_index)) {
 
-						if (waves.size() > 1 && sea_level_count > 0) {
+						if (waves.size() > 1) {
 							cout << "Adjusting sea level" << endl;
-							int averageY = sea_level_y / sea_level_count;
 							cout << "Old Y " << waves[waves.size()-2].bottom.getY() << endl;
-							cout << "averageY " << averageY << endl;
+
+							// sea_level_y += waves.back().bottom.getY();
+							if (sea_level_y == 0)
+								sea_level_y = waves.back().bottom.getY();
+							else
+								sea_level_y = (sea_level_y + waves.back().bottom.getY())/2;
+							// sea_level_count++;
+
+							// int averageY = sea_level_y / sea_level_count;
+							// cout << "averageY " << averageY << endl;
+
 							int x = waves[waves.size()-2].bottom.getX();
-							int y = (waves[waves.size()-2].bottom.getY() + averageY)/2;
+							int y = (waves[waves.size()-2].bottom.getY() + sea_level_y)/2;
+
 							cout << "New Y " << y << endl;
 							waves[waves.size()-2].bottom = Point(x,y);
+
+							int colorR = rand() % 256;
+							int colorG = rand() % 256;
+							int colorB = rand() % 256;
+
+							cout << "Setting wave index " << waves.size()-2 << " to color Scalar(" << colorR << "," << colorG << "," << colorB << ")" << endl;
+
+							adjustPointVector.push_back(ColoredPoint(x,sea_level_y,Scalar(colorB,colorG,colorR)));
 						}
 
 						sea_level_y = 0;
 						sea_level_count = 0;
 
 					} else {
-						cout << "Bottom Index Y: " << t.getPoint(bottom_index).getY() << endl;
-						cout << "Top Index Y: " << t.getPoint(top_index).getY() << endl;
+						// cout << "Bottom Index Y: " << t.getPoint(bottom_index).getY() << endl;
+						// cout << "Top Index Y: " << t.getPoint(top_index).getY() << endl;
 
-						cout << "Old sea level : " << sea_level_y << ", count = " << sea_level_count << endl;
-						sea_level_y += t.getPoint(bottom_index).getY();
-						sea_level_count++;
-						cout << "New sea level : " << sea_level_y << ", count = " << sea_level_count << endl;
+						// cout << "Old sea level : " << sea_level_y << ", count = " << sea_level_count << endl;
+						int waveMiddleHeight = (t.getPoint(bottom_index).getY() + t.getPoint(top_index).getY())/2;
+						if (sea_level_y == 0)
+							sea_level_y = waveMiddleHeight;
+						else
+							sea_level_y = (sea_level_y + waveMiddleHeight)/2;
+						// sea_level_count++;
+
+						// cout << "New sea level : " << sea_level_y << ", count = " << sea_level_count << endl;
+
 					}
 
 					gap_count = 0;
@@ -228,17 +272,33 @@ void WaveDetector::analyseTrajectory(Trajectory &t) {
 
 		if ( state > 0 && i == (derivative.points.size() - 1) ) {
 			if (detectWave(t,bottom_index,top_index)) {
-				// if (waves.size() > 1) {
-				// 	int averageY = sea_level_y / sea_level_count;
-				// 	int x = waves[waves.size()-2].bottom.getX();
-				// 	int y = (waves[waves.size()-2].bottom.getY() + averageY)/2;
-				// 	waves[waves.size()-2].bottom = Point(x,y);
-				// }
-			} else {
-				// int averageY = sea_level_y / sea_level_count;
-				// int x = waves[waves.size()-1].bottom.getX();
-				// int y = (waves[waves.size()-1].bottom.getY() + averageY)/2;
-				// waves[waves.size()-1].bottom = Point(x,y);
+				if (waves.size() > 1) {
+					cout << "Adjusting sea level" << endl;
+					cout << "Old Y " << waves[waves.size()-2].bottom.getY() << endl;
+
+					if (sea_level_y == 0)
+						sea_level_y = waves.back().bottom.getY();
+					else
+						sea_level_y = (sea_level_y + waves.back().bottom.getY())/2;
+					// sea_level_count++;
+
+					// int averageY = sea_level_y / sea_level_count;
+					// cout << "averageY " << averageY << endl;
+
+					int x = waves[waves.size()-2].bottom.getX();
+					int y = (waves[waves.size()-2].bottom.getY() + sea_level_y)/2;
+
+					cout << "New Y " << y << endl;
+					waves[waves.size()-2].bottom = Point(x,y);
+
+					int colorR = rand() % 256;
+					int colorG = rand() % 256;
+					int colorB = rand() % 256;
+
+					cout << "Setting wave index " << waves.size()-2 << " to color Scalar(" << colorR << "," << colorG << "," << colorB << ")" << endl;
+
+					adjustPointVector.push_back(ColoredPoint(x,sea_level_y,Scalar(colorB,colorG,colorR)));
+				}
 			}
 
 			state = 0;
@@ -292,6 +352,8 @@ void WaveDetector::extractWaveDetails() {
 void WaveDetector::filter() {
 
 	int col = 0;
+
+	srand (time(NULL));
 
 	while(true) {
 
