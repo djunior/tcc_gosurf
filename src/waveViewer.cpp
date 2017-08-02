@@ -12,39 +12,53 @@
 #include "filterPipeline.h"
 #include "tiltFilter.h"
 #include "preProcessor.hpp"
+#include "wave.hpp"
 
 using namespace std;
 using namespace cv;
 using namespace tcc;
 
-double calculateAngle(int imageSize, double cameraAngle, double focalAngle, int pixel) {
-	return cameraAngle - focalAngle/2 + pixel * (focalAngle / imageSize);
+void drawLines(Mat& mat, Wave& wave) {
+	line(mat,cv::Point(0,wave.bottom.getY()),cv::Point(mat.cols,wave.bottom.getY()),Scalar(0,0,255),2);
+	line(mat,cv::Point(0,wave.top.getY()),cv::Point(mat.cols,wave.top.getY()),Scalar(0,0,255),2);
 }
 
-double calculeSizeByAngle(int imageSize, double cameraHeight, double cameraAngle, double focalAngle, int waveBase, int waveTop) {
-	double angleBase = calculateAngle(imageSize,cameraAngle,focalAngle,waveBase);
-	double angleTop = calculateAngle(imageSize,cameraAngle,focalAngle,waveTop);
-
-	double height = cameraHeight * ( 1 - (tan(angleTop) / tan(angleBase)) );
-
-	cout << "Height: " << height << "m" << endl;
-
-	return height;
+int getWaveFromFrame(vector<Wave> &waves, int frameNumber) {
+	for (int i = 0; i < waves.size(); i++) {
+		if (frameNumber >= waves[i].bottom.getX() && frameNumber <= waves[i].top.getX()) {
+			return i;
+		}
+	}
+	return -1;
 }
 
-int main(int argc, char** argv) {
+void watchWaves(VideoCapture &cap, vector<Wave> &waves) {
+	cap.set(CV_CAP_PROP_POS_FRAMES,0);
+	Mat frame;
+	int frame_count = 0;
+	while(true) {
+		cap >> frame;
 
-	vector< pair<tcc::Point,tcc::Point> > waves;
+		if(frame.data == NULL)
+			break;
 
-	VideoCapture cap(argv[1]);
+		int index = getWaveFromFrame(waves,frame_count);
+		if (index >= 0)
+			drawLines(frame,waves[index]);
 
-	double cameraHeight = 6.0;
-	double cameraAngle = 90.0;
-	int imageSize = 720;
-	double focalAngle = 60.0;
+		imshow("frame",frame);
+
+		frame_count++;
+
+		waitKey(10);
+	}
+}
+
+void readWaveFile(vector<Wave> &waves) {
 
 	string line_bottom;
 	string line_top;
+	
 	ifstream f("waves.txt");
 
 	if (f.is_open())
@@ -63,87 +77,64 @@ int main(int argc, char** argv) {
 	      tcc::Point bottom(bottom_x,bottom_y);
 	      tcc::Point top(top_x,top_y);
 
-	      pair<tcc::Point,tcc::Point> wave(bottom,top);
-	      waves.push_back(wave);
-
-	      int base,up;
-
-	      double height = calculeSizeByAngle(imageSize, cameraHeight, cameraAngle, focalAngle, bottom_x, top_x );
+	      waves.push_back(Wave(bottom,top));
 	    }
 	    f.close();
 	}
 
-	// Mat frame;
-	int frame_count = 0;
-	int wave_count = 0;
+}
+
+void detectWaveInFrames(VideoCapture &cap, vector<Wave> &waves) {
 
 	PreProcessor preProcessor(cap);
 
-	// while(true) {
-	// 	cap >> frame;
+	Mat frame;
 
-	// 	if(frame.data == NULL)
-	// 		break;
+	for (int i = 0; i < waves.size(); i++) {
 
-		for (int i = 0; i < waves.size(); i++) {
-			tcc::Point bottom = waves[i].first;
-			tcc::Point top = waves[i].second;
+		tcc::Point bottom = waves[i].bottom;
+		tcc::Point top = waves[i].top;
 
-			Mat frame;
+		cap.set(CV_CAP_PROP_POS_FRAMES,top.getX());
+		cap.grab();
+		cap.retrieve(frame);
 
-			cap.set(CV_CAP_PROP_POS_FRAMES,top.getX());
-			cap.grab();
-			cap.retrieve(frame);
+		preProcessor.process(frame);
+		TiltFilter tf;
+		tf.init(preProcessor.skyRemover.getFilteredImage());
+		tf.process(frame);
 
-			// imshow("frame",frame);
+		Mat tiltedFrame = tf.getFilteredImage()->clone();
+		Mat lineFrame = tiltedFrame.clone();
 
-			// waitKey(0);
+		drawLines(lineFrame,waves[i]);
 
-			// if (frame_count == top.getX()) {
+		stringstream outputStream;
+		outputStream << "output_images/wave_viewer/wave_" << (i+1) << ".jpg";
+		ImageOutput io(outputStream.str());
+		io.setSourceMat(&lineFrame);
+		io.filter();
 
-				// cout << "Frame count: " << frame_count << endl;
-				cout << "bottom wave: (" << bottom.getX() << "," << bottom.getY() << ")" << endl;
-				cout << "top wave: (" << top.getX() << "," << top.getY() << ")" << endl;
+		stringstream originalOutputStream;
+		originalOutputStream << "output_images/wave_viewer/wave_original_" << (i+1) << ".jpg";
+		ImageOutput originalIo(originalOutputStream.str());
+		originalIo.setSourceMat(&tiltedFrame);
+		originalIo.filter();
 
-				preProcessor.process(frame);
-				TiltFilter tf;
-				tf.init(preProcessor.skyRemover.getFilteredImage());
-				tf.process(frame);
+	}
 
-				Mat tiltedFrame = tf.getFilteredImage()->clone();
-				Mat lineFrame = tiltedFrame.clone();
+}
 
-				wave_count++;
+int main(int argc, char** argv) {
 
-				line(lineFrame,cv::Point(0,bottom.getY()),cv::Point(lineFrame.cols,bottom.getY()),Scalar(0,0,255),2);
-				line(lineFrame,cv::Point(0,top.getY()),cv::Point(lineFrame.cols,top.getY()),Scalar(0,0,255),2);
+	vector< Wave > waves;
 
-				// if ( frame_count == top.getX() ) {
-					stringstream outputStream;
-					outputStream << "output_images/wave_viewer/wave_" << wave_count << ".jpg";
-					cout << "Saving image " << outputStream << endl;
-					ImageOutput io(outputStream.str());
-					io.setSourceMat(&lineFrame);
-					io.filter();
+	readWaveFile(waves);
 
-					stringstream originalOutputStream;
-					originalOutputStream << "output_images/wave_viewer/wave_original_" << wave_count << ".jpg";
-					cout << "Saving image " << originalOutputStream << endl;
-					ImageOutput originalIo(originalOutputStream.str());
-					originalIo.setSourceMat(&tiltedFrame);
-					originalIo.filter();
-				// }
+	VideoCapture cap(argv[1]);
 
-				// break;
-			// }
-		}
+	detectWaveInFrames(cap,waves);
 
-		// imshow("frame",frame);
-
-		// frame_count++;
-
-		// waitKey(30);
-	// }
-	waitKey(0);
+	watchWaves(cap,waves);
 
 }
