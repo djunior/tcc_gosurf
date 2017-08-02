@@ -23,7 +23,8 @@ int TiltFilter::findFirstPoint(Mat &m) {
 	return 0;
 }
 
-void TiltFilter::filter() {
+void TiltFilter::init(Mat *m) {
+	setSourceMat(m);
 
 	Mat firstCol = srcMat.col(0);
 	int firstY = findFirstPoint(firstCol);
@@ -31,13 +32,31 @@ void TiltFilter::filter() {
 	Mat lastCol = srcMat.col(srcMat.cols-1);
 	int lastY = findFirstPoint(lastCol);
 
-	double ang = -1* atan( (double) abs(lastY - firstY) / (srcMat.cols-1) ) * 180 / PI;
+	double ang = atan( (double) (lastY - firstY) / (srcMat.cols) ) ;
+
+	// cout << "Ang: " << ang * 180 / PI << endl;
+	// cout << "Cos: " << cos(abs(ang)) << endl;
+
+	offsetX = srcMat.rows * sin(abs(ang));
+	offsetY = srcMat.cols / tan(PI/2 - abs(ang));
+
+	// cout << "X: " << x << endl;
+	// cout << "Y: " << y << endl;
 
 	cv::Point center(srcMat.cols,srcMat.rows);
 
-	Mat r = getRotationMatrix2D(center,ang,1.0);
+	rotation = getRotationMatrix2D(center, ang * 180 / PI,1.0);
+}
 
-	warpAffine(srcMat, filteredMat, r, srcMat.size());
+void TiltFilter::filter() {
+
+}
+
+void TiltFilter::process(Mat &m) {
+	Mat rotated;
+	warpAffine(m, rotated, rotation, m.size());
+	Rect roi(offsetX,0,m.cols-2*offsetX,m.rows-2*offsetY);
+	filteredMat = rotated(roi);
 }
 
 }

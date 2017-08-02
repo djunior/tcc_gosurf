@@ -10,6 +10,7 @@
 #include "timestack.h"
 #include "cannyFilter.h"
 #include "skyRemoverFilter.hpp"
+#include "tiltFilter.h"
 
 using namespace std;
 using namespace cv;
@@ -19,9 +20,7 @@ namespace tcc {
 class PreProcessor : public ImageProcessor {
 private:
 	Timestack timestack;
-	
-	SkyRemoverFilter skyRemover;
-	
+
 	bool isInit;
 	
 	void init(Mat &m) {
@@ -42,6 +41,9 @@ private:
 	int count;
 
 public:
+
+	SkyRemoverFilter skyRemover;
+
 	PreProcessor(VideoCapture &cap) : timestack(cap) {
 		isInit = false;
 	}
@@ -66,6 +68,7 @@ public:
 	
 	void process(Mat &m) {
 		Mat greyFrame, eqFrame;
+		TiltFilter tiltFilter;
 
 		// Passo 1 - converter para nível de cinza
 		if (m.channels() == 1)
@@ -82,9 +85,12 @@ public:
 		// Passo 3 - Remoção do Céu
 		skyRemover.process(eqFrame);
 
+		tiltFilter.init(skyRemover.getFilteredImage());
+		tiltFilter.process((*skyRemover.getFilteredImage()));
+
 		// Passo 4 - adicionar frame ao timestack
-		// timestack.process((*skyRemover.getFilteredImage()));
-		timestack.process(eqFrame);
+		timestack.process((*tiltFilter.getFilteredImage()));
+		// timestack.process(eqFrame);
 
 		if (count == 100)
 			imwrite("output_images/simpletimestack/simpletimestack_sky_removed.jpg",(*skyRemover.getFilteredImage()));

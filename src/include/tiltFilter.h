@@ -5,11 +5,15 @@
 
 namespace tcc {
 
-class TiltFilter : public ImageFilter {
+class TiltFilter : public ImageFilter, public ImageProcessor {
 public:
 	TiltFilter() : ImageFilter() {}
+	void init(cv::Mat*);
 	void filter();
+	void process(cv::Mat &);
 private:
+	cv::Mat rotation;
+	int offsetX, offsetY;
 	int findFirstPoint(cv::Mat &);
 };
 

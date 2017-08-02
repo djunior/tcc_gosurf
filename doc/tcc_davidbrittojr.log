@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.15 (TeX Live 2015/dev/Debian) (preloaded format=pdflatex 2017.7.13)  23 JUL 2017 20:16
+This is pdfTeX, Version 3.14159265-2.6-1.40.15 (TeX Live 2015/dev/Debian) (preloaded format=pdflatex 2017.7.13)  1 AUG 2017 15:50
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -513,24 +513,272 @@ Package caption3 Info: TeX engine: e-TeX on input line 57.
 \c@lotdepth=\count198
 \sf@top=\skip54
 \sf@bottom=\skip55
+)
+(/usr/share/texlive/texmf-dist/tex/latex/todonotes/todonotes.sty
+Package: todonotes 2012/07/25 .dtx Todonotes source and documentation.
+Package: todonotes 2012/07/25
+
+(/usr/share/texlive/texmf-dist/tex/latex/pgf/frontendlayer/tikz.sty
+(/usr/share/texlive/texmf-dist/tex/latex/pgf/basiclayer/pgf.sty
+(/usr/share/texlive/texmf-dist/tex/latex/pgf/utilities/pgfrcs.sty
+(/usr/share/texlive/texmf-dist/tex/generic/pgf/utilities/pgfutil-common.tex
+\pgfutil@everybye=\toks41
+\pgfutil@tempdima=\dimen183
+\pgfutil@tempdimb=\dimen184
+
+(/usr/share/texlive/texmf-dist/tex/generic/pgf/utilities/pgfutil-common-lists.t
+ex)) (/usr/share/texlive/texmf-dist/tex/generic/pgf/utilities/pgfutil-latex.def
+\pgfutil@abb=\box38
+(/usr/share/texlive/texmf-dist/tex/latex/ms/everyshi.sty
+Package: everyshi 2001/05/15 v3.00 EveryShipout Package (MS)
+))
+(/usr/share/texlive/texmf-dist/tex/generic/pgf/utilities/pgfrcs.code.tex
+Package: pgfrcs 2013/12/20 v3.0.0 (rcs-revision 1.28)
+))
+Package: pgf 2013/12/18 v3.0.0 (rcs-revision 1.14)
+
+(/usr/share/texlive/texmf-dist/tex/latex/pgf/basiclayer/pgfcore.sty
+(/usr/share/texlive/texmf-dist/tex/latex/pgf/systemlayer/pgfsys.sty
+(/usr/share/texlive/texmf-dist/tex/generic/pgf/systemlayer/pgfsys.code.tex
+Package: pgfsys 2013/11/30 v3.0.0 (rcs-revision 1.47)
+
+(/usr/share/texlive/texmf-dist/tex/generic/pgf/utilities/pgfkeys.code.tex)
+\pgf@x=\dimen185
+\pgf@y=\dimen186
+\pgf@xa=\dimen187
+\pgf@ya=\dimen188
+\pgf@xb=\dimen189
+\pgf@yb=\dimen190
+\pgf@xc=\dimen191
+\pgf@yc=\dimen192
+\w@pgf@writea=\write3
+\r@pgf@reada=\read1
+\c@pgf@counta=\count199
+\c@pgf@countb=\count200
+\c@pgf@countc=\count201
+\c@pgf@countd=\count202
+\t@pgf@toka=\toks42
+\t@pgf@tokb=\toks43
+\t@pgf@tokc=\toks44
+
+(/usr/share/texlive/texmf-dist/tex/generic/pgf/systemlayer/pgf.cfg
+File: pgf.cfg 2008/05/14  (rcs-revision 1.7)
+)
+Driver file for pgf: pgfsys-pdftex.def
+
+(/usr/share/texlive/texmf-dist/tex/generic/pgf/systemlayer/pgfsys-pdftex.def
+File: pgfsys-pdftex.def 2013/07/18  (rcs-revision 1.33)
+
+(/usr/share/texlive/texmf-dist/tex/generic/pgf/systemlayer/pgfsys-common-pdf.de
+f
+File: pgfsys-common-pdf.def 2013/10/10  (rcs-revision 1.13)
+)))
+(/usr/share/texlive/texmf-dist/tex/generic/pgf/systemlayer/pgfsyssoftpath.code.
+tex
+File: pgfsyssoftpath.code.tex 2013/09/09  (rcs-revision 1.9)
+\pgfsyssoftpath@smallbuffer@items=\count203
+\pgfsyssoftpath@bigbuffer@items=\count204
+)
+(/usr/share/texlive/texmf-dist/tex/generic/pgf/systemlayer/pgfsysprotocol.code.
+tex
+File: pgfsysprotocol.code.tex 2006/10/16  (rcs-revision 1.4)
+))
+(/usr/share/texlive/texmf-dist/tex/generic/pgf/basiclayer/pgfcore.code.tex
+Package: pgfcore 2010/04/11 v3.0.0 (rcs-revision 1.7)
+
+(/usr/share/texlive/texmf-dist/tex/generic/pgf/math/pgfmath.code.tex)
+(/usr/share/texlive/texmf-dist/tex/generic/pgf/basiclayer/pgfcorepoints.code.te
+x
+File: pgfcorepoints.code.tex 2013/10/07  (rcs-revision 1.27)
+\pgf@picminx=\dimen193
+\pgf@picmaxx=\dimen194
+\pgf@picminy=\dimen195
+\pgf@picmaxy=\dimen196
+\pgf@pathminx=\dimen197
+\pgf@pathmaxx=\dimen198
+\pgf@pathminy=\dimen199
+\pgf@pathmaxy=\dimen200
+\pgf@xx=\dimen201
+\pgf@xy=\dimen202
+\pgf@yx=\dimen203
+\pgf@yy=\dimen204
+\pgf@zx=\dimen205
+\pgf@zy=\dimen206
+)
+(/usr/share/texlive/texmf-dist/tex/generic/pgf/basiclayer/pgfcorepathconstruct.
+code.tex
+File: pgfcorepathconstruct.code.tex 2013/10/07  (rcs-revision 1.29)
+\pgf@path@lastx=\dimen207
+\pgf@path@lasty=\dimen208
+)
+(/usr/share/texlive/texmf-dist/tex/generic/pgf/basiclayer/pgfcorepathusage.code
+.tex
+File: pgfcorepathusage.code.tex 2013/12/13  (rcs-revision 1.23)
+\pgf@shorten@end@additional=\dimen209
+\pgf@shorten@start@additional=\dimen210
+)
+(/usr/share/texlive/texmf-dist/tex/generic/pgf/basiclayer/pgfcorescopes.code.te
+x
+File: pgfcorescopes.code.tex 2013/10/09  (rcs-revision 1.44)
+\pgfpic=\box39
+\pgf@hbox=\box40
+\pgf@layerbox@main=\box41
+\pgf@picture@serial@count=\count205
+)
+(/usr/share/texlive/texmf-dist/tex/generic/pgf/basiclayer/pgfcoregraphicstate.c
+ode.tex
+File: pgfcoregraphicstate.code.tex 2013/09/19  (rcs-revision 1.11)
+\pgflinewidth=\dimen211
+)
+(/usr/share/texlive/texmf-dist/tex/generic/pgf/basiclayer/pgfcoretransformation
+s.code.tex
+File: pgfcoretransformations.code.tex 2013/10/10  (rcs-revision 1.17)
+\pgf@pt@x=\dimen212
+\pgf@pt@y=\dimen213
+\pgf@pt@temp=\dimen214
+)
+(/usr/share/texlive/texmf-dist/tex/generic/pgf/basiclayer/pgfcorequick.code.tex
+File: pgfcorequick.code.tex 2008/10/09  (rcs-revision 1.3)
+)
+(/usr/share/texlive/texmf-dist/tex/generic/pgf/basiclayer/pgfcoreobjects.code.t
+ex
+File: pgfcoreobjects.code.tex 2006/10/11  (rcs-revision 1.2)
+)
+(/usr/share/texlive/texmf-dist/tex/generic/pgf/basiclayer/pgfcorepathprocessing
+.code.tex
+File: pgfcorepathprocessing.code.tex 2013/09/09  (rcs-revision 1.9)
+)
+(/usr/share/texlive/texmf-dist/tex/generic/pgf/basiclayer/pgfcorearrows.code.te
+x
+File: pgfcorearrows.code.tex 2013/11/07  (rcs-revision 1.40)
+\pgfarrowsep=\dimen215
+)
+(/usr/share/texlive/texmf-dist/tex/generic/pgf/basiclayer/pgfcoreshade.code.tex
+File: pgfcoreshade.code.tex 2013/07/15  (rcs-revision 1.15)
+\pgf@max=\dimen216
+\pgf@sys@shading@range@num=\count206
+)
+(/usr/share/texlive/texmf-dist/tex/generic/pgf/basiclayer/pgfcoreimage.code.tex
+File: pgfcoreimage.code.tex 2013/07/15  (rcs-revision 1.18)
+
+(/usr/share/texlive/texmf-dist/tex/generic/pgf/basiclayer/pgfcoreexternal.code.
+tex
+File: pgfcoreexternal.code.tex 2013/07/15  (rcs-revision 1.20)
+\pgfexternal@startupbox=\box42
+))
+(/usr/share/texlive/texmf-dist/tex/generic/pgf/basiclayer/pgfcorelayers.code.te
+x
+File: pgfcorelayers.code.tex 2013/07/18  (rcs-revision 1.7)
+)
+(/usr/share/texlive/texmf-dist/tex/generic/pgf/basiclayer/pgfcoretransparency.c
+ode.tex
+File: pgfcoretransparency.code.tex 2013/09/30  (rcs-revision 1.5)
+)
+(/usr/share/texlive/texmf-dist/tex/generic/pgf/basiclayer/pgfcorepatterns.code.
+tex
+File: pgfcorepatterns.code.tex 2013/11/07  (rcs-revision 1.5)
+)))
+(/usr/share/texlive/texmf-dist/tex/generic/pgf/modules/pgfmoduleshapes.code.tex
+File: pgfmoduleshapes.code.tex 2013/10/31  (rcs-revision 1.34)
+\pgfnodeparttextbox=\box43
+) (/usr/share/texlive/texmf-dist/tex/generic/pgf/modules/pgfmoduleplot.code.tex
+File: pgfmoduleplot.code.tex 2013/07/31  (rcs-revision 1.12)
+)
+(/usr/share/texlive/texmf-dist/tex/latex/pgf/compatibility/pgfcomp-version-0-65
+.sty
+Package: pgfcomp-version-0-65 2007/07/03 v3.0.0 (rcs-revision 1.7)
+\pgf@nodesepstart=\dimen217
+\pgf@nodesepend=\dimen218
+)
+(/usr/share/texlive/texmf-dist/tex/latex/pgf/compatibility/pgfcomp-version-1-18
+.sty
+Package: pgfcomp-version-1-18 2007/07/23 v3.0.0 (rcs-revision 1.1)
+)) (/usr/share/texlive/texmf-dist/tex/latex/pgf/utilities/pgffor.sty
+(/usr/share/texlive/texmf-dist/tex/latex/pgf/utilities/pgfkeys.sty
+(/usr/share/texlive/texmf-dist/tex/generic/pgf/utilities/pgfkeys.code.tex))
+(/usr/share/texlive/texmf-dist/tex/latex/pgf/math/pgfmath.sty
+(/usr/share/texlive/texmf-dist/tex/generic/pgf/math/pgfmath.code.tex))
+(/usr/share/texlive/texmf-dist/tex/generic/pgf/utilities/pgffor.code.tex
+Package: pgffor 2013/12/13 v3.0.0 (rcs-revision 1.25)
+
+(/usr/share/texlive/texmf-dist/tex/generic/pgf/math/pgfmath.code.tex)
+\pgffor@iter=\dimen219
+\pgffor@skip=\dimen220
+\pgffor@stack=\toks45
+\pgffor@toks=\toks46
+))
+(/usr/share/texlive/texmf-dist/tex/generic/pgf/frontendlayer/tikz/tikz.code.tex
+Package: tikz 2013/12/13 v3.0.0 (rcs-revision 1.142)
+
+(/usr/share/texlive/texmf-dist/tex/generic/pgf/libraries/pgflibraryplothandlers
+.code.tex
+File: pgflibraryplothandlers.code.tex 2013/08/31 v3.0.0 (rcs-revision 1.20)
+\pgf@plot@mark@count=\count207
+\pgfplotmarksize=\dimen221
+)
+\tikz@lastx=\dimen222
+\tikz@lasty=\dimen223
+\tikz@lastxsaved=\dimen224
+\tikz@lastysaved=\dimen225
+\tikzleveldistance=\dimen226
+\tikzsiblingdistance=\dimen227
+\tikz@figbox=\box44
+\tikz@figbox@bg=\box45
+\tikz@tempbox=\box46
+\tikz@tempbox@bg=\box47
+\tikztreelevel=\count208
+\tikznumberofchildren=\count209
+\tikznumberofcurrentchild=\count210
+\tikz@fig@count=\count211
+
+(/usr/share/texlive/texmf-dist/tex/generic/pgf/modules/pgfmodulematrix.code.tex
+File: pgfmodulematrix.code.tex 2013/09/17  (rcs-revision 1.8)
+\pgfmatrixcurrentrow=\count212
+\pgfmatrixcurrentcolumn=\count213
+\pgf@matrix@numberofcolumns=\count214
+)
+\tikz@expandcount=\count215
+
+(/usr/share/texlive/texmf-dist/tex/generic/pgf/frontendlayer/tikz/libraries/tik
+zlibrarytopaths.code.tex
+File: tikzlibrarytopaths.code.tex 2008/06/17 v3.0.0 (rcs-revision 1.2)
+)))
+(/usr/share/texlive/texmf-dist/tex/generic/pgf/frontendlayer/tikz/libraries/tik
+zlibrarypositioning.code.tex
+File: tikzlibrarypositioning.code.tex 2008/10/06 v3.0.0 (rcs-revision 1.7)
+)
+(/usr/share/texlive/texmf-dist/tex/latex/tools/calc.sty
+Package: calc 2014/10/28 v4.3 Infix arithmetic (KKT,FJ)
+\calc@Acount=\count216
+\calc@Bcount=\count217
+\calc@Adimen=\dimen228
+\calc@Bdimen=\dimen229
+\calc@Askip=\skip56
+\calc@Bskip=\skip57
+LaTeX Info: Redefining \setlength on input line 75.
+LaTeX Info: Redefining \addtolength on input line 76.
+\calc@Ccount=\count218
+\calc@Cskip=\skip58
+)
+\c@@todonotes@numberoftodonotes=\count219
 ))
 (/usr/share/texlive/texmf-dist/tex/latex/tools/longtable.sty
 Package: longtable 2014/10/28 v4.11 Multi-page Table package (DPC)
-\LTleft=\skip56
-\LTright=\skip57
-\LTpre=\skip58
-\LTpost=\skip59
-\LTchunksize=\count199
-\LTcapwidth=\dimen183
-\LT@head=\box38
-\LT@firsthead=\box39
-\LT@foot=\box40
-\LT@lastfoot=\box41
-\LT@cols=\count200
-\LT@rows=\count201
-\c@LT@tables=\count202
-\c@LT@chunks=\count203
-\LT@p@ftn=\toks41
+\LTleft=\skip59
+\LTright=\skip60
+\LTpre=\skip61
+\LTpost=\skip62
+\LTchunksize=\count220
+\LTcapwidth=\dimen230
+\LT@head=\box48
+\LT@firsthead=\box49
+\LT@foot=\box50
+\LT@lastfoot=\box51
+\LT@cols=\count221
+\LT@rows=\count222
+\c@LT@tables=\count223
+\c@LT@chunks=\count224
+\LT@p@ftn=\toks47
 )
 (./tcc_davidbrittojr.aux)
 \openout1 = `tcc_davidbrittojr.aux'.
@@ -550,17 +798,17 @@ LaTeX Font Info:    ... okay on input line 4.
 
 (/usr/share/texlive/texmf-dist/tex/context/base/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
-\scratchcounter=\count204
-\scratchdimen=\dimen184
-\scratchbox=\box42
-\nofMPsegments=\count205
-\nofMParguments=\count206
-\everyMPshowfont=\toks42
-\MPscratchCnt=\count207
-\MPscratchDim=\dimen185
-\MPnumerator=\count208
-\makeMPintoPDFobject=\count209
-\everyMPtoPDFconversion=\toks43
+\scratchcounter=\count225
+\scratchdimen=\dimen231
+\scratchbox=\box52
+\nofMPsegments=\count226
+\nofMParguments=\count227
+\everyMPshowfont=\toks48
+\MPscratchCnt=\count228
+\MPscratchDim=\dimen232
+\MPnumerator=\count229
+\makeMPintoPDFobject=\count230
+\everyMPtoPDFconversion=\toks49
 ) (/usr/share/texlive/texmf-dist/tex/generic/oberdiek/pdftexcmds.sty
 Package: pdftexcmds 2011/11/29 v0.20 Utility functions of pdfTeX for LuaTeX (HO
 )
@@ -605,12 +853,12 @@ G,.JBIG2,.JB2,.eps]
 File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Liv
 e
 ))
-\c@lstlisting=\count210
+\c@lstlisting=\count231
 Package caption Info: Begin \AtBeginDocument code.
 Package caption Info: subfig package v1.3 is loaded.
 Package caption Info: End \AtBeginDocument code.
 
-(./Capa.tex
+ABD: EveryShipout initializing macros (./Capa.tex
 Package epstopdf Info: Source file: <./figuras/Poli.eps>
 (epstopdf)                    date: 2017-06-30 13:33:02
 (epstopdf)                    size: 546883 bytes
@@ -622,7 +870,7 @@ ed-to.pdf ./figuras/Poli.eps>
 (epstopdf)             \includegraphics on input line 1.
 Package epstopdf Info: Output file is already uptodate.
 
-<./figuras/Poli-eps-converted-to.pdf, id=1, 130.4875pt x 139.52126pt>
+<./figuras/Poli-eps-converted-to.pdf, id=4, 130.4875pt x 139.52126pt>
 File: ./figuras/Poli-eps-converted-to.pdf Graphic file (type pdf)
 
 <use ./figuras/Poli-eps-converted-to.pdf>
@@ -671,24 +919,24 @@ Underfull \hbox (badness 10000) in paragraph at lines 8--16
 
  []
 
-[3] [4] [5] [6] [7] [8] [9]) (./tcc_davidbrittojr.toc)
-\tf@toc=\write3
-\openout3 = `tcc_davidbrittojr.toc'.
+[3] [4] [5] [6] [7] [8] [9]) (./tcc_davidbrittojr.toc [10
 
- [10
+])
+\tf@toc=\write4
+\openout4 = `tcc_davidbrittojr.toc'.
 
-]
-(./tcc_davidbrittojr.lof)
-\tf@lof=\write4
-\openout4 = `tcc_davidbrittojr.lof'.
+ [11]
+(./tcc_davidbrittojr.lof [12
 
- [11
+])
+\tf@lof=\write5
+\openout5 = `tcc_davidbrittojr.lof'.
 
-] (./tcc_davidbrittojr.lot)
-\tf@lot=\write5
-\openout5 = `tcc_davidbrittojr.lot'.
+ [13] (./tcc_davidbrittojr.lot)
+\tf@lot=\write6
+\openout6 = `tcc_davidbrittojr.lot'.
 
- [12
+ [14
 
 ]
 Cap\'{\i }tulo 1.
@@ -696,128 +944,206 @@ Cap\'{\i }tulo 1.
 
 
 
-]
-
-LaTeX Warning: Citation `Griffith05' on page 2 undefined on input line 21.
-
-[2]
+] [2]
 LaTeX Font Info:    Try loading font information for OMS+cmr on input line 33.
  (/usr/share/texlive/texmf-dist/tex/latex/base/omscmr.fd
 File: omscmr.fd 2014/09/29 v2.5h Standard LaTeX font definitions
 )
 LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <12> not available
 (Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 33.
- [3]) [4]
+
+[3]) [4]
 Cap\'{\i }tulo 2.
-(./cap2.tex
+(./cap2.tex [5
 
-LaTeX Warning: Citation `Holland97' on page 5 undefined on input line 3.
-
-
-LaTeX Warning: Citation `Griffith05' on page 5 undefined on input line 6.
-
-[5
-
-]
-
-LaTeX Warning: Citation `Griffith10' on page 6 undefined on input line 10.
+] [6] [7]
+Overfull \hbox (25.73314pt too wide) in paragraph at lines 46--46
+[][][][]\OT1/cmr/m/n/6 Falar 
+ []
 
 
-LaTeX Warning: Citation `Griffith11' on page 6 undefined on input line 13.
+Overfull \hbox (18.361pt too wide) in paragraph at lines 46--46
+\OT1/cmr/m/n/6 so- 
+ []
 
 
-LaTeX Warning: Citation `Griffith14' on page 6 undefined on input line 13.
+Overfull \hbox (19.4888pt too wide) in paragraph at lines 46--46
+\OT1/cmr/m/n/6 bre 
+ []
 
 
-LaTeX Warning: Citation `Rico17' on page 6 undefined on input line 17.
-
-[6]
-
-LaTeX Warning: Citation `Gonzalez92' on page 7 undefined on input line 21.
+Overfull \hbox (35.9441pt too wide) in paragraph at lines 46--46
+\OT1/cmr/m/n/6 m^^Setodos 
+ []
 
 
-LaTeX Warning: Citation `Jahne02' on page 7 undefined on input line 23.
+Overfull \hbox (16.98882pt too wide) in paragraph at lines 46--46
+\OT1/cmr/m/n/6 no 
+ []
 
 
-LaTeX Warning: Citation `Holland97' on page 7 undefined on input line 23.
+Overfull \hbox (34.93303pt too wide) in paragraph at lines 46--46
+\OT1/cmr/m/n/6 dom^^S^^Pnio 
+ []
 
 
-LaTeX Warning: Citation `Gonzalez92' on page 7 undefined on input line 33.
-
-[7]
-
-LaTeX Warning: Citation `Gonzalez92' on page 8 undefined on input line 35.
-
-[8]
-
-LaTeX Warning: Citation `Gonzalez92' on page 9 undefined on input line 64.
+Overfull \hbox (16.98882pt too wide) in paragraph at lines 46--46
+\OT1/cmr/m/n/6 da 
+ []
 
 
-LaTeX Warning: Citation `Jahne02' on page 9 undefined on input line 72.
+Overfull \hbox (42.04408pt too wide) in paragraph at lines 46--46
+\OT1/cmr/m/n/6 frequ^encia  
+ []
 
 
-LaTeX Warning: Citation `Gonzalez92' on page 9 undefined on input line 91.
-
-[9]
-
-LaTeX Warning: Citation `Gonzalez92' on page 10 undefined on input line 126.
+Overfull \hbox (25.73314pt too wide) in paragraph at lines 46--46
+[][][][]\OT1/cmr/m/n/6 Falar 
+ []
 
 
-LaTeX Warning: Citation `Gonzalez92' on page 10 undefined on input line 126.
-
-[10]
-
-LaTeX Warning: Citation `Canny86' on page 11 undefined on input line 128.
+Overfull \hbox (18.361pt too wide) in paragraph at lines 46--46
+\OT1/cmr/m/n/6 so- 
+ []
 
 
-LaTeX Warning: Citation `Juneja09' on page 11 undefined on input line 128.
+Overfull \hbox (19.4888pt too wide) in paragraph at lines 46--46
+\OT1/cmr/m/n/6 bre 
+ []
 
 
-LaTeX Warning: Citation `Canny86' on page 11 undefined on input line 128.
+Overfull \hbox (35.9441pt too wide) in paragraph at lines 46--46
+\OT1/cmr/m/n/6 m^^Setodos 
+ []
 
 
-LaTeX Warning: Citation `Gonzalez92' on page 11 undefined on input line 140.
+Overfull \hbox (16.98882pt too wide) in paragraph at lines 46--46
+\OT1/cmr/m/n/6 no 
+ []
 
 
-LaTeX Warning: Citation `Griffith11' on page 11 undefined on input line 140.
+Overfull \hbox (34.93303pt too wide) in paragraph at lines 46--46
+\OT1/cmr/m/n/6 dom^^S^^Pnio 
+ []
 
 
-LaTeX Warning: Citation `Gonzalez92' on page 11 undefined on input line 142.
+Overfull \hbox (16.98882pt too wide) in paragraph at lines 46--46
+\OT1/cmr/m/n/6 da 
+ []
 
-[11]
 
-LaTeX Warning: Citation `Fusiello' on page 12 undefined on input line 146.
+Overfull \hbox (42.04408pt too wide) in paragraph at lines 46--46
+\OT1/cmr/m/n/6 frequ^encia  
+ []
 
-<./figuras/pin_hole_camera.png, id=91, 549.05125pt x 269.005pt>
+
+Overfull \hbox (7.8324pt too wide) in paragraph at lines 46--46
+[][][] 
+ []
+
+
+Overfull \hbox (25.73314pt too wide) in paragraph at lines 46--46
+[][][][]\OT1/cmr/m/n/6 Falar 
+ []
+
+
+Overfull \hbox (18.361pt too wide) in paragraph at lines 46--46
+\OT1/cmr/m/n/6 so- 
+ []
+
+
+Overfull \hbox (19.4888pt too wide) in paragraph at lines 46--46
+\OT1/cmr/m/n/6 bre 
+ []
+
+
+Overfull \hbox (35.9441pt too wide) in paragraph at lines 46--46
+\OT1/cmr/m/n/6 m^^Setodos 
+ []
+
+
+Overfull \hbox (16.98882pt too wide) in paragraph at lines 46--46
+\OT1/cmr/m/n/6 no 
+ []
+
+
+Overfull \hbox (34.93303pt too wide) in paragraph at lines 46--46
+\OT1/cmr/m/n/6 dom^^S^^Pnio 
+ []
+
+
+Overfull \hbox (16.98882pt too wide) in paragraph at lines 46--46
+\OT1/cmr/m/n/6 da 
+ []
+
+
+Overfull \hbox (42.04408pt too wide) in paragraph at lines 46--46
+\OT1/cmr/m/n/6 frequ^encia  
+ []
+
+
+Overfull \hbox (25.73314pt too wide) in paragraph at lines 46--46
+[][][][]\OT1/cmr/m/n/6 Falar 
+ []
+
+
+Overfull \hbox (18.361pt too wide) in paragraph at lines 46--46
+\OT1/cmr/m/n/6 so- 
+ []
+
+
+Overfull \hbox (19.4888pt too wide) in paragraph at lines 46--46
+\OT1/cmr/m/n/6 bre 
+ []
+
+
+Overfull \hbox (35.9441pt too wide) in paragraph at lines 46--46
+\OT1/cmr/m/n/6 m^^Setodos 
+ []
+
+
+Overfull \hbox (16.98882pt too wide) in paragraph at lines 46--46
+\OT1/cmr/m/n/6 no 
+ []
+
+
+Overfull \hbox (34.93303pt too wide) in paragraph at lines 46--46
+\OT1/cmr/m/n/6 dom^^S^^Pnio 
+ []
+
+
+Overfull \hbox (16.98882pt too wide) in paragraph at lines 46--46
+\OT1/cmr/m/n/6 da 
+ []
+
+
+Overfull \hbox (42.04408pt too wide) in paragraph at lines 46--46
+\OT1/cmr/m/n/6 frequ^encia  
+ []
+
+
+Overfull \hbox (7.8324pt too wide) in paragraph at lines 46--46
+[][][] 
+ []
+
+[8] [9] [10] [11]
+<./figuras/pin_hole_camera.png, id=103, 549.05125pt x 269.005pt>
 File: ./figuras/pin_hole_camera.png Graphic file (type png)
 
 <use ./figuras/pin_hole_camera.png>
-Package pdftex.def Info: ./figuras/pin_hole_camera.png used on input line 151.
+Package pdftex.def Info: ./figuras/pin_hole_camera.png used on input line 153.
 (pdftex.def)             Requested size: 384.33325pt x 188.3022pt.
-
-
-LaTeX Warning: Citation `Fusiello' on page 12 undefined on input line 152.
-
-
-LaTeX Warning: Citation `Fusiello' on page 12 undefined on input line 152.
 
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
-[12]
-
-LaTeX Warning: Citation `Griffith14' on page 13 undefined on input line 166.
-
-<./figuras/beach_model_griffith.png, id=96, 529.0164pt x 224.037pt>
+[12] <./figuras/beach_model_griffith.png, id=108, 529.0164pt x 224.037pt>
 File: ./figuras/beach_model_griffith.png Graphic file (type png)
 
 <use ./figuras/beach_model_griffith.png>
 Package pdftex.def Info: ./figuras/beach_model_griffith.png used on input line 
-170.
+172.
 (pdftex.def)             Requested size: 423.2137pt x 179.22983pt.
-
-
-LaTeX Warning: Citation `Griffith14' on page 13 undefined on input line 171.
 
 
 LaTeX Warning: `h' float specifier changed to `ht'.
@@ -826,7 +1152,7 @@ LaTeX Warning: `h' float specifier changed to `ht'.
 PNG copy)>]
 Cap\'{\i }tulo 3.
 (./cap3.tex
-<./figuras/pre_processamento_pipeline.png, id=107, 984.67876pt x 222.8325pt>
+<./figuras/pre_processamento_pipeline.png, id=116, 984.67876pt x 222.8325pt>
 File: ./figuras/pre_processamento_pipeline.png Graphic file (type png)
 
 <use ./figuras/pre_processamento_pipeline.png>
@@ -834,7 +1160,7 @@ Package pdftex.def Info: ./figuras/pre_processamento_pipeline.png used on input
  line 9.
 (pdftex.def)             Requested size: 426.79134pt x 96.58453pt.
 
-<./figuras/pre_processamento_frame.png, id=108, 783.92876pt x 181.67876pt>
+<./figuras/pre_processamento_frame.png, id=117, 783.92876pt x 181.67876pt>
 File: ./figuras/pre_processamento_frame.png Graphic file (type png)
 
 <use ./figuras/pre_processamento_frame.png>
@@ -845,29 +1171,21 @@ ne 11.
 
  <./figuras/pre_processamento_pipeline.png> <./figuras/pre_processamento_frame.
 png>] [16]
-<./figuras/timestack.jpg, id=119, 4213.7425pt x 722.7pt>
+<./figuras/timestack.jpg, id=127, 4213.7425pt x 722.7pt>
 File: ./figuras/timestack.jpg Graphic file (type jpg)
 
 <use ./figuras/timestack.jpg>
 Package pdftex.def Info: ./figuras/timestack.jpg used on input line 30.
 (pdftex.def)             Requested size: 426.79134pt x 73.18951pt.
- [17 <./figuras/timestack.jpg>] [18]
-
-LaTeX Warning: Citation `RaspberryCamera' on page 19 undefined on input line 49
-.
-
-[19] <./figuras/pcb.png, id=130, 456.2646pt x 295.8252pt>
+ [17 <./figuras/timestack.jpg>] [18] [19]
+<./figuras/pcb.png, id=138, 456.2646pt x 295.8252pt>
 File: ./figuras/pcb.png Graphic file (type png)
-
-<use ./figuras/pcb.png>
+ <use ./figuras/pcb.png>
 Package pdftex.def Info: ./figuras/pcb.png used on input line 55.
 (pdftex.def)             Requested size: 341.43436pt x 221.37633pt.
 
-
-LaTeX Warning: Citation `Ho2014' on page 20 undefined on input line 66.
-
 [20 <./figuras/pcb.png>]
-<./figuras/IMG_0798_2_originalTimestack.jpg, id=135, 1888.05376pt x 722.7pt>
+<./figuras/IMG_0798_2_originalTimestack.jpg, id=143, 1888.05376pt x 722.7pt>
 File: ./figuras/IMG_0798_2_originalTimestack.jpg Graphic file (type jpg)
 
 <use ./figuras/IMG_0798_2_originalTimestack.jpg>
@@ -875,7 +1193,7 @@ Package pdftex.def Info: ./figuras/IMG_0798_2_originalTimestack.jpg used on inp
 ut line 70.
 (pdftex.def)             Requested size: 192.0548pt x 73.50931pt.
 
-<./figuras/IMG_0798_2_stableTimestack.jpg, id=136, 1888.05376pt x 722.7pt>
+<./figuras/IMG_0798_2_stableTimestack.jpg, id=144, 1888.05376pt x 722.7pt>
 File: ./figuras/IMG_0798_2_stableTimestack.jpg Graphic file (type jpg)
 
 <use ./figuras/IMG_0798_2_stableTimestack.jpg>
@@ -883,7 +1201,7 @@ Package pdftex.def Info: ./figuras/IMG_0798_2_stableTimestack.jpg used on input
  line 72.
 (pdftex.def)             Requested size: 192.0548pt x 73.50931pt.
 
-<./figuras/IMG_0896_cutted_originalTimestack.jpg, id=137, 1546.77875pt x 722.7p
+<./figuras/IMG_0896_cutted_originalTimestack.jpg, id=145, 1546.77875pt x 722.7p
 t>
 File: ./figuras/IMG_0896_cutted_originalTimestack.jpg Graphic file (type jpg)
  <use ./figuras/IMG_0896_cutted_originalTimestack.jpg>
@@ -891,7 +1209,7 @@ Package pdftex.def Info: ./figuras/IMG_0896_cutted_originalTimestack.jpg used o
 n input line 74.
 (pdftex.def)             Requested size: 192.0548pt x 89.73076pt.
 
-<./figuras/IMG_0896_cutted_stableTimestack.jpg, id=138, 1546.77875pt x 722.7pt>
+<./figuras/IMG_0896_cutted_stableTimestack.jpg, id=146, 1546.77875pt x 722.7pt>
 File: ./figuras/IMG_0896_cutted_stableTimestack.jpg Graphic file (type jpg)
 <use ./figuras/IMG_0896_cutted_stableTimestack.jpg>
 Package pdftex.def Info: ./figuras/IMG_0896_cutted_stableTimestack.jpg used on 
@@ -899,11 +1217,8 @@ input line 76.
 (pdftex.def)             Requested size: 192.0548pt x 89.73076pt.
  [21 <./figuras/IMG_0798_2_originalTimestack.jpg> <./figuras/IMG_0798_2_stableT
 imestack.jpg> <./figuras/IMG_0896_cutted_originalTimestack.jpg> <./figuras/IMG_
-0896_cutted_stableTimestack.jpg>]
-
-LaTeX Warning: Citation `Griffith14' on page 22 undefined on input line 85.
-
-[22] <./figuras/process_threshold_150.jpg, id=145, 4209.7275pt x 722.7pt>
+0896_cutted_stableTimestack.jpg>] [22]
+<./figuras/process_threshold_150.jpg, id=153, 4209.7275pt x 722.7pt>
 File: ./figuras/process_threshold_150.jpg Graphic file (type jpg)
 
 <use ./figuras/process_threshold_150.jpg>
@@ -911,7 +1226,7 @@ Package pdftex.def Info: ./figuras/process_threshold_150.jpg used on input line
  105.
 (pdftex.def)             Requested size: 426.79134pt x 73.26671pt.
 
-<./figuras/process_threshold_210.jpg, id=146, 4209.7275pt x 722.7pt>
+<./figuras/process_threshold_210.jpg, id=154, 4209.7275pt x 722.7pt>
 File: ./figuras/process_threshold_210.jpg Graphic file (type jpg)
 
 <use ./figuras/process_threshold_210.jpg>
@@ -919,7 +1234,7 @@ Package pdftex.def Info: ./figuras/process_threshold_210.jpg used on input line
  107.
 (pdftex.def)             Requested size: 426.79134pt x 73.26671pt.
 
-<./figuras/simpletimestack_original.jpg, id=147, 1284.8pt x 722.7pt>
+<./figuras/simpletimestack_original.jpg, id=155, 1284.8pt x 722.7pt>
 File: ./figuras/simpletimestack_original.jpg Graphic file (type jpg)
 
 <use ./figuras/simpletimestack_original.jpg>
@@ -927,7 +1242,7 @@ Package pdftex.def Info: ./figuras/simpletimestack_original.jpg used on input l
 ine 116.
 (pdftex.def)             Requested size: 192.0548pt x 108.02538pt.
 
-<./figuras/simpletimestack_canny.jpg, id=148, 1284.8pt x 722.7pt>
+<./figuras/simpletimestack_canny.jpg, id=156, 1284.8pt x 722.7pt>
 File: ./figuras/simpletimestack_canny.jpg Graphic file (type jpg)
 
 <use ./figuras/simpletimestack_canny.jpg>
@@ -938,7 +1253,7 @@ Package pdftex.def Info: ./figuras/simpletimestack_canny.jpg used on input line
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
-<./figuras/simpletimestack_sky_removed.jpg, id=149, 1284.8pt x 722.7pt>
+<./figuras/simpletimestack_sky_removed.jpg, id=157, 1284.8pt x 722.7pt>
 File: ./figuras/simpletimestack_sky_removed.jpg Graphic file (type jpg)
 
 <use ./figuras/simpletimestack_sky_removed.jpg>
@@ -950,7 +1265,7 @@ t line 130.
 LaTeX Warning: `h' float specifier changed to `ht'.
 
 [23 <./figuras/process_threshold_150.jpg> <./figuras/process_threshold_210.jpg>
-] <./figuras/diagrama_processamento.png, id=153, 1231.60126pt x 369.38pt>
+] <./figuras/diagrama_processamento.png, id=162, 1231.60126pt x 369.38pt>
 File: ./figuras/diagrama_processamento.png Graphic file (type png)
 
 <use ./figuras/diagrama_processamento.png>
@@ -963,7 +1278,7 @@ LaTeX Warning: `h' float specifier changed to `ht'.
 
 [24 <./figuras/simpletimestack_original.jpg> <./figuras/simpletimestack_canny.j
 pg> <./figuras/simpletimestack_sky_removed.jpg>]
-<./figuras/breakzone_timestack.png, id=157, 949.5475pt x 722.7pt>
+<./figuras/breakzone_timestack.png, id=166, 949.5475pt x 722.7pt>
 File: ./figuras/breakzone_timestack.png Graphic file (type png)
 
 <use ./figuras/breakzone_timestack.png>
@@ -976,7 +1291,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 149--149
 do pelo pr^^Se-
  []
 
-<./figuras/process_breakzone.png, id=158, 949.5475pt x 722.7pt>
+<./figuras/process_breakzone.png, id=167, 949.5475pt x 722.7pt>
 File: ./figuras/process_breakzone.png Graphic file (type png)
 
 <use ./figuras/process_breakzone.png>
@@ -984,7 +1299,7 @@ Package pdftex.def Info: ./figuras/process_breakzone.png used on input line 151
 .
 (pdftex.def)             Requested size: 192.0548pt x 146.1695pt.
 
-<./figuras/process_gaussian.jpg, id=159, 4213.7425pt x 722.7pt>
+<./figuras/process_gaussian.jpg, id=168, 4213.7425pt x 722.7pt>
 File: ./figuras/process_gaussian.jpg Graphic file (type jpg)
 
 <use ./figuras/process_gaussian.jpg>
@@ -997,14 +1312,14 @@ LaTeX Warning: `h' float specifier changed to `ht'.
 
 [25 <./figuras/diagrama_processamento.png> <./figuras/breakzone_timestack.png> 
 <./figuras/process_breakzone.png>]
-<./figuras/waveband_blur.png, id=164, 349.305pt x 147.55125pt>
+<./figuras/waveband_blur.png, id=172, 349.305pt x 147.55125pt>
 File: ./figuras/waveband_blur.png Graphic file (type png)
 
 <use ./figuras/waveband_blur.png>
 Package pdftex.def Info: ./figuras/waveband_blur.png used on input line 171.
 (pdftex.def)             Requested size: 341.43436pt x 144.23448pt.
 
-<./figuras/waveband_no_blur.png, id=165, 349.305pt x 147.55125pt>
+<./figuras/waveband_no_blur.png, id=173, 349.305pt x 147.55125pt>
 File: ./figuras/waveband_no_blur.png Graphic file (type png)
 
 <use ./figuras/waveband_no_blur.png>
@@ -1016,7 +1331,7 @@ Package pdftex.def Info: ./figuras/waveband_no_blur.png used on input line 173.
 LaTeX Warning: `h' float specifier changed to `ht'.
 
 [26 <./figuras/process_gaussian.jpg>]
-<./figuras/waveband_threshold_150.png, id=169, 208.78pt x 144.54pt>
+<./figuras/waveband_threshold_150.png, id=177, 208.78pt x 144.54pt>
 File: ./figuras/waveband_threshold_150.png Graphic file (type png)
 
 <use ./figuras/waveband_threshold_150.png>
@@ -1028,7 +1343,7 @@ Underfull \hbox (badness 1629) in paragraph at lines 184--184
 []\OT1/cmr/m/n/10 (a) |\OT1/cmr/m/n/10.95 Regi~ao de es-puma de-tec-tada
  []
 
-<./figuras/waveband_threshold_120.png, id=170, 208.78pt x 144.54pt>
+<./figuras/waveband_threshold_120.png, id=178, 208.78pt x 144.54pt>
 File: ./figuras/waveband_threshold_120.png Graphic file (type png)
 
 <use ./figuras/waveband_threshold_120.png>
@@ -1043,14 +1358,14 @@ Underfull \hbox (badness 1484) in paragraph at lines 186--186
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
-<./figuras/IMG_0882.jpg, id=171, 2224.31pt x 722.7pt>
+<./figuras/IMG_0882.jpg, id=179, 2224.31pt x 722.7pt>
 File: ./figuras/IMG_0882.jpg Graphic file (type jpg)
 
 <use ./figuras/IMG_0882.jpg>
 Package pdftex.def Info: ./figuras/IMG_0882.jpg used on input line 196.
 (pdftex.def)             Requested size: 341.43436pt x 110.92561pt.
 
-<./figuras/process_threshold_fail.jpg, id=172, 2224.31pt x 722.7pt>
+<./figuras/process_threshold_fail.jpg, id=180, 2224.31pt x 722.7pt>
 File: ./figuras/process_threshold_fail.jpg Graphic file (type jpg)
 
 <use ./figuras/process_threshold_fail.jpg>
@@ -1061,16 +1376,13 @@ e 198.
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
-
-LaTeX Warning: Citation `Suzuki85' on page 27 undefined on input line 207.
-
 [27 <./figuras/waveband_blur.png> <./figuras/waveband_no_blur.png>] [28 <./figu
 ras/waveband_threshold_150.png> <./figuras/waveband_threshold_120.png>]
 
 LaTeX Warning: Reference `FigCannySuzuki' on page 29 undefined on input line 23
 6.
 
-<./figuras/process_waveband_canny.png, id=183, 790.955pt x 718.685pt>
+<./figuras/process_waveband_canny.png, id=191, 790.955pt x 718.685pt>
 File: ./figuras/process_waveband_canny.png Graphic file (type png)
 
 <use ./figuras/process_waveband_canny.png>
@@ -1078,7 +1390,7 @@ Package pdftex.def Info: ./figuras/process_waveband_canny.png used on input lin
 e 240.
 (pdftex.def)             Requested size: 192.0548pt x 174.5057pt.
 
-<./figuras/process_waveband_suzuki.png, id=184, 790.955pt x 718.685pt>
+<./figuras/process_waveband_suzuki.png, id=192, 790.955pt x 718.685pt>
 File: ./figuras/process_waveband_suzuki.png Graphic file (type png)
 
 <use ./figuras/process_waveband_suzuki.png>
@@ -1091,7 +1403,7 @@ Underfull \hbox (badness 2744) in paragraph at lines 242--242
  []
 
 [29 <./figuras/IMG_0882.jpg> <./figuras/process_threshold_fail.jpg>]
-<./figuras/diagrama_analise.png, id=188, 1091.07625pt x 310.15875pt>
+<./figuras/diagrama_analise.png, id=197, 1091.07625pt x 310.15875pt>
 File: ./figuras/diagrama_analise.png Graphic file (type png)
 
 <use ./figuras/diagrama_analise.png>
@@ -1104,7 +1416,7 @@ LaTeX Warning: `h' float specifier changed to `ht'.
 
 [30 <./figuras/process_waveband_canny.png> <./figuras/process_waveband_suzuki.p
 ng>] [31 <./figuras/diagrama_analise.png>] [32]
-<./figuras/automato_identificacao_onda.png, id=202, 929.4725pt x 207.77625pt>
+<./figuras/automato_identificacao_onda.png, id=210, 929.4725pt x 207.77625pt>
 File: ./figuras/automato_identificacao_onda.png Graphic file (type png)
 
 <use ./figuras/automato_identificacao_onda.png>
@@ -1115,7 +1427,7 @@ t line 322.
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
-[33] <./figuras/process_waves_result.png, id=206, 1394.20876pt x 722.7pt>
+[33] <./figuras/process_waves_result.png, id=214, 1394.20876pt x 722.7pt>
 File: ./figuras/process_waves_result.png Graphic file (type png)
 
 <use ./figuras/process_waves_result.png>
@@ -1137,30 +1449,20 @@ File: lstlang1.sty 2014/09/06 1.5e listings language file
 )
 (/usr/share/texlive/texmf-dist/tex/latex/listings/lstmisc.sty
 File: lstmisc.sty 2014/09/06 1.5e (Carsten Heinz)
-)
-
-LaTeX Warning: Citation `OpenCVOrg' on page 36 undefined on input line 11.
-
-
-LaTeX Warning: Citation `OpenCVAbout' on page 36 undefined on input line 11.
-
-
-LaTeX Warning: Citation `OpenCVMat' on page 36 undefined on input line 14.
-
-[36
+) [36
 
 ]
 LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <10> not available
 (Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 36.
 LaTeX Font Info:    Try loading font information for OML+cmr on input line 38.
- (/usr/share/texlive/texmf-dist/tex/latex/base/omlcmr.fd
+
+(/usr/share/texlive/texmf-dist/tex/latex/base/omlcmr.fd
 File: omlcmr.fd 2014/09/29 v2.5h Standard LaTeX font definitions
 )
 LaTeX Font Info:    Font shape `OML/cmr/m/n' in size <10> not available
 (Font)              Font shape `OML/cmm/m/it' tried instead on input line 38.
- [37] [38]
-[39]
-<./figuras/class_diagram_trajectory.png, id=229, 573.14125pt x 231.86626pt>
+ [37] [38] [39]
+<./figuras/class_diagram_trajectory.png, id=238, 573.14125pt x 231.86626pt>
 File: ./figuras/class_diagram_trajectory.png Graphic file (type png)
 
 <use ./figuras/class_diagram_trajectory.png>
@@ -1289,13 +1591,108 @@ Overfull \hbox (113.21416pt too wide) in paragraph at lines 454--455
 [][][][][][][][][][][][][][][][][][][][][][][][][][][][] 
  []
 
-[50]) [51]
+[50] <./figuras/diagram_wave.png, id=275, 522.95375pt x 145.54375pt>
+File: ./figuras/diagram_wave.png Graphic file (type png)
+
+<use ./figuras/diagram_wave.png>
+Package pdftex.def Info: ./figuras/diagram_wave.png used on input line 461.
+(pdftex.def)             Requested size: 341.43436pt x 95.02647pt.
+ [51 <./figuras/diagram_wave.png>]
+Overfull \hbox (425.21733pt too wide) in paragraph at lines 511--512
+[][][][][][][][][][][][][][][][][][][][][][][][][] 
+ []
+
+
+Overfull \hbox (173.21477pt too wide) in paragraph at lines 520--522
+[][][][][][][][][][][][][] 
+ []
+
+[52]
+Overfull \hbox (473.21782pt too wide) in paragraph at lines 532--533
+[][][][][][][][][][][][][][][][][][][][][][][][][] 
+ []
+
+
+Overfull \hbox (5.21306pt too wide) in paragraph at lines 533--535
+[][][][][][][][][] 
+ []
+
+
+Overfull \hbox (77.21379pt too wide) in paragraph at lines 545--547
+[][][][][][][][][][][][][] 
+ []
+
+[53]
+Overfull \hbox (179.21483pt too wide) in paragraph at lines 568--569
+[][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][] 
+ []
+
+
+Overfull \hbox (35.21336pt too wide) in paragraph at lines 573--574
+[][][][][][][][][][][][][][][][][][][][] 
+ []
+
+
+Overfull \hbox (311.21617pt too wide) in paragraph at lines 574--575
+[][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][] 
+ []
+
+
+Overfull \hbox (257.21562pt too wide) in paragraph at lines 575--576
+[][][][][][][][][][][][][][][][][][][][][] 
+ []
+
+
+Overfull \hbox (53.21355pt too wide) in paragraph at lines 584--585
+[][][][][][][][][][][][][][][][][][][][][][][][][][][][][][] 
+ []
+
+
+Overfull \hbox (113.21416pt too wide) in paragraph at lines 585--586
+[][][][][][][][][][][][][][][][][][][][][][][][][][][] 
+ []
+
+
+Overfull \hbox (101.21404pt too wide) in paragraph at lines 586--587
+[][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][] 
+ []
+
+
+Overfull \hbox (389.21696pt too wide) in paragraph at lines 591--592
+[][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][] 
+ []
+
+
+Overfull \hbox (143.21446pt too wide) in paragraph at lines 592--593
+[][][][][][][][][][][][][][][][][][][][][][] 
+ []
+
+
+Overfull \hbox (107.2141pt too wide) in paragraph at lines 593--594
+[][][][][][][][][][][][][][][][][][][][][][] 
+ []
+
+
+Overfull \hbox (23.21324pt too wide) in paragraph at lines 594--595
+[][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][] 
+ []
+
+[54]
+Overfull \hbox (545.21855pt too wide) in paragraph at lines 605--606
+[][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][] 
+ []
+
+) [55]
 Cap\'{\i }tulo 5.
-[52
+(./cap5.tex
+
+LaTeX Warning: Citation `Bourke' on page 56 undefined on input line 3.
+
+) [56
 
 ]
 Cap\'{\i }tulo 6.
-[53
+[57
 
 ] (./tcc_davidbrittojr.bbl
 Underfull \hbox (badness 10000) in paragraph at lines 33--36
@@ -1309,7 +1706,7 @@ Underfull \hbox (badness 1527) in paragraph at lines 33--36
 06 Ju-nho
  []
 
-[54
+[58
 
 
 ]
@@ -1346,9 +1743,9 @@ Overfull \hbox (78.50232pt too wide) in paragraph at lines 82--85
 .0/d3/d63/classcv[]1[]1Mat.html,
  []
 
-) [55]
+) [59]
 Ap\^endice A.
-(./ApendiceA.tex) [56
+(./ApendiceA.tex) [60
 
 ]
 Ap\^endice B.
@@ -1365,7 +1762,7 @@ Final-eps-converted-to.pdf ./figuras/Capa_do_Projeto_Final.eps>
 (epstopdf)             \includegraphics on input line 9.
 Package epstopdf Info: Output file is already uptodate.
 
-<./figuras/Capa_do_Projeto_Final-eps-converted-to.pdf, id=285, 420.57124pt x 52
+<./figuras/Capa_do_Projeto_Final-eps-converted-to.pdf, id=309, 420.57124pt x 52
 0.94624pt>
 File: ./figuras/Capa_do_Projeto_Final-eps-converted-to.pdf Graphic file (type p
 df)
@@ -1378,28 +1775,25 @@ Overfull \hbox (50.6844pt too wide) in paragraph at lines 9--9
  [] 
  []
 
-) [57
+) [61
 
-] [58 <./figuras/Capa_do_Projeto_Final-eps-converted-to.pdf>]
+] [62 <./figuras/Capa_do_Projeto_Final-eps-converted-to.pdf>]
 Ap\^endice C.
-(./ApendiceC.tex) [59
+(./ApendiceC.tex) [63
 
 ] (./tcc_davidbrittojr.aux)
 
 LaTeX Warning: There were undefined references.
 
-
-LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
-
  ) 
 Here is how much of TeX's memory you used:
- 14621 strings out of 493105
- 238135 string characters out of 6137072
- 347419 words of memory out of 5000000
- 17758 multiletter control sequences out of 15000+600000
- 14416 words of font info for 54 fonts, out of 8000000 for 9000
+ 19530 strings out of 493105
+ 351901 string characters out of 6137072
+ 455424 words of memory out of 5000000
+ 22500 multiletter control sequences out of 15000+600000
+ 14108 words of font info for 53 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 55i,10n,97p,1761b,1693s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 63i,10n,97p,1761b,1694s stack positions out of 5000i,500n,10000p,200000b,80000s
 </usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></us
 r/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/shar
 e/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbxti10.pfb></usr/share/te
@@ -1415,10 +1809,10 @@ msfonts/cm/cmr12.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts
 /usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/sh
 are/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb></usr/share/te
 xlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmti12.pfb>
-Output written on tcc_davidbrittojr.pdf (71 pages, 5694868 bytes).
+Output written on tcc_davidbrittojr.pdf (77 pages, 5726818 bytes).
 PDF statistics:
- 400 PDF objects out of 1000 (max. 8388607)
- 215 compressed objects within 3 object streams
+ 425 PDF objects out of 1000 (max. 8388607)
+ 232 compressed objects within 3 object streams
  0 named destinations out of 1000 (max. 500000)
- 166 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 183 words of extra memory for PDF output out of 10000 (max. 10000000)
 

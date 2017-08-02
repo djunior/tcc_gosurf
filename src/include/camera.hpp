@@ -57,7 +57,7 @@ public:
 		cameraHeight(6.0),
 		imageSize(720) 
 	{
-		focalAngle = calculateFocalAngle(24.0,29.0);
+		focalAngle = calculateFocalAngle(3.6,4.15);
 	}
 
 	double calculateRealHeight(int bottom, int top) {

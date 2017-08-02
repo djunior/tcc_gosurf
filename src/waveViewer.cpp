@@ -8,6 +8,10 @@
 
 #include "point.hpp"
 #include "trajectory.h"
+#include "imageOutput.hpp"
+#include "filterPipeline.h"
+#include "tiltFilter.h"
+#include "preProcessor.hpp"
 
 using namespace std;
 using namespace cv;
@@ -42,15 +46,13 @@ int main(int argc, char** argv) {
 	string line_bottom;
 	string line_top;
 	ifstream f("waves.txt");
+
 	if (f.is_open())
 	{
 		while ( ! f.eof() )
 	    {
 	      f >> line_bottom;
 	      f >> line_top;
-
-	      // cout << "line bottom: " << line_bottom << endl;
-	      // cout << "line top: " << line_top << endl;
 
 	      int bottom_x,bottom_y;
 	      int top_x,top_y;
@@ -66,51 +68,82 @@ int main(int argc, char** argv) {
 
 	      int base,up;
 
-	      cout << "Wave point 1: " << bottom_x << endl;
-	      cout << "Wave point 2: " << top_x << endl;
-
 	      double height = calculeSizeByAngle(imageSize, cameraHeight, cameraAngle, focalAngle, bottom_x, top_x );
 	    }
 	    f.close();
 	}
 
-	Mat frame;
+	// Mat frame;
 	int frame_count = 0;
-	while(true) {
-		cap >> frame;
+	int wave_count = 0;
 
-		if(frame.data == NULL)
-			break;
+	PreProcessor preProcessor(cap);
 
-		// Mat frame;
-    	// transpose(t_frame,frame);
+	// while(true) {
+	// 	cap >> frame;
+
+	// 	if(frame.data == NULL)
+	// 		break;
 
 		for (int i = 0; i < waves.size(); i++) {
 			tcc::Point bottom = waves[i].first;
 			tcc::Point top = waves[i].second;
 
-			// float a = (top.x - bottom.x)/(top.y - bottom.y);
-			// float b = top.x - a*top.y;
+			Mat frame;
 
-			if (frame_count >= bottom.getY() && frame_count <= top.getY()) {
-				// int top_y = a*frame_count + b;
+			cap.set(CV_CAP_PROP_POS_FRAMES,top.getX());
+			cap.grab();
+			cap.retrieve(frame);
 
-				cv::Point bottom_p1(0,bottom.getX());
-				cv::Point bottom_p2(frame.cols,bottom.getX());
+			// imshow("frame",frame);
 
-				line(frame,bottom_p1,bottom_p2,Scalar(0,0,255),2);
+			// waitKey(0);
 
-				cv::Point top_p1(0,top.getX());
-				cv::Point top_p2(frame.cols,top.getX());
+			// if (frame_count == top.getX()) {
 
-				line(frame,top_p1,top_p2,Scalar(0,0,255),2);
-			}
+				// cout << "Frame count: " << frame_count << endl;
+				cout << "bottom wave: (" << bottom.getX() << "," << bottom.getY() << ")" << endl;
+				cout << "top wave: (" << top.getX() << "," << top.getY() << ")" << endl;
+
+				preProcessor.process(frame);
+				TiltFilter tf;
+				tf.init(preProcessor.skyRemover.getFilteredImage());
+				tf.process(frame);
+
+				Mat tiltedFrame = tf.getFilteredImage()->clone();
+				Mat lineFrame = tiltedFrame.clone();
+
+				wave_count++;
+
+				line(lineFrame,cv::Point(0,bottom.getY()),cv::Point(lineFrame.cols,bottom.getY()),Scalar(0,0,255),2);
+				line(lineFrame,cv::Point(0,top.getY()),cv::Point(lineFrame.cols,top.getY()),Scalar(0,0,255),2);
+
+				// if ( frame_count == top.getX() ) {
+					stringstream outputStream;
+					outputStream << "output_images/wave_viewer/wave_" << wave_count << ".jpg";
+					cout << "Saving image " << outputStream << endl;
+					ImageOutput io(outputStream.str());
+					io.setSourceMat(&lineFrame);
+					io.filter();
+
+					stringstream originalOutputStream;
+					originalOutputStream << "output_images/wave_viewer/wave_original_" << wave_count << ".jpg";
+					cout << "Saving image " << originalOutputStream << endl;
+					ImageOutput originalIo(originalOutputStream.str());
+					originalIo.setSourceMat(&tiltedFrame);
+					originalIo.filter();
+				// }
+
+				// break;
+			// }
 		}
 
-		imshow("frame",frame);
+		// imshow("frame",frame);
 
-		frame_count++;
+		// frame_count++;
 
-		waitKey(30);
-	}	
+		// waitKey(30);
+	// }
+	waitKey(0);
+
 }

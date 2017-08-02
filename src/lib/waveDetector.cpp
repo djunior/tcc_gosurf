@@ -341,9 +341,16 @@ void WaveDetector::extractWaveDetails() {
 
 		double realHeight = camera.calculateRealHeight(bottom.getY(),top.getY());
 
+		height_sum += realHeight;
+		height_count++;
+
 		cout << "Found wave at " << halfway << " height " << height << " real height: " << realHeight << " m" << endl;
 		f << height << " px, " << realHeight << " m" << endl;
 	}
+
+	double averageRealHeight = height_sum / height_count;
+
+	cout << "Average real height: " << averageRealHeight << endl;
 
 	f.close();
 
@@ -388,8 +395,8 @@ void WaveDetector::save(char* fname) {
   		tcc::Point bottom = waves[i].bottom;
   		tcc::Point top = waves[i].top;
 
-  		f << bottom.getY() << "," << bottom.getX() << endl;
-  		f << top.getY() << "," << top.getX() << endl;
+  		f << bottom.getX() << "," << bottom.getY() << endl;
+  		f << top.getX() << "," << top.getY() << endl;
   	}
 
   	f.close();
