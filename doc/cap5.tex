@@ -19,7 +19,9 @@
     \end{tabular}
 \end{center}
 
-\paragraph{}Foram analisados \todo[inline]{adicionar numero de v�deos} v�deos. Para cada v�deo as ondas foram analisadas automaticamente pelo algoritmo e pelo manualmente pelo autor, a fim de verificar quantas ondas foram ou deixaram de ser identificadas, e verificar a precis�o da identifica��o do ponto m�nimo e m�ximo da onda. Estes s�o os principais erros observados nos dados analisados. 
+\paragraph{}Foram analisados \todo[inline]{adicionar numero de vídeos} vídeos. Para cada vídeo as ondas foram analisadas automaticamente pelo algoritmo e pelo manualmente pelo autor, a fim de verificar quantas ondas foram ou deixaram de ser identificadas, e verificar a precisão da identificação do ponto mínimo e máximo da onda. A maior parcela dos erros observados nos dados analisados está relacionada com estes parâmetros.
+
+\paragraph{}A identificação dos pontos mínimos e máximos está suscetível a interferência externa, como banhistas ou pessoas próximas da zona de arrebentação. A ação do vento \cite{Hwang2016} também pode introduzir erros na identificação do ponto de máximo, causando um \textit{spray} da espuma do mar que pode ser erroneamente detectado como o ponto máximo da onda (Figura \ref{FigMaxError}).
 
 \begin{figure}[h]
 	\centering
@@ -42,5 +44,8 @@
 	\subfloat[\small{Onda detectada manualmente.}]{\includegraphics[width=.7\textwidth,keepaspectratio]{wave_spray_automatic.jpg}}
 
 	\caption[\small{Comparativo entre onda detectada manualmente e onda detectada automaticamente com efeito de \textit{spray} de espuma.}]{\small{Comparativo entre onda detectada manualmente e onda detectada automaticamente com efeito de \textit{spray} de espuma.}}
+
 	\label{FigSprayError}
 \end{figure}
+
+\paragraph{}Uma última fonte de erro comum é a localização espacial das ondas. Como discutido por Browne \textit{et al} \cite{Griffith11} ondas com distâncias diferentes da câmera podem aparentar possuir a mesma altura em \textit{pixels}

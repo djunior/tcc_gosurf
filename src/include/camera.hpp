@@ -3,6 +3,8 @@
 
 #define PI 3.14159265
 
+#include "math.h"
+
 using namespace std;
 
 namespace tcc {

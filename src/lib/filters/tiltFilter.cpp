@@ -16,7 +16,7 @@ using namespace cv;
 namespace tcc {
 
 int TiltFilter::findFirstPoint(Mat &m) {
-	int TOP_THRESHOLD = 300;
+	int TOP_THRESHOLD = 0;
 	for (int i = TOP_THRESHOLD; i < m.rows; i++)
 		if (m.at<uchar>(i,0) > 0)
 			return i;
@@ -24,12 +24,13 @@ int TiltFilter::findFirstPoint(Mat &m) {
 }
 
 void TiltFilter::init(Mat *m) {
+
 	setSourceMat(m);
 
-	Mat firstCol = srcMat.col(0);
+	Mat firstCol = srcMat.col(2);
 	int firstY = findFirstPoint(firstCol);
 	
-	Mat lastCol = srcMat.col(srcMat.cols-1);
+	Mat lastCol = srcMat.col(srcMat.cols-3);
 	int lastY = findFirstPoint(lastCol);
 
 	double ang = atan( (double) (lastY - firstY) / (srcMat.cols) ) ;
@@ -40,8 +41,8 @@ void TiltFilter::init(Mat *m) {
 	offsetX = srcMat.rows * sin(abs(ang));
 	offsetY = srcMat.cols / tan(PI/2 - abs(ang));
 
-	// cout << "X: " << x << endl;
-	// cout << "Y: " << y << endl;
+	// cout << "X: " << offsetX << endl;
+	// cout << "Y: " << offsetY << endl;
 
 	cv::Point center(srcMat.cols,srcMat.rows);
 

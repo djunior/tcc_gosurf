@@ -135,6 +135,6 @@ int main(int argc, char** argv) {
 
 	detectWaveInFrames(cap,waves);
 
-	watchWaves(cap,waves);
+	// watchWaves(cap,waves);
 
 }
