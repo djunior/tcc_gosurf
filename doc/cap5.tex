@@ -1,37 +1,46 @@
-\paragraph{}Este cap?ulo tem como objetivo apresentar os resultados obtidos ao aplicar o m√©todo de estima√ß√£o de altura de ondas discutido nos cap√≠tulos 2 e 3. 
+\paragraph{}Este cap?ulo tem como objetivo apresentar os resultados obtidos ao aplicar o mÈtodo de estimaÁ„o de altura de ondas discutido nos capÌtulos 2 e 3. 
 
-\paragraph{}Os v√≠deos analisados foram capturados na praia de Itacoatiara, em Niter√≥i. A c√¢mera foi posicionada no Quiosque 5, na orla da praia, a uma altura de aproximadamente oito metros do n?el do mar. Este quiosque foi escolhido para posicionar a c√¢mera pois uma vis√£o clara do mar, sem a obstru√ß√£o da vegeta√ß√£o local da praia. A c√¢mera est√° posicionada com uma angula√ß√£o vertical de 83$^{\circ}$. O campo visual (\textit{field of view}) da c√¢mera do \textit{smartphone} foi calculado atrav√©s da seguinte equa√ß√£o \cite{Bourke}: 
+\paragraph{}Os vÌdeos analisados foram capturados na praia de Itacoatiara, em NiterÛi. A c‚mera foi posicionada no Quiosque 5, na orla da praia, a uma altura de aproximadamente oito metros do n?el do mar. Este quiosque foi escolhido para posicionar a c‚mera pois uma vis„o clara do mar, sem a obstruÁ„o da vegetaÁ„o local da praia. A c‚mera est· posicionada com uma angulaÁ„o vertical de 83$^{\circ}$. O campo visual (\textit{field of view}) da c‚mera do \textit{smartphone} foi calculado atravÈs da seguinte equaÁ„o \cite{Bourke}: 
 
 \[
-	fov = 2 * atan(height/2*focalLength)
+	fov = 2 * atan\Bigg(\frac{h}{2f}\Bigg)
 \]
 
-\noindent{}onde $height$ √© a altura da imagem no sensor da c√¢mera e $focalLength$ √© a dist√¢ncia focal da c√¢mera. Estes par√¢metros foram obtidos no momento da captura atrav√©s do pr√≥prio \textit{smartphone}. Os valores considerados foram:
+\noindent{}onde $h$ È a altura da imagem no sensor da c‚mera e $f$ È a dist‚ncia focal da c‚mera. Estes par‚metros foram obtidos no momento da captura atravÈs do prÛprio \textit{smartphone}. Os valores considerados foram:
 
 \begin{center}
     \begin{tabular}{| l | r |}
     \hline
-    Par√¢etros & Valores \\ \hline
-    Dist√¢ncia Focal & 4.15 mm\\ \hline
+    Par‚etros & Valores \\ \hline
+    Dist‚ncia Focal & 4.15 mm\\ \hline
     Altura do sensor & 3.60 mm\\ \hline
-    Campo de vis√£o vertical & 46.92$^{\circ}$ \\ 
+    Campo de vis„o vertical & 46.92$^{\circ}$ \\ 
     \hline
     \end{tabular}
 \end{center}
 
-\paragraph{}Foram analisados \todo[inline]{adicionar numero de v√≠deos} v√≠deos. Para cada v√≠deo as ondas foram analisadas automaticamente pelo algoritmo e pelo manualmente pelo autor, a fim de verificar quantas ondas foram ou deixaram de ser identificadas, e verificar a precis√£o da identifica√ß√£o do ponto m√≠nimo e m√°ximo da onda. Estes s√£o os principais erros observados nos dados analisados. 
-
-\paragraph{}A identifica√ß√£o dos pontos m√≠nimos e m√°ximos est√° suscet√≠vel a interfer√™ncia externa, como banhistas ou pessoas pr√≥ximas da zona de arrebenta√ß√£o. A a√ß√£o do vento \cite{Hwang2016} tamb√©m pode introduzir erros na identifica√ß√£o do ponto de m√°ximo, causando um \textit{spray} da espuma do mar que pode ser erroneamente detectado como o ponto m√°ximo da onda (Figura \ref{FigMaxError}).
+\paragraph{}Foram analisados \todo[inline]{adicionar numero de vÌdeos} vÌdeos. Para cada vÌdeo as ondas foram analisadas automaticamente pelo algoritmo e pelo manualmente pelo autor, a fim de verificar quantas ondas foram ou deixaram de ser identificadas, e verificar a precis„o da identificaÁ„o do ponto mÌnimo e m·ximo da onda. Estes s„o os principais erros observados nos dados analisados. 
 
 \begin{figure}[h]
 	\centering
 
-	\subfloat[]{\includegraphics[width=0.45\textwidth,keepaspectratio]{}}
+	\subfloat[\small{Onda detectada automaticamente.}]{\includegraphics[width=.7\textwidth,keepaspectratio]{wave_people_manual.jpg}}
 
-	\qquad
+	\subfloat[\small{Onda detectada manualmente.}]{\includegraphics[width=.7\textwidth,keepaspectratio]{wave_people_automatic.jpg}}
 
-	\subfloat[]{\includegraphics[width=-0.45\textwidth,keepaspectratio]{}}
+	\caption[\small{Comparativo entre onda detectada manualmente e onda detectada automaticamente com interferÍncia de pessoas na areia.}]{\small{Comparativo entre onda detectada manualmente e onda detectada automaticamente com interferÍncia de pessoas na areia.}}
+	\label{FigPeopleError}
+\end{figure}
+
+\paragraph{}A identificaÁ„o dos pontos mÌnimos e m·ximos est· suscetÌvel a interferÍncia externa, como banhistas ou pessoas prÛximas da zona de arrebentaÁ„o (Figura \ref{FigPeopleError}). A aÁ„o do vento \cite{Hwang2016} tambÈm pode introduzir erros na identificaÁ„o do ponto de m·ximo, causando um \textit{spray} da espuma do mar que pode ser erroneamente detectado como o ponto m·ximo da onda (Figura \ref{FigSprayError}).
+
+\begin{figure}[h]
+	\centering
+
+	\subfloat[\small{Onda detectada automaticamente.}]{\includegraphics[width=.7\textwidth,keepaspectratio]{wave_spray_manual.jpg}}
+
+	\subfloat[\small{Onda detectada manualmente.}]{\includegraphics[width=.7\textwidth,keepaspectratio]{wave_spray_automatic.jpg}}
 
 	\caption[\small{Comparativo entre onda detectada manualmente e onda detectada automaticamente com efeito de \textit{spray} de espuma.}]{\small{Comparativo entre onda detectada manualmente e onda detectada automaticamente com efeito de \textit{spray} de espuma.}}
-	\label{FigMaxError}
+	\label{FigSprayError}
 \end{figure}
