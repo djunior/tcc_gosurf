@@ -11,13 +11,14 @@ namespace tcc {
 using namespace cv;
 using namespace std;
 
-Timestack::Timestack(VideoCapture& cap):
-    size(min(cap.get(CV_CAP_PROP_FRAME_WIDTH),cap.get(CV_CAP_PROP_FRAME_HEIGHT))),
-    timestack(0,size,CV_8UC1,0.0f)
+Timestack::Timestack(VideoCapture& cap)
 {
     // cout << "WIDTH: " << cap.get(CV_CAP_PROP_FRAME_WIDTH) << endl;
     // cout << "HEIGHT: " << cap.get(CV_CAP_PROP_FRAME_HEIGHT) << endl;
     // cout << "SIZE: " << size << endl;
+
+    size = min(cap.get(CV_CAP_PROP_FRAME_WIDTH),cap.get(CV_CAP_PROP_FRAME_HEIGHT));
+    timestack = Mat(0,size,CV_8UC1,0.0f);
 
     horizontalPercent = 50;
 }

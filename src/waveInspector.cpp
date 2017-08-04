@@ -24,6 +24,7 @@ private:
 	WaveList waves;
 	tcc::Point bottom,top;
 	int state;
+	int frame;
 	bool handleEvents;
 
 	Mat baseMat;
@@ -48,9 +49,10 @@ public:
 		handleEvents = false;
 	}
 
-	void enableEvents(Mat& mat) {
+	void enableEvents(Mat& mat, int f) {
 		handleEvents = true;
 		baseMat = mat.clone();
+		frame = f;
 	}
 
 	void disableEvents() {
@@ -78,12 +80,14 @@ public:
 	}
 
 	void draw(Mat& mat) {
-		circle(mat,cv::Point(bottom.getX(),bottom.getY()),2,Scalar(0,255,0),1);
-		circle(mat,cv::Point(top.getX(),top.getY()),2,Scalar(0,0,255),1);
+		line(mat,cv::Point(0,bottom.getY()),cv::Point(mat.cols,bottom.getY()),Scalar(0,255,0),2);
+		line(mat,cv::Point(0,top.getY()),cv::Point(mat.cols,top.getY()),Scalar(0,0,255),2);
 	}
 
 	void addWave() {
-		waves.addWave(bottom,top);
+		tcc::Point b(frame,bottom.getY());
+		tcc::Point t(frame,top.getY());
+		waves.addWave(b,t);
 	}
 	
 	void save(string fname, string info) {
@@ -128,17 +132,18 @@ void watchWaves(VideoCapture &cap,WaveCreator& waves) {
 
 		imshow("frame",tiltedFrame);
 
-		if (waitKey(10) == 'p') {
+		char c = waitKey(10);
+		if (c == 'p') {
 
-			waves.enableEvents(tiltedFrame);
+			waves.enableEvents(tiltedFrame,cap.get(CV_CAP_PROP_POS_FRAMES));
 
 			stringstream outputStream;
 
 			bool stayOnLoop = true;
 
 			while(stayOnLoop) {
-
-				switch(waitKey(0)) {
+				char key = waitKey(0);
+				switch(key) {
 					case 's':
 						waves.addWave();
 						outputStream << "output_images/wave_inspector/wave_" << (++waveCount) << ".jpg";
@@ -159,7 +164,7 @@ void watchWaves(VideoCapture &cap,WaveCreator& waves) {
 							sprintf(str,"%f %%",(float) cap.get(CV_CAP_PROP_POS_FRAMES)*100 / numberOfFrames);
 							putText(tiltedFrame, str, Point2f(50,50), CV_FONT_HERSHEY_PLAIN, 2,  Scalar(0,0,255,255));
 							imshow("frame",tiltedFrame);
-							waves.enableEvents(tiltedFrame);
+							waves.enableEvents(tiltedFrame,cap.get(CV_CAP_PROP_POS_FRAMES));
 						}
 						break;
 					case 'f':
@@ -175,7 +180,7 @@ void watchWaves(VideoCapture &cap,WaveCreator& waves) {
 							sprintf(str,"%f %%",(float) cap.get(CV_CAP_PROP_POS_FRAMES)*100 / numberOfFrames);
 							putText(tiltedFrame, str, Point2f(50,50), CV_FONT_HERSHEY_PLAIN, 2,  Scalar(0,0,255,255));
 							imshow("frame",tiltedFrame);
-							waves.enableEvents(tiltedFrame);
+							waves.enableEvents(tiltedFrame,cap.get(CV_CAP_PROP_POS_FRAMES));
 						}
 						break;
 				}

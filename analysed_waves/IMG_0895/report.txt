@@ -1,0 +1,14 @@
+Waves detected: 2
+
+Wave index 0
+From height point 383 to 365
+From Duration point 901 to 1617
+Height (pixels): 18
+Height (meters): 0.837588
+
+Wave index 1
+From height point 383 to 365
+From Duration point 901 to 1617
+Height (pixels): 18
+Height (meters): 0.837588
+

@@ -25,7 +25,8 @@ int main(int argc, char** argv) {
 			Wave wave = waveList.getWave(i);
 
 			f << "Wave index " << i << endl;
-			f << "From point " << wave.bottom.getY() << " to " << wave.top.getY() << endl;
+			f << "From height point " << wave.bottom.getY() << " to " << wave.top.getY() << endl;
+			f << "From Duration point " << wave.bottom.getX() << " to " << wave.top.getX() << endl;
 			f << "Height (pixels): " << wave.bottom.getY() - wave.top.getY() << endl;
 			f << "Height (meters): " << camera.calculateRealHeight(wave.bottom.getY(),wave.top.getY()) << endl << endl;
 

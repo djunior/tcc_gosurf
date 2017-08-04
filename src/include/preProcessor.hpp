@@ -85,6 +85,9 @@ public:
 		// Passo 3 - Remoção do Céu
 		skyRemover.process(eqFrame);
 
+		// imshow("sky_removed",(*skyRemover.getFilteredImage()));
+		// waitKey(0);		
+
 		tiltFilter.init(skyRemover.getFilteredImage());
 		tiltFilter.process((*skyRemover.getFilteredImage()));
 

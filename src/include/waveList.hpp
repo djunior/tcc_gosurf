@@ -1,6 +1,7 @@
 #ifndef __WAVE_LIST_HPP__
 #define __WAVE_LIST_HPP__
 
+#include <iostream>
 #include <fstream>
 #include "wave.hpp"
 #include <vector>
@@ -39,7 +40,7 @@ public:
 		string line_bottom;
 		string line_top;
 		
-		ifstream f(fileName);
+		ifstream f(fileName.c_str());
 
 		if (f.is_open())
 		{
@@ -76,7 +77,7 @@ public:
 	}
 
 	void save(string fileName, string info) {
-		ofstream f(fileName);
+		ofstream f(fileName.c_str());
 
 		if (f.is_open())
 		{
