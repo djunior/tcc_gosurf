@@ -203,6 +203,7 @@
 \paragraph{}É importante notar que o \textit{thresholding} apenas isola as regiões cujo nível de intensidade está acima de um certo valor. Mais de uma região pode ser isolada durante esse processo, por exemplo, partes da região do mar pode estar mais clara que o esperado, e por isso serão preservadas pelo \threshold. O passo de segmentação é responsável por filtrar as regiões isoladas pelo \textit{thresholding}.
 
 \section{Segmentação e Detecção de Bordas}
+\label{sec:segmentation_border_detection}
 
 \paragraph{}O último passo do processamento principal é a segmentação. Este passo tem como objetivo identificar a região de espuma dentre as regiões isoladas pelo \textit{thresholding}, e identificar a sua borda externa para ser analisada pela próxima etapa. Primeiro, deve-se identificar todas as regiões isoladas pelo \textit{thresholding}. Como a imagem está binarizada, isto é, todos \textit{pixels} possuem a intensidade mínima ou máxima, as regiões isoladas pelo \textit{thresholding} serão os conjuntos de \textit{pixels} contínuos com intensidade máxima. Neste momento a biblioteca OpenCV agiliza a implementação pois é capaz de realizar a identificação das regiões e a detecção de bordas das mesmas de uma só vez. Para isso se utilizou a função \textit{findContours}, que produz um vetor com todos contornos das regiões isoladas pelo \textit{thresholding} através do método de detecção de bordas de Suzuki \cite{Suzuki85}.
 

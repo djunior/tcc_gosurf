@@ -9,7 +9,7 @@
 \noindent{}onde $h$ é a altura da imagem no sensor da câmera e $f$ é a distância focal da câmera. Estes parâmetros foram obtidos no momento da captura através do próprio \textit{smartphone}. Os valores considerados foram:
 
 \begin{center}
-    \begin{tabular}{| l | r |}
+    \begin{tabular}{| c | c |}
 	    \hline
 	    Parâmetros & Valores \\ \hline
 	    Distância Focal & 4.15 mm\\ \hline
@@ -19,7 +19,89 @@
     \end{tabular}
 \end{center}
 
-\paragraph{}Foram analisados \todo[inline]{adicionar numero de vídeos} vídeos. Para cada vídeo as ondas foram analisadas automaticamente pelo algoritmo e pelo manualmente pelo autor, a fim de verificar quantas ondas foram ou deixaram de ser identificadas, e verificar a precisão da identificação do ponto mínimo e máximo da onda. A maior parcela dos erros observados nos dados analisados estÃ¡ relacionada com estes parâmetros.
+\paragraph{}Foram analisados dez vídeos, contemplando três dias distintos. Para cada vídeo as ondas foram analisadas automaticamente pelo algoritmo e manualmente pelo autor, a fim de verificar quantas ondas foram ou deixaram de ser identificadas, e verificar a precisão da identificação do ponto mínimo e máximo da onda. No total foram identificadas 123 ondas manualmente e 126 ondas pelo algoritmo, o que representa uma taxa de acerto de 98\%. Entretanto, como será mostrado, a taxa de acerto de cada vídeo individual pode variar. Os dados obtidos serão apresentados a seguir:
+
+\paragraph{}Os dados das tabelas \ref{TabIMG_0886}, \ref{TabIMG_0887}, \ref{TabIMG_0888} e \ref{TabIMG_0889} são referentes ao dia 04/07/2017. Este dia apresentava céu nublado e mar revolto, sem a presença de banhistas na areia ou mar.
+
+\todo[inline]{Adicionar duração dos videos na legenda das tabelas}
+
+\begin{table}[h]
+	\input{../analysed_waves/IMG_0886/report_table.tex}
+	\caption[\small{Dados do 1$^\circ$ vídeo gravado no dia 04/07/2017}]{\small{Dados do 1$^\circ$ vídeo gravado no dia 04/07/2017}}
+	\label{TabIMG_0886}
+\end{table}
+
+\begin{table}[h]
+	\input{../analysed_waves/IMG_0887/report_table.tex}
+	\caption[\small{Dados do 2$^\circ$ vídeo gravado no dia 04/07/2017}]{\small{Dados do 2$^\circ$ vídeo gravado no dia 04/07/2017}}
+	\label{TabIMG_0887}
+\end{table}
+
+\begin{table}[h]
+	\centering
+	\input{../analysed_waves/IMG_0888/report_table.tex}
+	\caption[\small{Dados do 3$^\circ$ vídeo gravado no dia 04/07/2017}]{\small{Dados do 3$^\circ$ vídeo gravado no dia 04/07/2017}}
+	\label{TabIMG_0888}
+\end{table}
+
+\begin{table}[h]
+	\centering
+	\input{../analysed_waves/IMG_0889/report_table.tex}
+	\caption[\small{Dados do 4$^\circ$ vídeo gravado no dia 04/07/2017}]{\small{Dados do 4$^\circ$ vídeo gravado no dia 04/07/2017}}
+	\label{TabIMG_0889}
+\end{table}
+
+\paragraph{}Os dados das tabelas \ref{TabIMG_0894}, \ref{TabIMG_0895}, \ref{TabIMG_0898} são referentes ao dia 08/07/2017. Este dia apresentava céu claro e mar calmo, sendo algumas séries com ondas um pouco maiores. Pode-se observar a presença de pessoas na areia e surfistas no mar.
+
+\begin{table}[h]
+	\centering
+	\input{../analysed_waves/IMG_0894/report_table.tex}
+	\caption[\small{Dados do 1$^\circ$ vídeo gravado no dia 08/07/2017}]{\small{Dados do 1$^\circ$ vídeo gravado no dia 08/07/2017}}
+	\label{TabIMG_0894}
+\end{table}
+
+\begin{table}[h]
+	\centering
+	\input{../analysed_waves/IMG_0895/report_table.tex}
+	\caption[\small{Dados do 2$^\circ$ vídeo gravado no dia 08/07/2017}]{\small{Dados do 2$^\circ$ vídeo gravado no dia 08/07/2017}}
+	\label{TabIMG_0895}
+\end{table}
+
+\begin{table}[h]
+	\centering
+	\input{../analysed_waves/IMG_0898/report_table.tex}
+	\caption[\small{Dados do 3$^\circ$ vídeo gravado no dia 08/07/2017}]{\small{Dados do 3$^\circ$ vídeo gravado no dia 08/07/2017}}
+	\label{TabIMG_0898}
+\end{table}
+
+\paragraph{}Os dados das tabelas \ref{TabIMG_0900}, \ref{TabIMG_0902}, \ref{TabIMG_0903} são referentes ao dia 08/07/2017. Este dia apresentava céu claro e mar calmo, sendo algumas séries com ondas um pouco maiores. Pode-se observar a presença de pessoas na areia e surfistas no mar.
+
+\begin{table}[h]
+	\centering
+	\input{../analysed_waves/IMG_0900/report_table.tex}
+	\caption[\small{Dados do 1$^\circ$ vídeo gravado no dia 09/07/2017}]{\small{Dados do 1$^\circ$ vídeo gravado no dia 09/07/2017}}
+	\label{TabIMG_0900}
+\end{table}
+
+\begin{table}[h]
+	\centering
+	\input{../analysed_waves/IMG_0902/report_table.tex}
+	\caption[\small{Dados do 2$^\circ$ vídeo gravado no dia 09/07/2017}]{\small{Dados do 2$^\circ$ vídeo gravado no dia 09/07/2017}}
+	\label{TabIMG_0902}
+\end{table}
+
+\begin{table}[h]
+	\centering
+	\input{../analysed_waves/IMG_0903/report_table.tex}
+	\caption[\small{Dados do 3$^\circ$ vídeo gravado no dia 09/07/2017}]{\small{Dados do 3$^\circ$ vídeo gravado no dia 09/07/2017}}
+	\label{TabIMG_0903}
+\end{table}
+
+\paragraph{}Alguns fatores podem interferir no algoritmo de estimação de altura das ondas. Dentre estes fatores, pode-se classificá-los em duas categorias: problemas impeditivos e não impeditivos. 
+
+\paragraph{}Os problemas impeditivos impossibilitam completamente a identificação das região de espuma do mar, e em geral possuem duas causas: baixa iluminação e interferência fixa de banhistas na areia. O problema da baixa iluminação foi discutido na seção \ref{sec:segmentation_border_detection} e ilustrado pela figura \ref{FigThresholdFail}. Já a interferência de banhistas fixos ocorre quando alguma pessoa ou objeto está posicionado sobre a coluna central de cada \textit{frame} do vídeo como na imagem \ref{FigObjectMiddleCol}. Esta pessoa ou objeto se traduz no \textit{timestack} como uma linha escura contínua. Esta linha divide a região de espuma encontrada, formando duas regiões de alta intensidade na imagem binarizada pela etapa de \textit{thresholding}. Dependendo da posição vertical onde a região é dividida a região de espuma pode não ser a maior região segmentada pela imagem, fazendo com que a etapa de segmentação selecione a região errada (por exemplo, selecione a faixa de areia ao invés de selecionar a região de espuma). Este efeito pode ser observado na figura \ref{FigSegmentationFail}.
+
+\paragraph{}Os problemas não impeditivos estão relacionados a erros na identificação do que é uma onda, como por exemplo detecção de um número excessivo ou insuficiente de ondas em um vídeo, ou caso a onda seja detectada, erros na identificação do ponto máximo ou mínimo da onda.
 
 \paragraph{}A identificação dos pontos mínimos e máximos estão suscetível a interferência externa, como banhistas ou pessoas próximas da zona de arrebentação. A ação do vento \cite{Hwang2016} também pode introduzir erros na identificação do ponto de máximo, causando um \textit{spray} da espuma do mar que pode ser erroneamente detectado como o ponto máximo da onda (Figura \ref{FigMaxError}).
 
@@ -49,43 +131,3 @@
 \end{figure}
 
 \paragraph{}Uma última fonte de erro comum é a localização espacial das ondas. Como discutido por Browne \textit{et al} \cite{Griffith11} ondas com distâncias diferentes da câmera podem aparentar possuir a mesma altura em \textit{pixels}
-
-\begin{center}
-	\input{../analysed_waves/IMG_0886/report_table.tex}
-\end{center}
-
-\begin{center}
-	\input{../analysed_waves/IMG_0887/report_table.tex}
-\end{center}
-
-\begin{center}
-	\input{../analysed_waves/IMG_0888/report_table.tex}
-\end{center}
-
-\begin{center}
-	\input{../analysed_waves/IMG_0889/report_table.tex}
-\end{center}
-
-\begin{center}
-	\input{../analysed_waves/IMG_0894/report_table.tex}
-\end{center}
-
-\begin{center}
-	\input{../analysed_waves/IMG_0895/report_table.tex}
-\end{center}
-
-\begin{center}
-	\input{../analysed_waves/IMG_0898/report_table.tex}
-\end{center}
-
-\begin{center}
-	\input{../analysed_waves/IMG_0900/report_table.tex}
-\end{center}
-
-\begin{center}
-	\input{../analysed_waves/IMG_0902/report_table.tex}
-\end{center}
-
-\begin{center}
-	\input{../analysed_waves/IMG_0903/report_table.tex}
-\end{center}
