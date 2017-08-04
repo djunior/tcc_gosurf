@@ -1,6 +1,6 @@
-\paragraph{}Este cap?ulo tem como objetivo apresentar os resultados obtidos ao aplicar o método de estimação de altura de ondas discutido nos capítulos 2 e 3. 
+\paragraph{}Este capítulo tem como objetivo apresentar os resultados obtidos ao aplicar o método de estimação de altura de ondas discutido nos capítulos 2 e 3. 
 
-\paragraph{}Os vídeos analisados foram capturados na praia de Itacoatiara, em Niterói. A câmera foi posicionada no Quiosque 5, na orla da praia, a uma altura de aproximadamente oito metros do n?el do mar. Este quiosque foi escolhido para posicionar a câmera pois uma visão clara do mar, sem a obstrução da vegetação local da praia. A câmera está posicionada com uma angulação vertical de 83$^{\circ}$. O campo visual (\textit{field of view}) da câmera do \textit{smartphone} foi calculado através da seguinte equação \cite{Bourke}: 
+\paragraph{}Os vídeos analisados foram capturados na praia de Itacoatiara, em Niterói. A câmera foi posicionada no Quiosque 5, na orla da praia, a uma altura de aproximadamente oito metros do nível do mar. Este quiosque foi escolhido para posicionar a câmera pois uma visão clara do mar, sem a obstrução da vegetação local da praia. A câmera está posicionada com uma angulação vertical de 83$^{\circ}$. O campo visual (\textit{field of view}) da câmera do \textit{smartphone} foi calculado através da seguinte equação \cite{Bourke}: 
 
 \[
 	fov = 2 * atan\Bigg(\frac{h}{2f}\Bigg)
@@ -10,25 +10,25 @@
 
 \begin{center}
     \begin{tabular}{| l | r |}
-    \hline
-    Parâetros & Valores \\ \hline
-    Distância Focal & 4.15 mm\\ \hline
-    Altura do sensor & 3.60 mm\\ \hline
-    Campo de visão vertical & 46.92$^{\circ}$ \\ 
-    \hline
+	    \hline
+	    Parâmetros & Valores \\ \hline
+	    Distância Focal & 4.15 mm\\ \hline
+	    Altura do sensor & 3.60 mm\\ \hline
+	    Campo de visão vertical & 46.92$^{\circ}$ \\ 
+	    \hline
     \end{tabular}
 \end{center}
 
-\paragraph{}Foram analisados \todo[inline]{adicionar numero de vÃ­deos} vÃ­deos. Para cada vÃ­deo as ondas foram analisadas automaticamente pelo algoritmo e pelo manualmente pelo autor, a fim de verificar quantas ondas foram ou deixaram de ser identificadas, e verificar a precisÃ£o da identificaÃ§Ã£o do ponto mÃ­nimo e mÃ¡ximo da onda. A maior parcela dos erros observados nos dados analisados estÃ¡ relacionada com estes parÃ¢metros.
+\paragraph{}Foram analisados \todo[inline]{adicionar numero de vídeos} vídeos. Para cada vídeo as ondas foram analisadas automaticamente pelo algoritmo e pelo manualmente pelo autor, a fim de verificar quantas ondas foram ou deixaram de ser identificadas, e verificar a precisão da identificação do ponto mínimo e máximo da onda. A maior parcela dos erros observados nos dados analisados estÃ¡ relacionada com estes parâmetros.
 
-\paragraph{}A identificaÃ§Ã£o dos pontos mÃ­nimos e mÃ¡ximos estÃ¡ suscetÃ­vel a interferÃªncia externa, como banhistas ou pessoas prÃ³ximas da zona de arrebentaÃ§Ã£o. A aÃ§Ã£o do vento \cite{Hwang2016} tambÃ©m pode introduzir erros na identificaÃ§Ã£o do ponto de mÃ¡ximo, causando um \textit{spray} da espuma do mar que pode ser erroneamente detectado como o ponto mÃ¡ximo da onda (Figura \ref{FigMaxError}).
+\paragraph{}A identificação dos pontos mínimos e máximos estão suscetível a interferência externa, como banhistas ou pessoas próximas da zona de arrebentação. A ação do vento \cite{Hwang2016} também pode introduzir erros na identificação do ponto de máximo, causando um \textit{spray} da espuma do mar que pode ser erroneamente detectado como o ponto máximo da onda (Figura \ref{FigMaxError}).
 
 \begin{figure}[h]
 	\centering
 
-	\subfloat[\small{Onda detectada automaticamente.}]{\includegraphics[width=.7\textwidth,keepaspectratio]{wave_people_manual.jpg}}
+	\subfloat[\small{Onda detectada manualmente.}]{\includegraphics[width=.7\textwidth,keepaspectratio]{wave_people_manual.jpg}}
 
-	\subfloat[\small{Onda detectada manualmente.}]{\includegraphics[width=.7\textwidth,keepaspectratio]{wave_people_automatic.jpg}}
+	\subfloat[\small{Onda detectada automaticamente.}]{\includegraphics[width=.7\textwidth,keepaspectratio]{wave_people_automatic.jpg}}
 
 	\caption[\small{Comparativo entre onda detectada manualmente e onda detectada automaticamente com interferência de pessoas na areia.}]{\small{Comparativo entre onda detectada manualmente e onda detectada automaticamente com interferência de pessoas na areia.}}
 	\label{FigPeopleError}
@@ -39,13 +39,53 @@
 \begin{figure}[h]
 	\centering
 
-	\subfloat[\small{Onda detectada automaticamente.}]{\includegraphics[width=.7\textwidth,keepaspectratio]{wave_spray_manual.jpg}}
+	\subfloat[\small{Onda detectada manualmente.}]{\includegraphics[width=.7\textwidth,keepaspectratio]{wave_spray_manual.jpg}}
 
-	\subfloat[\small{Onda detectada manualmente.}]{\includegraphics[width=.7\textwidth,keepaspectratio]{wave_spray_automatic.jpg}}
+	\subfloat[\small{Onda detectada automaticamente.}]{\includegraphics[width=.7\textwidth,keepaspectratio]{wave_spray_automatic.jpg}}
 
 	\caption[\small{Comparativo entre onda detectada manualmente e onda detectada automaticamente com efeito de \textit{spray} de espuma.}]{\small{Comparativo entre onda detectada manualmente e onda detectada automaticamente com efeito de \textit{spray} de espuma.}}
 
 	\label{FigSprayError}
 \end{figure}
 
-\paragraph{}Uma Ãºltima fonte de erro comum Ã© a localizaÃ§Ã£o espacial das ondas. Como discutido por Browne \textit{et al} \cite{Griffith11} ondas com distÃ¢ncias diferentes da cÃ¢mera podem aparentar possuir a mesma altura em \textit{pixels}
+\paragraph{}Uma última fonte de erro comum é a localização espacial das ondas. Como discutido por Browne \textit{et al} \cite{Griffith11} ondas com distâncias diferentes da câmera podem aparentar possuir a mesma altura em \textit{pixels}
+
+\begin{center}
+	\input{../analysed_waves/IMG_0886/report_table.tex}
+\end{center}
+
+\begin{center}
+	\input{../analysed_waves/IMG_0887/report_table.tex}
+\end{center}
+
+\begin{center}
+	\input{../analysed_waves/IMG_0888/report_table.tex}
+\end{center}
+
+\begin{center}
+	\input{../analysed_waves/IMG_0889/report_table.tex}
+\end{center}
+
+\begin{center}
+	\input{../analysed_waves/IMG_0894/report_table.tex}
+\end{center}
+
+\begin{center}
+	\input{../analysed_waves/IMG_0895/report_table.tex}
+\end{center}
+
+\begin{center}
+	\input{../analysed_waves/IMG_0898/report_table.tex}
+\end{center}
+
+\begin{center}
+	\input{../analysed_waves/IMG_0900/report_table.tex}
+\end{center}
+
+\begin{center}
+	\input{../analysed_waves/IMG_0902/report_table.tex}
+\end{center}
+
+\begin{center}
+	\input{../analysed_waves/IMG_0903/report_table.tex}
+\end{center}

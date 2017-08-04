@@ -10,6 +10,7 @@ echo Percentual total de ondas encontradas: $PERCENT
 for f in `ls . | grep IMG`
 do
 	echo "Analisando video $f"
-	awk -f report_compiler.awk $f/manual_report.txt $f/report.txt
+	awk -f report_compiler.awk $f/manual_report.txt $f/report.txt | awk -f latexTableGenerator.awk > $f/report_table.tex
+	iconv -t ISO-8859-1 $f/report_table.tex -o $f/report_table.tex
 done
 

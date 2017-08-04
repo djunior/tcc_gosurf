@@ -9,7 +9,7 @@ function calculateDiffPercent(diff,base) {
 function standard_deviation(values,mean,count) {
 	sd_sum = 0
 	for (key in values) {
-		sd_sum += ((values[key] - mean)^2) / (count-1)
+		sd_sum += ((values[key] - mean)^2) / (count)
 	}
 	return sqrt(sd_sum)
 }
@@ -62,6 +62,9 @@ FNR==NR && /pixels/{
 }
 
 END{
+	print "Numero de ondas encontradas (manual): " manual_count
+	print "Numero de ondas encontradas (algoritmo): " alg_count
+
 	print "Porcentagem de ondas encontradas (algoritmo/manual): " calculateDiffPercent(alg_count,manual_count) "%"
 
 	line_height_count = manual_line_height_count
@@ -78,12 +81,16 @@ END{
 	print "Altura media em pixels (manual): " manual_pixel_average
 	print "Altura media em pixels (algoritmo): " alg_pixel_average
 
-	manual_height_variance = variance(manual_height_values,line_height_count)
 	manual_height_sd = standard_deviation(manual_height_values,manual_height_average,line_height_count)
+	
+	#manual_height_variance = manual_height_sd^2
+	#manual_height_variance = variance(manual_height_values,line_height_count)
 
-	alg_height_variance = variance(alg_height_values,line_height_count)
 	alg_height_sd = standard_deviation(alg_height_values,alg_height_average,line_height_count)
+	
+	#alg_height_variance = alg_height_sd^2
+	#alg_height_variance = variance(alg_height_values,line_height_count)
 
-	print "Desvio padrao (altura manual em metros): " manual_height_sd " variancia: " manual_height_variance
-	print "Desvio padrao (altura algoritmo em metros): " alg_height_sd " variancia: " alg_height_variance
+	print "Desvio padrao (altura manual em metros): " manual_height_sd
+	print "Desvio padrao (altura algoritmo em metros): " alg_height_sd
 }
