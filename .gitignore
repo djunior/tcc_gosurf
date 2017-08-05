@@ -1,3 +1,9 @@
 deploy
 build
 output_images
+doc/tcc_davidbrittojr.aux
+doc/tcc_davidbrittojr.lof
+doc/tcc_davidbrittojr.log
+doc/tcc_davidbrittojr.lot
+doc/tcc_davidbrittojr.pdf
+doc/tcc_davidbrittojr.toc
