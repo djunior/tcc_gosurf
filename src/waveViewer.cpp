@@ -133,6 +133,10 @@ int main(int argc, char** argv) {
 
 	VideoCapture cap(argv[1]);
 
+	Mat frame;
+	cap >> frame;
+	imwrite("output_images/wave_viewer/first_frame.jpg",frame);
+
 	detectWaveInFrames(cap,waves);
 
 	// watchWaves(cap,waves);

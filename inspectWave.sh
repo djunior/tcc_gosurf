@@ -24,11 +24,6 @@ DEBUG=n ./deploy/filterImage $OUTPUT_DIR/timestack.jpg
 
 mv output_images/process $OUTPUT_DIR
 
-./deploy/generateReport waves.txt
-
-mv waves.txt $OUTPUT_DIR
-mv report.txt $OUTPUT_DIR
-
 echo Starting wave viewer
 
 mkdir -p output_images/wave_viewer
@@ -49,4 +44,10 @@ mkdir -p output_images/wave_inspector
 mv output_images/wave_inspector $OUTPUT_DIR
 mv manual_waves.txt $OUTPUT_DIR
 mv report.txt $OUTPUT_DIR/manual_report.txt
+
+
+./deploy/generateReport waves.txt
+
+mv waves.txt $OUTPUT_DIR
+mv report.txt $OUTPUT_DIR
 

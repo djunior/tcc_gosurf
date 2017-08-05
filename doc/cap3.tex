@@ -94,7 +94,35 @@
 
 \paragraph{}A equalização de histograma tem como funcionalidade normalizar o nível intensidade da imagem. Desta forma, reduz-se tanto o efeito do clima (como a variação da iluminação em dias nublados e dias de céu aberto) quanto o efeito do horário do dia (como a variação da iluminação entre o começo da manhã e o meio do dia). Além disso, nuvens e objetos externos podem alterar a iluminação durante a aquisição do vídeo em si. Portanto, deve-se equalizar o histograma de cada \textit{frame} do vídeo antes de gerar o \textit{timestack}.
 
-%Descrever como é feita a equalização, tal como você fez na seção de níveis de cinza.
+\paragraph{}A figura \ref{FigHistogramSunny} ilustra o efeito da equalização de histograma sobre uma imagem de alta luminosidade, enquanto a figura \ref{FigHistogramCloud} ilustra o efeito da equalização de histograma em um dia de baixa luminosidade (um dia nublado). Nota-se que o histograma do dia com baixa luminosidade apresenta uma grande concentração de pixels nos níveis de maior intensidade, enquanto o histograma do dia com alta luminosidade está melhor distribuído por todo o espectro de níveis de cinza. Com isso, pode-se notar que o efeito da equalização foi mais significativo na figura \ref{FigHistogramCloud}.
+
+\begin{figure}[h]
+  \centering
+  \subfloat[\small{Imagem de uma praia em dia ensolarado (alta luminosidade).}]{\includegraphics[width=.45\textwidth,height=.15\textheight]{sunny_grey_image.jpg}}
+  \qquad
+  \subfloat[\small{Histograma da imagem original.}]{\includegraphics[width=.3\textwidth,height=.15\textheight]{sunny_histogram.jpg}}
+  \qquad
+  \subfloat[\small{Resultado da equalização da imagem original.}]{\includegraphics[width=.45\textwidth,height=.15\textheight]{sunny_equalized_image.jpg}}
+  \qquad
+  \subfloat[\small{Histograma da imagem equalizada.}]{\includegraphics[width=.3\textwidth,height=.15\textheight]{sunny_histogram_eq.jpg}}
+  \caption[\small{Comparação entre o histograma original e equalizado de um dia ensolarado.}]{\small{Comparação entre o histograma original e equalizado de um dia ensolarado.}}
+  \label{FigHistogramSunny}
+\end{figure}
+
+\begin{figure}[h]
+  \centering
+  \subfloat[\small{Imagem de uma praia em dia nublado (baixa luminosidade).}]{\includegraphics[width=.45\textwidth,height=.15\textheight]{cloud_grey_image.jpg}}
+  \qquad
+  \subfloat[\small{Histograma da imagem original.}]{\includegraphics[width=.3\textwidth,height=.15\textheight]{cloud_histogram.jpg}}
+  \qquad
+  \subfloat[\small{Resultado da equalização da imagem original.}]{\includegraphics[width=.45\textwidth,height=.15\textheight]{cloud_equalized_image.jpg}}
+  \qquad
+  \subfloat[\small{Histograma da imagem equalizada.}]{\includegraphics[width=.3\textwidth,height=.15\textheight]{cloud_histogram_eq.jpg}}
+  \caption[\small{Comparação entre o histograma original e equalizado de um dia nublado.}]{\small{Comparação entre o histograma original e equalizado de um dia nublado.}}
+  \label{FigHistogramCloud}
+\end{figure}
+
+\paragraph{}As figuras \ref{FigHistogramSunny}c e \ref{FigHistogramCloud}c exibem o efeito de normalização da luminosidade no vídeo. Estas as imagens equalizadas serão utilizadas pelos próximos passos do pré-processamento para gerar o \textit{timestack}. A equalização de histograma é realizada através da biblioteca de processamento gráfico OpenCV, e será discutida com mais detalhes no Capítulo 4.
 
 \section{Detecção da Linha de Horizonte}
 
@@ -308,6 +336,7 @@
 \end{algorithm}
 
 \section{Identificação das Ondas}
+\label{sec:wave_identification}
 
 \paragraph{}O último passo para estimar a altura das ondas em um \timestack é 
 identificar as ondas na linha rastreada no passo anterior. Para isso, calcula-se a derivada da sequência discreta $s[n]$, da seguinte forma:
@@ -325,6 +354,8 @@ identificar as ondas na linha rastreada no passo anterior. Para isso, calcula-se
 \end{figure}
 
 \noindent{}O estado 0 do autômato procura pela primeira derivada $s'[n]$ positiva, marcando o ponto equivalente de $s[n]$ como o mínimo da onda e avançando para o estado 1. O estado 1 procura pela primeira derivada negativa de $s'[n]$, marcando o ponto equivalente de $s[n]$ como candidato ao ponto máximo da onda e andando para o estado 2. Então, os estados 2 e 3 buscam por "buracos" ou \textit{gaps} no trecho de derivada positiva, onde a derivada se torna negativa por um curto período e depois $s[n]$ torna a crescer. O estado 2 procura por novos pontos de máximo, trechos onde a derivada é positiva, e o estado 3 procura por trechos de derivada negativa. Quando o estado 3 encontrar uma derivada positiva, o autômato retorna para o estado 2. Enquanto o estado 3 encontrar derivadas não-positivas um contador de tamanho do \textit{gap} é incrementado. Quando o tamanho do \textit{gap} é superior a um certo limite, o autômato avança para o estado 4, identificando assim que um candidato a uma onda foi encontrado, delimitado pelos pontos de mínimo e máximo encontrados anteriormente. Este candidato apenas será considerado uma onda se sua altura estiver dentro de uma faixa de controle, isto é, são descartadas ondas muito pequenas ou muito grandes. A figura \ref{FigWave} mostra os pares de pontos máximo e mínimo identificados pelo autômato em uma linha de arrebentação aplicados no \timestack original. As linhas verdes unem os pares de pontos encontrados, e as linhas vermelhas evidencia a altura em \textit{pixels} da onda identificada. 
+
+\todo[inline]{Adicionar correção de nível de arrebentação no automato}
 
 \begin{figure}[h]
   \centering

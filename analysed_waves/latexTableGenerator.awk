@@ -36,11 +36,11 @@ BEGIN{
 
 END{
 	print "\\begin{tabular}{|l|l|l|}"
-	print "\hline"
-	print "Parâmetros & Valores (manuais) & Valores (algoritmo) \\\\ \hline"
-	print "Número de Ondas Encontradas & " manual_number_waves " & " alg_number_waves " \\\\ \hline"
-	print "Altura média das Ondas (pixels) & " manual_height_pixels " & " alg_height_pixels " \\\\ \hline"
-	print "Altura média das Ondas (metros) & " manual_height_meters " & " alg_height_meters " \\\\ \hline"
-	print "Desvio Padrão (metros$^{2}$) & " manual_sd " & " alg_sd " \\\\ \hline"
-	print "\end{tabular}"
+	print "\\hline"
+	print "Parâmetros & Valores (manuais) & Valores (algoritmo) \\\\ \\hline"
+	print "Número de Ondas Encontradas & " manual_number_waves " & " alg_number_waves " \\\\ \\hline"
+	print "Altura média das Ondas (pixels) & " manual_height_pixels " & " alg_height_pixels " \\\\ \\hline"
+	print "Altura média das Ondas (metros) & " manual_height_meters " & " alg_height_meters " \\\\ \\hline"
+	print "Desvio Padrão (metros$^{2}$) & " manual_sd " & " alg_sd " \\\\ \\hline"
+	print "\\end{tabular}"
 }
