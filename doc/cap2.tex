@@ -68,9 +68,7 @@ H(u,v) = e^{-D^{2}(u,v)/2D^{2}_{0}}
 
 \item Desvio de fase zero, isto é, o filtro não deve causar desvio na fase da imagem a fim de não alterar a posição dos objetos na mesma.
 
-
 \item Preservação da média, isto é, a soma de todos os fatores da máscara no domínio espacial deve ser igual a 1.
-
 
 \item Monotonicidade, isto é, a função de transferência do filtro de suavização deve decrescer monotonicamente.
 
@@ -80,8 +78,9 @@ H(u,v) = e^{-D^{2}(u,v)/2D^{2}_{0}}
 
 
 
+\todo[inline]{Mencionar que este método não é mais utilizado}
 
-\paragraph{}Por último, uma classe de métodos de suma importância são os métodos de nitidez, ou \textit{sharpening}. A função desses métodos é aumentar o contraste da imagem na fronteira de regiões, isto é, onde ocorre uma descontinuidade de \textit{pixels}. O método utilizado neste projeto é o método Laplaciano. Segundo Gonzalez \cite{Gonzalez92}, o Laplaciano de uma imagem \(f(x,y)\) é definido por:
+\paragraph{}Uma classe de métodos de suma importância são os métodos de nitidez, ou \textit{sharpening}. A função desses métodos é aumentar o contraste da imagem na fronteira de regiões, isto é, onde ocorre uma descontinuidade de \textit{pixels}. O método utilizado neste projeto é o método Laplaciano. Segundo Gonzalez \cite{Gonzalez92}, o Laplaciano de uma imagem \(f(x,y)\) é definido por:
 
 \[
 	\nabla^{2}f = \frac{\partial^{2}f}{\partial x^{2}} + \frac{\partial^{2}f}{\partial y^{2}}
@@ -114,7 +113,23 @@ H(u,v) = e^{-D^{2}(u,v)/2D^{2}_{0}}
 \noindent{}Onde \(g(x,y)\) é a imagem de saída e \(f(x,y)\) é a imagem de entrada.
 
 
-\paragraph{}Equalização de Histograma...\todo[inline]{Adicionar teoria sobre histogramas e equalização de histograma}
+
+
+\paragraph{}Por último, utiliza-se um método para normalizar a luminosidade da imagem, de forma que seja possível processar tanto dias de alta luminosidade (céu sem nuvens e sol forte) quanto dias de baixa luminosidade (céu nublado e sol fraco). Esta normalização pode ser realizada através da equalização do histograma da imagem. Gonzalez \cite{Gonzalez92} define um histograma de uma imagem digital com 0 até L-1 níveis de cinza como uma função discreta $h(r_ {k}) = n_{k}$, onde $r_{k}$ é o k-ésimo nível de cinza e $n_{k}$ é o número de \textit{pixels} com o nível de cinza $r_{k}$. Esta função pode ser normalizada pelo número total de \textit{pixels} $n$, a função normalizada $p(r_{k})$ é definida como:
+
+\[
+	p(r_{k}) = \frac{n_{k}}{n}
+\]
+
+\noindent{}A função $p(r_{k})$ pode ser interpretada como a probabilidade da ocorrência do nível de cinza $r_{k}$ na imagem digital. A equalização do histograma consiste em encontrar uma transformação T que quando aplicada no histograma normalizado $p(r_{k})$ que resulta em um histograma uniforme. Gonzalez demonstra que a seguinte transformação atinge este objetivo:
+
+\[
+	s_{k} = T(r_{k}) = \sum_{j=0}^{k} \frac{n_{j}}{n}
+\]
+
+\noindent{}Onde $k = 0,1,2,...,L-1$ e $s_{k}$ é a função que representa o histograma equalizado. 
+
+
 
 \section{Métodos de Segmentação de Imagens}
 
