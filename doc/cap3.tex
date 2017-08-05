@@ -308,6 +308,7 @@
 \end{algorithm}
 
 \section{Identificação das Ondas}
+\label{sec:wave_identification}
 
 \paragraph{}O último passo para estimar a altura das ondas em um \timestack é 
 identificar as ondas na linha rastreada no passo anterior. Para isso, calcula-se a derivada da sequência discreta $s[n]$, da seguinte forma:
@@ -325,6 +326,8 @@ identificar as ondas na linha rastreada no passo anterior. Para isso, calcula-se
 \end{figure}
 
 \noindent{}O estado 0 do autômato procura pela primeira derivada $s'[n]$ positiva, marcando o ponto equivalente de $s[n]$ como o mínimo da onda e avançando para o estado 1. O estado 1 procura pela primeira derivada negativa de $s'[n]$, marcando o ponto equivalente de $s[n]$ como candidato ao ponto máximo da onda e andando para o estado 2. Então, os estados 2 e 3 buscam por "buracos" ou \textit{gaps} no trecho de derivada positiva, onde a derivada se torna negativa por um curto período e depois $s[n]$ torna a crescer. O estado 2 procura por novos pontos de máximo, trechos onde a derivada é positiva, e o estado 3 procura por trechos de derivada negativa. Quando o estado 3 encontrar uma derivada positiva, o autômato retorna para o estado 2. Enquanto o estado 3 encontrar derivadas não-positivas um contador de tamanho do \textit{gap} é incrementado. Quando o tamanho do \textit{gap} é superior a um certo limite, o autômato avança para o estado 4, identificando assim que um candidato a uma onda foi encontrado, delimitado pelos pontos de mínimo e máximo encontrados anteriormente. Este candidato apenas será considerado uma onda se sua altura estiver dentro de uma faixa de controle, isto é, são descartadas ondas muito pequenas ou muito grandes. A figura \ref{FigWave} mostra os pares de pontos máximo e mínimo identificados pelo autômato em uma linha de arrebentação aplicados no \timestack original. As linhas verdes unem os pares de pontos encontrados, e as linhas vermelhas evidencia a altura em \textit{pixels} da onda identificada. 
+
+\todo[inline]{Adicionar correção de nível de arrebentação no automato}
 
 \begin{figure}[h]
   \centering
