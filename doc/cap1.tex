@@ -18,7 +18,7 @@
 
 \paragraph{}Inicialmente, este projeto começou como parte de um sistema de monitoramento de praias voltado para avaliação da condição de surf, chamado GoSurf. O sistema foi desenvolvido na disciplina Projeto Integrado. Entretanto, no desenvolvimento inicial do sistema não foi possível implementar uma forma de medição de ondas do mar satisfatório.
 
-\paragraph{}O monitoramento de praias possui outras aplicações fora do sistema descrito anteriormente. Um sistema similar, também baseado em imagens, foi desenvolvido na Griffin University, Australia, para indicar nível de perigo para nado em praias e que será objeto de estudo na fundamentação teórica deste trabalho \cite{Griffith05}.
+\paragraph{}O monitoramento de praias possui outras aplicações fora do sistema descrito anteriormente. Um sistema similar, também baseado em imagens, foi desenvolvido na Griffin University, Austrália, para indicar nível de perigo para nado em praias e que será objeto de estudo na fundamentação teórica deste trabalho \cite{Griffith05}.
 
 \paragraph{}O estudo de processamento de imagens voltado a ondas do mar apresenta um problema interessante em análise de imagens. Como se está trabalhando com imagens reais e altamente dinâmicas, deve-se empregar diversas técnicas para reduzir o ruído nos dados de entrada e garantir uma medição confiável.
 
@@ -28,27 +28,21 @@
 
 \section{Objetivos}
 
-\paragraph{}Informar qual é o objetivo geral do trabalho, isto é, aquilo que deve ser atendido e que corresponde ao indicador inequívoco do sucesso do seu trabalho. Pode acontecer que venha a existir um conjunto de objetivos específicos, que complementam o objetivo geral (tamanho do texto: livre, mas cuidado para não fazer uma literatura romanceada, afinal esta seção trata dos objetivos).
-\begin{itemize}
-\item Construir um aparato de aquisição de vídeos  montado em uma praia. 
-\item Adquirir os vídeos e transmiti-los para um servidor.
-\item Realizar medições (este item pode ser fragmentado em outras metas)
-\item Disponibilizar os dados. 
-\end{itemize}
+\paragraph{}Este trabalho possui como objetivo geral propor um algoritmo de estimação da altura de ondas baseado no processamento de vídeos. Este algoritmo será utilizado no sistema GoSurf com intuito de fornecer a um usuário a medida em tempo real da altura das ondas em uma praia. Ao final deste trabalho, o sistema implementado deve ser capaz de, dado um vídeo gravado na praia por uma câmera, identificar as ondas presentes no vídeo e estimar a altura de cada onda individual.
 
 \section{Metodologia}
 
-\paragraph{}As medições obtidas pelo algoritmo serão comparadas com medições manuais tanto nas imagens geradas quanto por estimativas in loco. As medições manuais são feitas na imagem por um operador humano. Inspecionando a imagem, é fácil perceber onde é o ponto de máximo e mínimo de uma onda, e com o auxílio de um programa de edição de imagem pode-se contar o número de pixels entre esses dois pontos. As medições in loco são realizadas no mesmo momento que as imagens são obtidas. Como não é possível medir a onda através de instrumentos, vale-se da experiência da pessoa realizando a aquisição dos dados e de outras no local para estimar a altura das ondas naquele momento. Essa estimativa serve para validar se o processo de calcular dimensões reais baseadas nas dimensões em pixels está na ordem de grandeza correta.
+\paragraph{}As medições obtidas pelo algoritmo serão comparadas com medições manuais tanto nas imagens geradas quanto por estimativas in loco. As medições manuais são feitas na imagem por um operador humano. Inspecionando a imagem, é fácil perceber onde é o ponto de máximo e mínimo de uma onda, e com o auxílio de um programa de edição de imagem pode-se contar o número de \textit{pixels} entre esses dois pontos. As medições in loco são realizadas no mesmo momento que as imagens são obtidas. Como não é possível medir a onda através de instrumentos, vale-se da experiência da pessoa realizando a aquisição dos dados e de outras no local para estimar a altura das ondas naquele momento. Essa estimativa serve para validar se o processo de calcular dimensões reais baseadas nas dimensões em \textit{pixels} está na ordem de grandeza correta.
 
 \paragraph{}Para certificar a confiabilidade do algoritmo, serão avaliados inúmeros dados de uma mesma praia, contemplando variações de clima, iluminação, angulação e posicionamento da câmera, maré e ocupação da praia. Todos esses fatores podem interferir com o resultado do algoritmo, principalmente as mudanças de maré e posicionamento da câmera. A escolha de uma posição para a câmera adequada é fundamental para minimizar o efeito dos outros fatores no resultado final.
 
 
 \section{Descrição}
 
-\paragraph{}No capítulo 2 será .....
+\paragraph{}No capítulo 2 será apresentado a fundamentação teórica dos métodos de processamento gráfico que foram estudados e utilizados neste projeto. Também serão discutidos trabalhos relacionados na área de oceanografia e visão computacional que serviram de inspiração para este trabalho.
 
-\paragraph{}O capítulo 3 apresenta ...
+\paragraph{}O algoritmo propriamente dito será discutido no capítulo 3. Serão apresentados o \textit{pipeline} de operações realizadas sobre a imagem desde a sua captura até a estimação das ondas. Este capítulo justificará a escolha de cada método, apresentando exemplos de casos de sucesso e falha em cada passo. Em seguida, o capítulo 4 irá demostrar a implementação de cada etapa do algoritmo descrito no capítulo 3, exibindo o código utilizado para implementar cada seção.
 
-\paragraph{}Os .... são apresentados no capítulo 4. Nele será explicitado ...
+\paragraph{}O capítulo 5 apresentará os dados experimentais obtidos pelo sistema implementado no capítulo 4. Os dados serão comparados com medições manuais realizadas pelo autor a fim de validar os resultados encontrados. Este capítulo também irá apresentar os problemas encontrados nos dados experimentais, detalhando a sua natureza e a forma que afetam a estimação da altura das ondas.
 
-\paragraph{}E assim vai até chegar na conclusão.
+\paragraph{}As conclusões e trabalhos futuros serão discutidos nos capítulo 6. Este capítulo irá apresentar as dificuldades encontradas nos pontos críticos do projeto e o que foi feito para amenizá-los, e avaliará os resultados obtidos mediante aos problemas enfrentados. Por fim, discutirá quais os próximos passos a serem realizados no projeto.

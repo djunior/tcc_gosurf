@@ -92,37 +92,38 @@
 
 \section{Equalização de Histograma}
 
-\paragraph{}A equalização de histograma tem como funcionalidade normalizar o nível intensidade da imagem. Desta forma, reduz-se tanto o efeito do clima (como a variação da iluminação em dias nublados e dias de céu aberto) quanto o efeito do horário do dia (como a variação da iluminação entre o começo da manhã e o meio do dia). Além disso, nuvens e objetos externos podem alterar a iluminação durante a aquisição do vídeo em si. Portanto, deve-se equalizar o histograma de cada \textit{frame} do vídeo antes de gerar o \textit{timestack}.
-
-\paragraph{}A figura \ref{FigHistogramSunny} ilustra o efeito da equalização de histograma sobre uma imagem de alta luminosidade, enquanto a figura \ref{FigHistogramCloud} ilustra o efeito da equalização de histograma em um dia de baixa luminosidade (um dia nublado). Nota-se que o histograma do dia com baixa luminosidade apresenta uma grande concentração de pixels nos níveis de maior intensidade, enquanto o histograma do dia com alta luminosidade está melhor distribuído por todo o espectro de níveis de cinza. Com isso, pode-se notar que o efeito da equalização foi mais significativo na figura \ref{FigHistogramCloud}.
+\paragraph{}A equalização de histograma tem como função normalizar o efeito da iluminação em uma imagem. As figuras \ref{FigHistogram}a, \ref{FigHistogram}b, \ref{FigHistogram}c e \ref{FigHistogram}d ilustram o efeito da equalização de histograma sobre uma imagem de alta luminosidade, enquanto as figuras \ref{FigHistogram}e, \ref{FigHistogram}f, \ref{FigHistogram}g e \ref{FigHistogram}h ilustram o efeito da equalização de histograma em um dia de baixa luminosidade. Nota-se que o histograma do dia com baixa luminosidade apresenta uma grande concentração de \textit{pixels} nos níveis de maior intensidade, enquanto o histograma do dia com alta luminosidade está melhor distribuído por todo o espectro de níveis de cinza. As figuras \ref{FigHistogram}c e \ref{FigHistogram}g exibem o efeito de normalização da luminosidade no vídeo. Pode-se notar que o efeito da equalização foi mais significativo na figura \ref{FigHistogram}g.
 
 \begin{figure}[h]
   \centering
-  \subfloat[\small{Imagem de uma praia em dia ensolarado (alta luminosidade).}]{\includegraphics[width=.45\textwidth,height=.15\textheight]{sunny_grey_image.jpg}}
+  \subfloat[\small{Imagem de uma praia em dia ensolarado (alta luminosidade).}]{\includegraphics[width=.45\textwidth,height=.1\textheight]{sunny_grey_image.jpg}}
   \qquad
-  \subfloat[\small{Histograma da imagem original.}]{\includegraphics[width=.3\textwidth,height=.15\textheight]{sunny_histogram.jpg}}
+  \subfloat[\small{Histograma da imagem original.}]{\includegraphics[width=.3\textwidth,height=.1\textheight]{sunny_histogram.jpg}}
   \qquad
-  \subfloat[\small{Resultado da equalização da imagem original.}]{\includegraphics[width=.45\textwidth,height=.15\textheight]{sunny_equalized_image.jpg}}
+  \subfloat[\small{Resultado da equalização da imagem original.}]{\includegraphics[width=.45\textwidth,height=.1\textheight]{sunny_equalized_image.jpg}}
   \qquad
-  \subfloat[\small{Histograma da imagem equalizada.}]{\includegraphics[width=.3\textwidth,height=.15\textheight]{sunny_histogram_eq.jpg}}
+  \subfloat[\small{Histograma da imagem equalizada.}]{\includegraphics[width=.3\textwidth,height=.1\textheight]{sunny_histogram_eq.jpg}}
+  \qquad
+  \subfloat[\small{Imagem de uma praia em dia nublado (baixa luminosidade).}]{\includegraphics[width=.45\textwidth,height=.1\textheight]{cloud_grey_image.jpg}}
+  \qquad
+  \subfloat[\small{Histograma da imagem original.}]{\includegraphics[width=.3\textwidth,height=.1\textheight]{cloud_histogram.jpg}}
+  \qquad
+  \subfloat[\small{Resultado da equalização da imagem original.}]{\includegraphics[width=.45\textwidth,height=.1\textheight]{cloud_equalized_image.jpg}}
+  \qquad
+  \subfloat[\small{Histograma da imagem equalizada.}]{\includegraphics[width=.3\textwidth,height=.1\textheight]{cloud_histogram_eq.jpg}}
   \caption[\small{Comparação entre o histograma original e equalizado de um dia ensolarado.}]{\small{Comparação entre o histograma original e equalizado de um dia ensolarado.}}
-  \label{FigHistogramSunny}
+  \label{FigHistogram}
 \end{figure}
 
-\begin{figure}[h]
-  \centering
-  \subfloat[\small{Imagem de uma praia em dia nublado (baixa luminosidade).}]{\includegraphics[width=.45\textwidth,height=.15\textheight]{cloud_grey_image.jpg}}
-  \qquad
-  \subfloat[\small{Histograma da imagem original.}]{\includegraphics[width=.3\textwidth,height=.15\textheight]{cloud_histogram.jpg}}
-  \qquad
-  \subfloat[\small{Resultado da equalização da imagem original.}]{\includegraphics[width=.45\textwidth,height=.15\textheight]{cloud_equalized_image.jpg}}
-  \qquad
-  \subfloat[\small{Histograma da imagem equalizada.}]{\includegraphics[width=.3\textwidth,height=.15\textheight]{cloud_histogram_eq.jpg}}
-  \caption[\small{Comparação entre o histograma original e equalizado de um dia nublado.}]{\small{Comparação entre o histograma original e equalizado de um dia nublado.}}
-  \label{FigHistogramCloud}
-\end{figure}
+\paragraph{}A iluminação de um vídeo capturado em ambiente externo pode variar segundo alguns fatores:
 
-\paragraph{}As figuras \ref{FigHistogramSunny}c e \ref{FigHistogramCloud}c exibem o efeito de normalização da luminosidade no vídeo. Estas as imagens equalizadas serão utilizadas pelos próximos passos do pré-processamento para gerar o \textit{timestack}. A equalização de histograma é realizada através da biblioteca de processamento gráfico OpenCV, e será discutida com mais detalhes no Capítulo 4.
+\begin{enumerate}
+  \item O horário do dia.
+  \item A condição climática do dia.
+  \item Nuvens se deslocando sob o Sol ou objetos externos produzindo sombra sobre a câmera.
+\end{enumerate}
+
+\noindent{}O efeitos do horário e condição climática do dia em geral permanecem constantes durante a aquisição do vídeo. Entretanto, nuvens e objeto cobrindo o Sol podem variar rapidamente, portanto a equalização do histograma deve ser realizada em cada \textit{frame} do vídeo antes de gerar o \textit{timestack}. Estes \textit{frames} equalizados serão utilizadas pelos próximos passos do pré-processamento para gerar o \textit{timestack}. A equalização de histograma é realizada através da biblioteca de processamento gráfico OpenCV, e será discutida com mais detalhes no Capítulo 4.
 
 \section{Detecção da Linha de Horizonte}
 
