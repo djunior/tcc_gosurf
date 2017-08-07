@@ -41,13 +41,9 @@ public:
 		t.trackLine(m);
 		mask = Mat::ones(m.size(),CV_8UC1);
 
-		cout << "Trajectory size: " << t.points.size() << endl;
-
 		for (int i = 0; i < t.points.size(); i++) {
 			tcc::Point p = t.getPoint(i);
-			// cout << "Point p(" << p.x << "," << p.y << ")" << endl;
 			for (int j = 0; j < p.getY(); j++) {
-				// cout << "setting mask at (" << i << "," << j << ")" << endl;
 				mask.at<uchar>(j,i) = 0;
 			}
 		}

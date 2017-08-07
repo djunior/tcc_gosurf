@@ -6,6 +6,9 @@
 	keywordstyle=\color{blue},
 	breakatwhitespace=false,
 	basicstyle=\footnotesize,
+	rangeprefix=/*---,
+	rangesuffix=---*/,
+  	includerangemarker=false,
 }
 
 % Introdução implementação
@@ -97,14 +100,19 @@ for (int y = 0; y < edgeFrame.rows; y++) {
 	\item Calcula a derivada do seu vetor de pontos ordenados.
 \end{enumerate}
 
-\noindent{}Para representar cada ponto individual criou-se uma classe interna a classe Trajectory denominada Trajectory::Point. O diagrama \ref{DiagTrajectory} apresenta interface de cada classe e demonstra a relação entre as duas.
+\noindent{}A fim de melhorar a organização do projeto, criou uma classe denominada Derivable para implementar as funções 2 e 3 descritas anteriormente. A classe Trajectory herda essas características da classe Derivable. Para representar cada ponto das classes Derivable e Trajectory criou-se uma classe Point. O diagrama \ref{DiagTrajectory} apresenta interface de cada classe e demonstra a relação entre as três.
 
 \begin{figure}[h]
 	\centering
 	\includegraphics[width=0.8\textwidth,keepaspectratio]{class_diagram_trajectory.png}
-	\caption[\small{Diagrama das classes Trajectory e Trajectory::Point.}]{\small{Diagrama das classes Trajectory e Trajectory::Point.}}
+	\caption[\small{Diagrama das classes Derivable, Trajectory e Point.}]{\small{Diagrama das classes Derivable, Trajectory e Point.}}
 	\label{DiagTrajectory}
 \end{figure}
+\todo{Corrigir diagrama da classe Point e adicionar classe Derivable}
+
+\paragraph{}O cálculo da derivada de uma lista de pontos é implementada no método Derivable::calculateDerivative conforme o código abaixo:
+
+\lstinputlisting[linerange=calculateDerivativeBegin-calculateDerivativeEnd]{../src/include/derivable.hpp}
 
 \paragraph{}O algoritmo \ref{AlgFirstPoint} é implementado no método Trajectory::findFirstPoint(cv::Mat\&,cv::Rect) conforme o código abaixo:
 
@@ -144,7 +152,7 @@ void Trajectory::trackLine(Mat& m, Rect roi) {
 }
 
 bool Trajectory::findNextPoint(Mat& m, int radius, Rect roi) {
-	Trajectory::Point currentPoint = points.back();
+	Point currentPoint = points.back();
 
 	if (currentPoint.getX() >= (roi.x + roi.width - 1))
 		return false;
@@ -180,7 +188,7 @@ Rect roi(0,0,1,edgeFrame.rows);
 trajectory.findFirstPoint(edgeFrame,roi);
 trajectory.trackLine();
 for (int i = 0; i < trajectory.points.size(); i++) {
-	Trajectory::Point p = trajectory.getPoint(i);
+	Point p = trajectory.getPoint(i);
 	for (int j = 0; j < p.getY(); j++) {
 		equalizedFrame.at<uchar>(j,i) = 0;
 	}
@@ -200,7 +208,7 @@ trajectory.trackLine();
 cv::Mat skyRemoverMask = cv::Mat::ones(equalizedFrame.size(),equalizedFrame.type());
 
 for (int i = 0; i < trajectory.points.size(); i++) {
-	Trajectory::Point p = trajectory.getPoint(i);
+	Point p = trajectory.getPoint(i);
 	for (int j = 0; j < p.getY(); j++) {
 		skyRemoverMask.at<uchar>(j,i) = 0;
 	}
@@ -292,7 +300,7 @@ while (true) {
 		cv::Mat skyRemoverMask = cv::Mat::ones(equalizedFrame.size(),equalizedFrame.type());
 
 		for (int i = 0; i < trajectory.points.size(); i++) {
-			Trajectory::Point p = trajectory.getPoint(i);
+			Point p = trajectory.getPoint(i);
 			for (int j = 0; j < p.getY(); j++) {
 				skyRemoverMask.at<uchar>(j,i) = 0;
 			}
@@ -470,93 +478,7 @@ while(true) {
 %Identificação das Ondas
 \paragraph{}O último passo a ser realizado é a identificação das ondas marítimas. Este passo é realizado implementando o automato descrito no capítulo anterior (Figura \ref{FigAutomato}). O automato de identificação das ondas foi implementado em uma função analyseTrajectory, conforme o código abaixo:
 
-\begin{lstlisting}
-void analyseTrajectory(Trajectory& trajectory) {
-	vector<Trajectory::Point> derivative;
-
-	trajectory.calculateDerivative(derivative);
-
-	int state = 0; 
-	int bottom_index = 0;
-	int top_index = 0;
-	int gap_count = 0;
-
-	int GAP_THRESHOLD = 20;
-
-	// Vetor que guarda o resultado com as ondas identificadas
-	vector<Wave> detectedWaves;
-
-	for (int i = 1; i < derivative.size(); i++) {
-		int dX = derivative[i].getX();
-		int dY = derivative[i].getY();
-
-		switch(state) {
-			case 0:
-				if (dY < 0) {
-					state = 1;
-					bottom_index = i+1;
-				}
-
-				break;
-			case 1:
-				if (dY > 0) {
-					top_index = i+1;
-					state = 2;
-				}
-
-				break;
-			case 2:
-				if (dY > 0) {
-					
-					state = 3;
-					gap_count = 0;
-
-				} else {
-					if (trajectory.calculateHeight(bottom_index,top_index) < trajectory.calculateHeight(bottom_index,i+1))
-						top_index = i+1;
-				}
-
-				break;
-			case 3:
-
-				if (gap_count >= GAP_THRESHOLD) {
-					
-					detectWave(trajectory,bottom_index,top_index,detectedWaves);
-
-					gap_count = 0;
-					state = 0;
-					bottom_index = 0;
-					top_index = 0;
-
-				} else {
-
-					if (dY < 0) {
-						state = 2;
-
-						if (trajectory.calculateHeight(bottom_index,top_index) < trajectory.calculateHeight(bottom_index,i+1))
-							top_index = i+1;
-
-					} else {
-
-						gap_count++;
-
-					}
-				}
-				break;
-		}
-
-		if ( state > 0 && i == (derivative.size() - 1) ) {
-			detectWave(trajectory,bottom_index,top_index,detectedWaves);
-
-			state = 0;
-			gap_count = 0;
-			bottom_index = 0;
-			top_index = 0;
-		}
-
-	}
-}
-\end{lstlisting}
+\lstinputlisting[linerange=analyseTrajectoryBegin-analyseTrajectoryEnd]{../src/lib/waveDetector.cpp}
 
 \noindent{}A função detectWave utilizada na função analyseTrajectory verifica se um par de pontos identificados como pontos mínimos e máximos locais são elegíveis para formar uma onda. Para serem elegíveis, cada par de pontos devem atender 2 requisitos:
 
@@ -568,17 +490,11 @@ void analyseTrajectory(Trajectory& trajectory) {
 
 \noindent{}O código abaixo exibe como a função detectWave é implementada:
 
-\begin{lstlisting}
-void detectWave(Trajectory& trajectory, int bottomIndex, int topIndex, vector<Wave>& detectedWaves) {
-	int MIN_HEIGHT_THRESHOLD = 10;
-	int MAX_HEIGHT_THRESHOLD = 200;
-	int height = trajectory.calculateHeight(bottomIndex,topIndex);
+\lstinputlisting[linerange=detectWaveBegin-detectWaveEnd]{../src/lib/waveDetector.cpp}
 
-	if ((height > MIN_HEIGHT_THRESHOLD && height < MAX_HEIGHT_THRESHOLD))
-		if (detectedWaves.size() == 0 || trajectory.getPoint(bottomIndex).getX() > detectedWaves.back().top.getX())
-			detectedWaves.push_back(Wave(trajectory.points[bottomIndex],trajectory.points[topIndex]));
-}
-\end{lstlisting}
+\paragraph{}A função analyseTrajectory implementa o método de correção do ponto mínimo das ondas discutido no capítulo 3. Ela utiliza uma função auxiliar fixBottomPoint que é implementada conforme o código a seguir:
+
+\lstinputlisting[linerange=fixBottomPointBegin-fixBottomPointEnd]{../src/lib/waveDetector.cpp}
 
 \paragraph{}O resultado deste automato é um vetor de objetos Wave (figura \ref{DiagramWave}), um objeto criado pelo autor que representa um par de pontos indicando o ponto mais baixo e o ponto mais alto de uma onda. A classe Wave implementa dois métodos: o método getHeight, que calcula a diferença de altura da onda em \textit{pixels}, e o método getHalfway, que calcula o ponto central horizontal da onda.
 
@@ -591,6 +507,7 @@ double calculateAngle(int pixel, double cameraAngle, double focalAngle, int imag
 	return ang * 3.14159265 / 180;
 }
 
+\todo{Corrigir a função calculateRealHeight e adicionar texto explicando porque imageHeight - pixelTop }
 // Função que calcula a altura real em metros entre dois pixels
 double calculateRealHeight(int pixelTop, int pixelBottom, double cameraHeight, double cameraAngle, double focalAngle, int imageHeight) {
 	double angleBottom = calculateAngle(pixelBottom, cameraAngle, focalAngle, imageHeight);

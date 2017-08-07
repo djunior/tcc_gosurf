@@ -23,6 +23,7 @@ WaveDetector::~WaveDetector() {
 	trajectoryList.clear();
 }
 
+/*---detectWaveBegin---*/
 bool WaveDetector::detectWave(Trajectory& t, int bottom, int top) {
 	int MIN_HEIGHT_THRESHOLD = 10;
 	int MAX_HEIGHT_THRESHOLD = 200;
@@ -30,69 +31,28 @@ bool WaveDetector::detectWave(Trajectory& t, int bottom, int top) {
 
 	if ((height > MIN_HEIGHT_THRESHOLD && height < MAX_HEIGHT_THRESHOLD)) {
 		if (waves.size() == 0 || t.getPoint(bottom).getX() > waves.back().top.getX()) {
-			Wave wave(t.points[bottom],t.points[top]);
-			waves.push_back(wave);
 			return true;
 		}
 	}
 
 	return false;
 }
+/*---detectWaveEnd---*/
 
 void WaveDetector::drawWaves(Mat &mat) {
-	// cout << "Drawing " << waves.size() << " waves" << endl;
-
-	double average_sum = 0;
-
 	if (waves.size() > 0) {
 		for (int i = 0; i < waves.size(); i++) {
-
-			// cout << "Drawing wave " << i << endl;
-
 			tcc::Point bottom = waves[i].bottom;
 			tcc::Point top = waves[i].top;
-
-			Scalar color1,color2;
-
-			if (i < (waves.size() -1)) {
-				ColoredPoint p = adjustPointVector[i];
-				color1 = color2 = p.color;
-
-				// line(mat,cv::Point(0,p.getY()),cv::Point(mat.cols,p.getY()),p.color,1);
-			} else {
-				color1 = Scalar(0,0,255);
-				color2 = Scalar(0,255,0);
-			}
 
 			cv::Point pt1(top.getX(), bottom.getY());
 			cv::Point pt2(top.getX(), top.getY());
 			cv::Point pt3(bottom.getX(), bottom.getY());
 
-			line(mat,pt1,pt2,color1,3);
-			line(mat,pt3,pt2,color2,3);
-
-			average_sum += bottom.getY();
+			line(mat,pt1,pt2,Scalar(0,255,0),3);
+			line(mat,pt3,pt2,Scalar(0,0,255),3);
 		}
 	}
-
-	cout << "Number of waves: " << waves.size() << endl;
-	cout << "Adjusted point vector size: " << adjustPointVector.size() << endl;
-
-	// for (int i = 0; i < adjustPointVector.size(); i++) {
-		// tcc::ColoredPoint p = adjustPointVector.back();
-
-		// cv::Point pt1(0,p.getY());
-		// cv::Point pt2(mat.cols,p.getY());
-
-		// line(mat,pt1,pt2,p.color,1);
-	// }
-
-	// double average_y = average_sum / waves.size();
-
-	// cv::Point avP1(0,average_y);
-	// cv::Point avP2(mat.cols,average_y);
-
-	// line(mat,avP1,avP2,Scalar(255,255,0),1);
 }
 
 void draw(Mat &mat, Trajectory &original, Derivable &derivative, int offset) {
@@ -126,15 +86,20 @@ void drawDerivative(Mat &m,Trajectory& original) {
 
 }
 
+/*---fixBottomPointBegin---*/
+void fixBottomPoint(vector<Wave> &waves, int sea_level_y) {
+	if (waves.size() > 0) {
+		int y = (waves.back().bottom.getY() + sea_level_y*2)/3;
+		waves.back().bottom = Point(x,y);
+	}
+}
+/*---fixBottomPointEnd---*/
+
+
+/*---analyseTrajectoryBegin---*/
 void WaveDetector::analyseTrajectory(Trajectory &t) {
-
-	drawDerivative(srcMat,t);
-
 	Derivable derivative;
-
 	t.calculateDerivative(derivative);
-
-	cout << "Derivative size: " << derivative.points.size() << endl;
 
 	int state = 0; 
 	int bottom_index = 0;
@@ -142,10 +107,9 @@ void WaveDetector::analyseTrajectory(Trajectory &t) {
 	int top_index = 0;
 	int gap_count = 0;
 	
+	int sea_level_x = 0;
 	int sea_level_y = 0;
 	int sea_level_count = 0;
-
-	// bool adjusted = false;
 
 	int GAP_THRESHOLD = 20;
 
@@ -158,19 +122,6 @@ void WaveDetector::analyseTrajectory(Trajectory &t) {
 				if (dY < 0) {
 					state = 1;
 					bottom_index = i+1;
-					// plateau_count = 0;
-				// } else if (dY == 0) {
-				// 	plateau_count++;
-				// 	if (plateau_count > 30 && ! adjusted) {
-				// 		if (waves.size() > 0) {
-				// 			adjusted = true;
-				// 			int averageY = (waves.back().bottom.getY() + t.points[i+1].getY())/2;
-				// 			cout << "Adjusting last wave bottom: " << waves.back().bottom.getY() << " to " << averageY << endl;
-				// 			waves.back().bottom = Point(waves.back().bottom.getX(),averageY);
-				// 		}
-				// 	}
-				// } else {
-				// 	plateau_count = 0;
 				}
 
 				break;
@@ -196,55 +147,22 @@ void WaveDetector::analyseTrajectory(Trajectory &t) {
 			case 3:
 
 				if (gap_count >= GAP_THRESHOLD) {
+
+					if (sea_level_count < 3) {
+						sea_level_y += t.getPoint(bottom_index).getY();
+						sea_level_count++;
+					}
 					
 					if (detectWave(t,bottom_index,top_index)) {
 
-						if (waves.size() > 1) {
-							cout << "Adjusting sea level" << endl;
-							cout << "Old Y " << waves[waves.size()-2].bottom.getY() << endl;
+						sea_level_y /= sea_level_count;
+						fixBottomPoint(waves,sea_level_y);
 
-							// sea_level_y += waves.back().bottom.getY();
-							if (sea_level_y == 0)
-								sea_level_y = waves.back().bottom.getY();
-							else
-								sea_level_y = (sea_level_y + waves.back().bottom.getY())/2;
-							// sea_level_count++;
-
-							// int averageY = sea_level_y / sea_level_count;
-							// cout << "averageY " << averageY << endl;
-
-							int x = waves[waves.size()-2].bottom.getX();
-							int y = (waves[waves.size()-2].bottom.getY() + sea_level_y)/2;
-
-							cout << "New Y " << y << endl;
-							waves[waves.size()-2].bottom = Point(x,y);
-
-							int colorR = rand() % 256;
-							int colorG = rand() % 256;
-							int colorB = rand() % 256;
-
-							cout << "Setting wave index " << waves.size()-2 << " to color Scalar(" << colorR << "," << colorG << "," << colorB << ")" << endl;
-
-							adjustPointVector.push_back(ColoredPoint(x,sea_level_y,Scalar(colorB,colorG,colorR)));
-						}
+						Wave wave(t.getPoint(bottom_index),t.getPoint(top_index));
+						waves.push_back(wave);
 
 						sea_level_y = 0;
 						sea_level_count = 0;
-
-					} else {
-						// cout << "Bottom Index Y: " << t.getPoint(bottom_index).getY() << endl;
-						// cout << "Top Index Y: " << t.getPoint(top_index).getY() << endl;
-
-						// cout << "Old sea level : " << sea_level_y << ", count = " << sea_level_count << endl;
-						int waveMiddleHeight = (t.getPoint(bottom_index).getY() + t.getPoint(top_index).getY())/2;
-						if (sea_level_y == 0)
-							sea_level_y = waveMiddleHeight;
-						else
-							sea_level_y = (sea_level_y + waveMiddleHeight)/2;
-						// sea_level_count++;
-
-						// cout << "New sea level : " << sea_level_y << ", count = " << sea_level_count << endl;
-
 					}
 
 					gap_count = 0;
@@ -271,34 +189,9 @@ void WaveDetector::analyseTrajectory(Trajectory &t) {
 		}
 
 		if ( state > 0 && i == (derivative.points.size() - 1) ) {
-			if (detectWave(t,bottom_index,top_index)) {
-				if (waves.size() > 1) {
-					cout << "Adjusting sea level" << endl;
-					cout << "Old Y " << waves[waves.size()-2].bottom.getY() << endl;
-
-					if (sea_level_y == 0)
-						sea_level_y = waves.back().bottom.getY();
-					else
-						sea_level_y = (sea_level_y + waves.back().bottom.getY())/2;
-					// sea_level_count++;
-
-					// int averageY = sea_level_y / sea_level_count;
-					// cout << "averageY " << averageY << endl;
-
-					int x = waves[waves.size()-2].bottom.getX();
-					int y = (waves[waves.size()-2].bottom.getY() + sea_level_y)/2;
-
-					cout << "New Y " << y << endl;
-					waves[waves.size()-2].bottom = Point(x,y);
-
-					int colorR = rand() % 256;
-					int colorG = rand() % 256;
-					int colorB = rand() % 256;
-
-					cout << "Setting wave index " << waves.size()-2 << " to color Scalar(" << colorR << "," << colorG << "," << colorB << ")" << endl;
-
-					adjustPointVector.push_back(ColoredPoint(x,sea_level_y,Scalar(colorB,colorG,colorR)));
-				}
+			if (detectWave(t,bottom_index,top_index)) {			
+				Wave wave(t.getPoint(bottom_index),t.getPoint(top_index));
+				waves.push_back(wave);
 			}
 
 			state = 0;
@@ -310,6 +203,7 @@ void WaveDetector::analyseTrajectory(Trajectory &t) {
 
 	}
 }
+/*---analyseTrajectoryEnd---*/
 
 void WaveDetector::extractWaveDetails() {
 
@@ -368,11 +262,8 @@ void WaveDetector::filter() {
 			break;
 		}
 
-		cout << "Detecting new trajectory in Rect(" << col << ", 0, " << srcMat.cols - col << ", " << srcMat.rows << ")" << endl;
-
 		Trajectory t(srcMat,Rect(col,0,srcMat.cols - col, srcMat.rows));
 		
-		cout << "Analysing the trajectory" << endl;
 		analyseTrajectory(t);
 
 		if (t.points.back().getX() >= (srcMat.cols-1) )

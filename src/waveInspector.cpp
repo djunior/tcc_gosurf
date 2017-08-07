@@ -100,10 +100,8 @@ void watchWaves(VideoCapture &cap,WaveCreator& waves) {
 	Mat frame, tiltedFrame;
 	int waveCount = 0;
 
-	cout << "Getting number of frames" << endl;
 	int numberOfFrames = cap.get(CV_CAP_PROP_FRAME_COUNT);
 
-	cout << "Creating pre processor" << endl;
 	PreProcessor preProcessor(cap);
 	TiltFilter tf;
 
@@ -204,18 +202,6 @@ void mouseHandler(int event, int x, int y, int flags, void* userdata) {
         cout << "Left button of the mouse is clicked - position (" << x << ", " << y << ")" << endl;
         waves->clicked(x,y);
     }
-    // else if  ( event == EVENT_RBUTTONDOWN )
-    // {
-    //     cout << "Right button of the mouse is clicked - position (" << x << ", " << y << ")" << endl;
-    // }
-    // else if  ( event == EVENT_MBUTTONDOWN )
-    // {
-    //     cout << "Middle button of the mouse is clicked - position (" << x << ", " << y << ")" << endl;
-    // }
-    // else if ( event == EVENT_MOUSEMOVE )
-    // {
-    //     cout << "Mouse move over the window - position (" << x << ", " << y << ")" << endl;
-    // }
 }
 
 int main(int argc, char** argv) {
@@ -224,11 +210,8 @@ int main(int argc, char** argv) {
 
 	WaveCreator waveCreator;
 
-	cout << "Creating named window" << endl;
 	namedWindow("frame",1);
-	cout << "Setting mouse callback" << endl;
 	setMouseCallback("frame", mouseHandler, &waveCreator);
-	cout << "Watching waves" << endl;
 	watchWaves(cap,waveCreator);
 
 	waveCreator.save("manual_waves.txt",string(argv[1]));

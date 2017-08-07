@@ -171,8 +171,6 @@ void WaveBandFinder::findByWatershed() {
 void WaveBandFinder::findByThreshold() {
 	vector< vector<Point> > contours;
     vector<Vec4i> hierarchy;
-    double largest_area;
-    int largest_contour_index;
 
     CannyFilter cf;
     cf.setSourceMat(&srcMat);
@@ -182,6 +180,9 @@ void WaveBandFinder::findByThreshold() {
 
     findContours( srcMat, contours, hierarchy, CV_RETR_CCOMP, CV_CHAIN_APPROX_SIMPLE );
 
+    /*---SegmentationAreaBegin---*/
+    double largest_area;
+    int largest_contour_index;
 	for (int i = 0; i< contours.size(); i++) {
        double a = contourArea(contours[i],false);
        if (a > largest_area) {
@@ -189,6 +190,7 @@ void WaveBandFinder::findByThreshold() {
 	       largest_contour_index = i;
 	    }
 	}
+	/*---SegmentationAreaEnd---*/
 
     Scalar color( 255, 255, 255 );
 

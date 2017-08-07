@@ -19,9 +19,11 @@
     \end{tabular}
 \end{center}
 
-\paragraph{}Foram analisados nove vídeos, contemplando três dias distintos. Para cada vídeo as ondas foram analisadas automaticamente pelo algoritmo e manualmente pelo autor, a fim de verificar quantas ondas foram ou deixaram de ser identificadas, e verificar a precisão da identificação do ponto mínimo e máximo da onda. No total foram identificadas 110 ondas manualmente e 124 ondas pelo algoritmo, o que representa uma taxa de acerto de 88\%. Entretanto, como será mostrado, a taxa de acerto de cada vídeo individual pode variar. Os dados obtidos serão apresentados a seguir: \todo{Falar sobre ferramenta de inspeção desenvolvida}
+\paragraph{}Foram analisados nove vídeos, contemplando três dias distintos. Para cada vídeo as ondas foram analisadas automaticamente pelo algoritmo e manualmente pelo autor, a fim de verificar quantas ondas foram ou deixaram de ser identificadas, e verificar a precisão da identificação do ponto mínimo e máximo da onda. No total foram identificadas 110 ondas manualmente e 124 ondas pelo algoritmo, o que representa uma taxa de acerto de 88\%. Entretanto, como será mostrado, a taxa de acerto de cada vídeo individual pode variar. Os dados obtidos foram apresentados nas tabelas \ref{Tab20170704}, \ref{Tab20170708} e \ref{Tab20170709}, referentes aos respectivos dias: 04/07/2017, 08/07/2017 e 09/07/2017. O dia 04/07/2017 apresentava céu nublado e mar revolto, sem a presença de banhistas na areia ou mar. Já os dias 08/07/2017 e 09/07/2017 apresentavam céu aberto e mar calmo, sendo algumas séries com ondas um pouco maiores. Pode-se observar a presença de pessoas na areia e surfistas no mar.
 
-\paragraph{}Os dados da tabela \ref{Tab20170704} são referentes ao dia 04/07/2017. Este dia apresentava céu nublado e mar revolto, sem a presença de banhistas na areia ou mar.
+\todo{Adicionar código do WaveViewer ?}
+
+\paragraph{}Para facilitar a análise manual dos vídeos foi desenvolvido um programa de inspeção de vídeos de praia denominado WaveInspector. Este programa permite ao usuário assistir um vídeo gravado de forma acelerada, pausar e retomar a execução do vídeo, e, com o vídeo pausado, selecionar com o mouse os pontos máximos e mínimos de uma onda observada na imagem. Uma vez escolhidos os dois pontos, é possível salvar ou descartar os dados selecionados. No final da execução do vídeo um arquivo texto é gerado contendo os pontos máximos e mínimos de cada onda e o número do \textit{frame} em que a medição foi realizada. Salva-se também o \textit{frame} em si com uma linha vertical indicando o centro da imagem. A figura \ref{FigSegmentataionFixedObject}a foi gerada utilizando o programa WaveInspector. O código deste programa será demostrado no apêndice A. \todo{Adicionar código do WaveInspector no apendice}
 
 \begin{table}[h]
     \subfloat[\small{Dados de um vídeo com 1:25 minutos de duração.}]{
@@ -43,8 +45,6 @@
 	\label{Tab20170704}
 \end{table}
 
-\paragraph{}Os dados da tabela \ref{Tab20170708} são referentes ao dia 08/07/2017. Este dia apresentava céu claro e mar calmo, sendo algumas séries com ondas um pouco maiores. Pode-se observar a presença de pessoas na areia e surfistas no mar.
-
 \begin{table}[h]
 	\centering
     \subfloat[\small{Dados de um vídeo com 1:58 minutos de duração.}]{
@@ -57,8 +57,6 @@
 	\caption[\small{Dados dos vídeos gravados no dia 08/07/2017}]{\small{Dados dos vídeos gravados no dia 08/07/2017}}
 	\label{Tab20170708}
 \end{table}
-
-\paragraph{}Os dados da tabela \ref{Tab20170709} são referentes ao dia 08/07/2017. Este dia apresentava céu claro e mar calmo, sendo algumas séries com ondas um pouco maiores. Pode-se observar a presença de pessoas na areia e surfistas no mar.
 
 \begin{table}[h]
 	\centering
@@ -77,9 +75,9 @@
 	\label{Tab20170709}
 \end{table}
 
-\paragraph{}Alguns fatores podem interferir no algoritmo de estimação de altura das ondas. Dentre estes fatores, pode-se classificá-los em duas categorias: problemas impeditivos e não impeditivos. 
+\todo{Adicionar desvio padrão em pixels nas tabelas}
 
-\paragraph{}Os problemas impeditivos impossibilitam completamente a identificação das região de espuma do mar, e em geral possuem duas causas: baixa iluminação e interferência fixa de banhistas na areia. O problema da baixa iluminação foi discutido na seção \ref{sec:segmentation_border_detection} e ilustrado pela figura \ref{FigThresholdFail}. Já a interferência de banhistas fixos ocorre quando alguma pessoa ou objeto está posicionado sobre a coluna central de cada \textit{frame} do vídeo como na imagem \ref{FigSegmentataionFixedObject}. Esta pessoa ou objeto se traduz no \textit{timestack} como uma linha escura contínua. Esta linha divide a região de espuma encontrada, formando duas regiões de alta intensidade na imagem binarizada pela etapa de \textit{thresholding}. Dependendo da posição vertical onde a região é dividida a região de espuma pode não ser a maior região segmentada pela imagem, fazendo com que a etapa de segmentação selecione a região errada (por exemplo, selecione a faixa de areia ao invés de selecionar a região de espuma). 
+\paragraph{}Alguns fatores podem interferir no algoritmo de estimação de altura das ondas. Dentre estes fatores, pode-se classificá-los em duas categorias: problemas impeditivos e não impeditivos. Os problemas impeditivos impossibilitam completamente a identificação das região de espuma do mar, e em geral possuem duas causas: baixa iluminação e interferência fixa de banhistas na areia. O problema da baixa iluminação foi discutido na seção \ref{sec:segmentation_border_detection} e ilustrado pela figura \ref{FigThresholdFail}. Já a interferência de banhistas fixos ocorre quando alguma pessoa ou objeto está posicionado sobre a coluna central de cada \textit{frame} do vídeo como na imagem \ref{FigSegmentataionFixedObject}. Esta pessoa ou objeto se traduz no \textit{timestack} como uma linha escura contínua. Esta linha divide a região de espuma encontrada, formando duas regiões de alta intensidade na imagem binarizada pela etapa de \textit{thresholding}. Dependendo da posição vertical onde a região é dividida a região de espuma pode não ser a maior região segmentada pela imagem, fazendo com que a etapa de segmentação selecione a região errada (por exemplo, selecione a faixa de areia ao invés de selecionar a região de espuma). 
 
 \begin{figure}[h]
     \centering
@@ -114,7 +112,7 @@
     \label{FigPeopleError}
 \end{figure}
 
-\paragraph{}Os erros na identificação dos pontos mínimos e máximos em geral são causados por interferência externa, e influênciam na altura estimada da onda. A presença de pessoas se deslocando próximos ao mar (Figura \ref{FigPeopleError}) é responsável por introduzir erros na identificação do ponto mínimo de uma onda, fazendo com que pontos na areia sejam identificados como parte da região de espuma. Outro fator que pode influenciar no ponto mínimo da onda é o afastamento da onda da linha de arrebentação esperada. Em geral as ondas tendem a quebrar à uma mesma distância da praia, a linha de arrebentação esperada, onde ocorre um acumulo da espuma produzida pelas ondas. Algumas ondas, entretanto, podem arrebentar antes de atingirem a linha de arrebentação esperada, a uma distância maior da praia. Esta situação afeta a estimação da altura da onda de duas maneiras:
+\paragraph{}Os erros na identificação dos pontos mínimos e máximos em geral são causados por interferência externa, e influenciam na altura estimada da onda. A presença de pessoas se deslocando próximos ao mar (Figura \ref{FigPeopleError}) é responsável por introduzir erros na identificação do ponto mínimo de uma onda, fazendo com que pontos na areia sejam identificados como parte da região de espuma. Outro fator que pode influenciar no ponto mínimo da onda é o afastamento da onda da linha de arrebentação esperada. Em geral as ondas tendem a quebrar à uma mesma distância da praia, a linha de arrebentação esperada, onde ocorre um acumulo da espuma produzida pelas ondas. Algumas ondas, entretanto, podem arrebentar antes de atingirem a linha de arrebentação esperada, a uma distância maior da praia. Esta situação afeta a estimação da altura da onda de duas maneiras:
 
 \begin{enumerate}
 

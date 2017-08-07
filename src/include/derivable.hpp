@@ -45,6 +45,7 @@ public:
 		}
 	}
 
+	/*---calculateDerivativeBegin---*/
 	void calculateDerivative(Derivable& d) {
 		for (int i = 0; i < points.size(); i++) {
 			int x = points[i].getX();
@@ -57,6 +58,7 @@ public:
 			}
 		}
 	}
+	/*---calculateDerivativeEnd---*/
 
 	Point getPoint(int i) {
 		return points[i];

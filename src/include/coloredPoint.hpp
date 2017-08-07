@@ -17,6 +17,10 @@ public:
 		color = c;
 	}
 
+	ColoredPoint(Point p, cv::Scalar c) : Point(p.getX(),p.getY()) {
+		color = c;
+	}
+
 	ColoredPoint(int x, int y, cv::Scalar c) : Point(x,y) {
 		color = c;
 	}
