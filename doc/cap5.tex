@@ -1,6 +1,6 @@
 \paragraph{}Este capítulo tem como objetivo apresentar os resultados obtidos ao aplicar o método de estimação de altura de ondas discutido nos capítulos 2 e 3. 
 
-\paragraph{}Os vídeos analisados foram capturados na praia de Itacoatiara, em Niterói. A câmera foi posicionada no Quiosque 5, na orla da praia, a uma altura de aproximadamente oito metros do nível do mar. Este quiosque foi escolhido para posicionar a câmera pois uma visão clara do mar, sem a obstrução da vegetação local da praia. A câmera está posicionada com uma angulação vertical de 83$^{\circ}$. O campo visual (\textit{field of view}) da câmera do \textit{smartphone} foi calculado através da seguinte equação \cite{Bourke}: 
+\paragraph{}Os vídeos analisados foram capturados na praia de Itacoatiara, em Niterói. A câmera foi posicionada no Quiosque 5, na orla da praia, a uma altura de aproximadamente oito metros do nível do mar. Este quiosque foi escolhido para posicionar a câmera pois uma visão clara do mar, sem a obstrução da vegetação local da praia. A câmera está posicionada com uma angulação vertical de 83$^{\circ}$. Os vídeos foram capturados tanto utilizando \textit{smartphones} do tipo iPhone quanto o aparato de \textit{hardware} apresentado nos capítulos 3 e 4. De acordo com o modelo de praia apresentado por Browne \textit{et al}, o único parâmetro intrínseco das câmeras utilizado para calcular as alturas reais é o campo de visão. O campo de visão (\textit{field of view}) da câmera do \textit{smartphone} foi calculado através da seguinte equação \cite{Bourke}: 
 
 \[
 	fov = 2 * atan\Bigg(\frac{h}{2f}\Bigg)
@@ -19,27 +19,36 @@
     \end{tabular}
 \end{center}
 
-\paragraph{}Foram analisados nove vídeos, contemplando três dias distintos. Para cada vídeo as ondas foram analisadas automaticamente pelo algoritmo e manualmente pelo autor, a fim de verificar quantas ondas foram ou deixaram de ser identificadas, e verificar a precisão da identificação do ponto mínimo e máximo da onda. No total foram identificadas 110 ondas manualmente e 124 ondas pelo algoritmo, o que representa uma taxa de acerto de 88\%. Entretanto, como será mostrado, a taxa de acerto de cada vídeo individual pode variar. Os dados obtidos foram apresentados nas tabelas \ref{Tab20170704}, \ref{Tab20170708} e \ref{Tab20170709}, referentes aos respectivos dias: 04/07/2017, 08/07/2017 e 09/07/2017. O dia 04/07/2017 apresentava céu nublado e mar revolto, sem a presença de banhistas na areia ou mar. Já os dias 08/07/2017 e 09/07/2017 apresentavam céu aberto e mar calmo, sendo algumas séries com ondas um pouco maiores. Pode-se observar a presença de pessoas na areia e surfistas no mar.
+\noindent{}O campo de visão da câmera utilizada no aparato de \textit{hardware} possui campo de visão vertical fixo, com o valor de $41.41^{\circ}$ \cite{RaspberryCamera}.
 
-\todo{Adicionar código do WaveViewer ?}
+\begin{figure}[h]
+    \centering
+    \subfloat[\small{Quiosque 5 e a praia de Itacoatiara ao fundo.}]{\includegraphics[height=.25\textheight,keepaspectratio]{IMG_0914.jpg}}
+    \qquad
+    \subfloat[\small{Aparato de \textit{hardware} posicionado.}]{\includegraphics[height=.25\textheight,keepaspectratio]{IMG_0913.jpg}}
+    \caption[\small{Local na praia de Itacoatiara onde os vídeos foram capturados.}]{\small{Local na praia de Itacoatiara onde os vídeos foram capturados.}}
+    \label{FigDataLocation}
+\end{figure}
 
-\paragraph{}Para facilitar a análise manual dos vídeos foi desenvolvido um programa de inspeção de vídeos de praia denominado WaveInspector. Este programa permite ao usuário assistir um vídeo gravado de forma acelerada, pausar e retomar a execução do vídeo, e, com o vídeo pausado, selecionar com o mouse os pontos máximos e mínimos de uma onda observada na imagem. Uma vez escolhidos os dois pontos, é possível salvar ou descartar os dados selecionados. No final da execução do vídeo um arquivo texto é gerado contendo os pontos máximos e mínimos de cada onda e o número do \textit{frame} em que a medição foi realizada. Salva-se também o \textit{frame} em si com uma linha vertical indicando o centro da imagem. A figura \ref{FigSegmentataionFixedObject}a foi gerada utilizando o programa WaveInspector. O código deste programa será demostrado no apêndice A. \todo{Adicionar código do WaveInspector no apendice}
+\paragraph{}Foram analisados 18 vídeos, contemplando quatro dias distintos. Para cada vídeo as ondas foram analisadas automaticamente pelo algoritmo e manualmente pelo autor, a fim de verificar quantas ondas foram ou deixaram de ser identificadas, e verificar a precisão da identificação do ponto mínimo e máximo da onda. No total foram identificadas 200 ondas manualmente e 225 ondas pelo algoritmo, o que representa uma taxa de acerto de 88\%. Entretanto, como será mostrado, a taxa de acerto de cada vídeo individual pode variar. Os dados obtidos foram apresentados nas tabelas \ref{Tab20170704}, \ref{Tab20170708}, \ref{Tab20170709}, \ref{Tab20170807_1} e \ref{Tab20170807_2}, referentes aos respectivos dias: 04/07/2017, 08/07/2017, 09/07/2017 e 07/08/2017. O dia 04/07/2017 apresentava céu nublado e mar revolto, sem a presença de banhistas na areia ou mar. Já os dias 08/07/2017 e 09/07/2017 apresentavam céu aberto e mar calmo, sendo algumas séries com ondas um pouco maiores. Pode-se observar a presença de pessoas na areia e surfistas no mar. O dia 07/08/2017 apresentada céu aberto e mar calmo, porém mais agitado que os dias 08/07/2017 e 09/07/2017. Não há muitos banhistas, mas é possível notar uma boa quantidade de surfistas. 
+
+\paragraph{}Para facilitar a análise manual dos vídeos foi desenvolvido um programa de inspeção de vídeos de praia denominado WaveInspector. Este programa permite ao usuário assistir um vídeo gravado de forma acelerada, pausar e retomar a execução do vídeo, e, com o vídeo pausado, selecionar com o mouse os pontos máximos e mínimos de uma onda observada na imagem. Uma vez escolhidos os dois pontos, é possível salvar ou descartar os dados selecionados. No final da execução do vídeo um arquivo texto é gerado contendo os pontos máximos e mínimos de cada onda e o número do \textit{frame} em que a medição foi realizada. Salva-se também o \textit{frame} em si com uma linha vertical indicando o centro da imagem. A figura \ref{FigSegmentataionFixedObject}a foi gerada utilizando o programa WaveInspector. O código deste programa será demostrado no apêndice A.
 
 \begin{table}[h]
-    \subfloat[\small{Dados de um vídeo com 1:25 minutos de duração.}]{
-	   \input{../analysed_waves/IMG_0886/report_table.tex}
+    \subfloat[\small{Dados de um vídeo com 1:25 minutos de duração gravado com \textit{smartphone}.}]{
+	   \input{../analysed_waves/wave_data/IMG_0886/report_table.tex}
     }
     \qquad
-    \subfloat[\small{Dados de um vídeo com 1:01 minutos de duração.}]{
-        \input{../analysed_waves/IMG_0887/report_table.tex}
+    \subfloat[\small{Dados de um vídeo com 1:01 minutos de duração gravado com \textit{smartphone}.}]{
+        \input{../analysed_waves/wave_data/IMG_0887/report_table.tex}
     }
     \qquad
-    \subfloat[\small{Dados de um vídeo com 1:33 minutos de duração.}]{
-        \input{../analysed_waves/IMG_0888/report_table.tex}
+    \subfloat[\small{Dados de um vídeo com 1:33 minutos de duração gravado com \textit{smartphone}.}]{
+        \input{../analysed_waves/wave_data/IMG_0888/report_table.tex}
     }
     \qquad
-    \subfloat[\small{Dados de um vídeo com 2:51 minutos de duração.}]{
-        \input{../analysed_waves/IMG_0889/report_table.tex}
+    \subfloat[\small{Dados de um vídeo com 2:51 minutos de duração gravado com \textit{smartphone}.}]{
+        \input{../analysed_waves/wave_data/IMG_0889/report_table.tex}
     }
 	\caption[\small{Dados dos vídeos gravados no dia 04/07/2017}]{\small{Dados dos vídeos gravados no dia 04/07/2017}}
 	\label{Tab20170704}
@@ -47,12 +56,12 @@
 
 \begin{table}[h]
 	\centering
-    \subfloat[\small{Dados de um vídeo com 1:58 minutos de duração.}]{
-	   \input{../analysed_waves/IMG_0894/report_table.tex}
+    \subfloat[\small{Dados de um vídeo com 1:58 minutos de duração gravado com \textit{smartphone}.}]{
+	   \input{../analysed_waves/wave_data/IMG_0894/report_table.tex}
     }
     \qquad
-    \subfloat[\small{Dados de um vídeo com 2:58 minutos de duração.}]{
-        \input{../analysed_waves/IMG_0898/report_table.tex}    
+    \subfloat[\small{Dados de um vídeo com 2:58 minutos de duração gravado com \textit{smartphone}.}]{
+        \input{../analysed_waves/wave_data/IMG_0898/report_table.tex}    
     }
 	\caption[\small{Dados dos vídeos gravados no dia 08/07/2017}]{\small{Dados dos vídeos gravados no dia 08/07/2017}}
 	\label{Tab20170708}
@@ -60,22 +69,69 @@
 
 \begin{table}[h]
 	\centering
-    \subfloat[\small{Dados de um vídeo com 2:13 minutos de duração.}]{
-	   \input{../analysed_waves/IMG_0900/report_table.tex}
+    \subfloat[\small{Dados de um vídeo com 2:13 minutos de duração gravado com \textit{smartphone}.}]{
+	   \input{../analysed_waves/wave_data/IMG_0900/report_table.tex}
     }
     \qquad
-    \subfloat[\small{Dados de um vídeo com 1:45 minutos de duração.}]{
-        \input{../analysed_waves/IMG_0902/report_table.tex}
+    \subfloat[\small{Dados de um vídeo com 1:45 minutos de duração gravado com \textit{smartphone}.}]{
+        \input{../analysed_waves/wave_data/IMG_0902/report_table.tex}
     }
     \qquad
-    \subfloat[\small{Dados de um vídeo com 8:37 minutos de duração.}]{
-        \input{../analysed_waves/IMG_0903/report_table.tex}
+    \subfloat[\small{Dados de um vídeo com 8:37 minutos de duração gravado com \textit{smartphone}.}]{
+        \input{../analysed_waves/wave_data/IMG_0903/report_table.tex}
     }
 	\caption[\small{Dados dos vídeos gravados no dia 09/07/2017}]{\small{Dados dos vídeos gravados no dia 09/07/2017}}
 	\label{Tab20170709}
 \end{table}
 
-\todo{Adicionar desvio padrão em pixels nas tabelas}
+\begin{table}[h]
+    \centering
+    \subfloat[\small{Dados de um vídeo 0:57 segundos de duração gravado com o aparato de \textit{hardware}.}]{
+        \input{../analysed_waves/wave_data/pivideo5/report_table.tex}
+    }
+    \qquad
+    \subfloat[\small{Dados de um vídeo 0:58 segundos de duração gravado com o aparato de \textit{hardware}.}]{
+        \input{../analysed_waves/wave_data/pivideo6/report_table.tex}
+    }
+    \qquad
+    \subfloat[\small{Dados de um vídeo 1:43 minutos de duração gravado com o aparato de \textit{hardware}.}]{
+        \input{../analysed_waves/wave_data/pivideo7/report_table.tex}
+    }
+    \qquad
+    \subfloat[\small{Dados de um vídeo 4:50 minutos de duração gravado com o aparato de \textit{hardware}.}]{
+        \input{../analysed_waves/wave_data/pivideo8/report_table.tex}
+    }
+    \caption[\small{Dados dos vídeos gravados no dia 07/08/2017}]{\small{Dados dos vídeos gravados no dia 07/08/2017}}
+    \label{Tab20170807_1}
+\end{table}
+
+\begin{table}[h]
+    \centering
+    \subfloat[\small{Dados de um vídeo 1:57 minutos de duração gravado com o aparato de \textit{hardware}.}]{
+        \input{../analysed_waves/wave_data/pivideo9/report_table.tex}
+    }
+    \qquad
+    \subfloat[\small{Dados de um vídeo 4:54 minutos de duração gravado com o aparato de \textit{hardware}.}]{
+        \input{../analysed_waves/wave_data/pivideo10/report_table.tex}
+    }
+    \qquad
+    \subfloat[\small{Dados de um vídeo 1:57 minutos de duração gravado com o aparato de \textit{hardware}.}]{
+        \input{../analysed_waves/wave_data/pivideo12/report_table.tex}
+    }
+    \caption[\small{Dados dos vídeos gravados no dia 07/08/2017}]{\small{Dados dos vídeos gravados no dia 07/08/2017}}
+    \label{Tab20170807_2}
+\end{table}
+
+\begin{table}[h]
+    \centering
+    \subfloat[\small{Dados de um vídeo 0:45 segundos de duração gravado com \textit{smartphone}.}]{
+        \input{../analysed_waves/wave_data/IMG_0915/report_table.tex}
+    }
+    \qquad
+    \subfloat[\small{Dados de um vídeo 0:38 segundos de duração gravado com \textit{smartphone}.}]{
+        \input{../analysed_waves/wave_data/IMG_0916/report_table.tex}
+    }
+\end{table}
 
 \paragraph{}Alguns fatores podem interferir no algoritmo de estimação de altura das ondas. Dentre estes fatores, pode-se classificá-los em duas categorias: problemas impeditivos e não impeditivos. Os problemas impeditivos impossibilitam completamente a identificação das região de espuma do mar, e em geral possuem duas causas: baixa iluminação e interferência fixa de banhistas na areia. O problema da baixa iluminação foi discutido na seção \ref{sec:segmentation_border_detection} e ilustrado pela figura \ref{FigThresholdFail}. Já a interferência de banhistas fixos ocorre quando alguma pessoa ou objeto está posicionado sobre a coluna central de cada \textit{frame} do vídeo como na imagem \ref{FigSegmentataionFixedObject}. Esta pessoa ou objeto se traduz no \textit{timestack} como uma linha escura contínua. Esta linha divide a região de espuma encontrada, formando duas regiões de alta intensidade na imagem binarizada pela etapa de \textit{thresholding}. Dependendo da posição vertical onde a região é dividida a região de espuma pode não ser a maior região segmentada pela imagem, fazendo com que a etapa de segmentação selecione a região errada (por exemplo, selecione a faixa de areia ao invés de selecionar a região de espuma). 
 
@@ -99,7 +155,7 @@
     \label{FigTimestackWaveNumberFail}
 \end{figure}
 
-\paragraph{}O caso de detecção insuficiente de ondas é incomum, como pode-se observar nos dados exibidos anteriormente. \todo[inline]{finalizar este paragrafo.}
+% \paragraph{}O caso de detecção insuficiente de ondas é incomum, como pode-se observar nos dados exibidos anteriormente. \todo[inline]{finalizar este paragrafo.}
 
 \begin{figure}[h]
     \centering
@@ -118,7 +174,7 @@
 
     \item Ondas com distâncias diferentes da câmera podem aparentar possuir a mesma altura em \textit{pixels}, quando na realidade possuem alturas diferentes. Além disso, Browne \textit{et al} \cite{Griffith11} demonstra que o erro associado aos parâmetros da câmera aumentam de acordo com a distância das ondas até a câmera.
 
-    \item O ponto mínimo da onda é identificado como o ponto mínimo da linha de arrebentação imediatamente antes da quebra da onda. Quando uma onda quebra antes da linha de arrebentação, a sua base será erroneamente detectada como o ponto mínimo da linha de arrebentação anterior. Este efeito é evidênciado na figura \ref{FigBaseGap} e pode ocorrer aleatoriamente \todo{É realmente aleatório?} ou quando há um distanciamento temporal entre duas ondas. A seção \ref{sec:wave_identification} apresenta uma forma de remediar este problema, mas que não resolve completamente o problema.
+    \item O ponto mínimo da onda é identificado como o ponto mínimo da linha de arrebentação imediatamente antes da quebra da onda. Quando uma onda quebra antes da linha de arrebentação, a sua base será erroneamente detectada como o ponto mínimo da linha de arrebentação anterior. Este efeito é evidênciado na figura \ref{FigBaseGap} e pode ocorrer quando há um distanciamento temporal entre duas ondas. A seção \ref{sec:wave_identification} apresenta uma forma de remediar este problema, mas que não resolve completamente o problema.
 
 \end{enumerate}
 

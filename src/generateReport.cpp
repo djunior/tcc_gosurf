@@ -11,8 +11,10 @@ int main(int argc, char** argv) {
 
 	WaveList waveList;
 	waveList.load(string(argv[1]));
-
+	
 	Camera camera;
+	if (argc > 2)
+		camera.load(string(argv[2]));
 
 	ofstream f("report.txt");
 

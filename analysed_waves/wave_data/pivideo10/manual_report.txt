@@ -1,0 +1,134 @@
+Waves detected: 22
+
+Wave index 0
+From height point 453 to 439
+From Duration point 66 to 66
+Height (pixels): 14
+Height (meters): 0.475954
+
+Wave index 1
+From height point 466 to 452
+From Duration point 366 to 366
+Height (pixels): 14
+Height (meters): 0.445261
+
+Wave index 2
+From height point 466 to 449
+From Duration point 520 to 520
+Height (pixels): 17
+Height (meters): 0.540373
+
+Wave index 3
+From height point 466 to 449
+From Duration point 739 to 739
+Height (pixels): 17
+Height (meters): 0.540373
+
+Wave index 4
+From height point 458 to 447
+From Duration point 1249 to 1249
+Height (pixels): 11
+Height (meters): 0.364473
+
+Wave index 5
+From height point 455 to 436
+From Duration point 1451 to 1451
+Height (pixels): 19
+Height (meters): 0.638576
+
+Wave index 6
+From height point 461 to 445
+From Duration point 2002 to 2002
+Height (pixels): 16
+Height (meters): 0.521583
+
+Wave index 7
+From height point 470 to 455
+From Duration point 2407 to 2407
+Height (pixels): 15
+Height (meters): 0.467754
+
+Wave index 8
+From height point 466 to 451
+From Duration point 2617 to 2617
+Height (pixels): 15
+Height (meters): 0.476976
+
+Wave index 9
+From height point 472 to 460
+From Duration point 3045 to 3045
+Height (pixels): 12
+Height (meters): 0.370844
+
+Wave index 10
+From height point 465 to 454
+From Duration point 3258 to 3258
+Height (pixels): 11
+Height (meters): 0.351781
+
+Wave index 11
+From height point 455 to 437
+From Duration point 3708 to 3708
+Height (pixels): 18
+Height (meters): 0.605071
+
+Wave index 12
+From height point 455 to 436
+From Duration point 3954 to 3954
+Height (pixels): 19
+Height (meters): 0.638576
+
+Wave index 13
+From height point 455 to 443
+From Duration point 4246 to 4246
+Height (pixels): 12
+Height (meters): 0.403804
+
+Wave index 14
+From height point 452 to 435
+From Duration point 4592 to 4592
+Height (pixels): 17
+Height (meters): 0.580742
+
+Wave index 15
+From height point 455 to 437
+From Duration point 5515 to 5515
+Height (pixels): 18
+Height (meters): 0.605071
+
+Wave index 16
+From height point 450 to 425
+From Duration point 5759 to 5759
+Height (pixels): 25
+Height (meters): 0.862158
+
+Wave index 17
+From height point 462 to 453
+From Duration point 6528 to 6528
+Height (pixels): 9
+Height (meters): 0.292283
+
+Wave index 18
+From height point 470 to 461
+From Duration point 6831 to 6831
+Height (pixels): 9
+Height (meters): 0.280977
+
+Wave index 19
+From height point 464 to 446
+From Duration point 6930 to 6930
+Height (pixels): 18
+Height (meters): 0.577767
+
+Wave index 20
+From height point 454 to 431
+From Duration point 7064 to 7064
+Height (pixels): 23
+Height (meters): 0.776583
+
+Wave index 21
+From height point 446 to 423
+From Duration point 7252 to 7252
+Height (pixels): 23
+Height (meters): 0.811105
+

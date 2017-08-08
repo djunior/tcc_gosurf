@@ -1,1 +1,14 @@
-\paragraph{}Elemento que consiste em um texto ou documento elaborado pelo autor, com o intuito de complementar sua argumentação, sem prejuízo do trabalho. São identificados por letras maiúsculas consecutivas e pelos respectivos títulos.
+\paragraph{}Este apêndice apresenta a ferramenta WaveInspector, criada pelo autor para facilitar a inspeção manual de ondas, a fim de comparar os valores medidos manualmente com os resultados do algoritmo apresentado no projeto.
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=\textwidth,keepaspectratio]{screenshot-waveinspector.png}
+	\caption[\small{Ferramenta WaveInspector com uma onda detectada pelo usuário.}]{\small{Ferramenta WaveInspector com uma onda detectada pelo usuário.}}
+	\label{FigWaveInspector}
+\end{figure}
+
+\paragraph{}O funcionamento da ferramenta é simples: ao iniciá-la uma janela com o vídeo em andamento é exibida, contendo a porcentagem do vídeo que já foi exibida e uma linha vertical indicando o centro da imagem. O inspetor pode interagir com o vídeo utilizando o teclado e o mouse. As teclas "p" e "c" são utilizadas para pausar e continuar a execução do vídeo. Uma vez pausado, o mouse pode ser utilizado para marcar o ponto máximo e o ponto mínimo de uma onda. O ponto máximo é representado por uma linha horizontal vermelha, enquanto o ponto mínimo é representado por uma linha verde. Os cliques sucessivos alteram o controle de cada ponto -- o primeiro clique posiciona o ponto máximo, o segundo clique o ponto mínimo, o terceiro o ponto máximo novamente e assim por diante. Após selecionar os pontos desejados, a tecla "s" adiciona a onda marcada em uma lista. Para descartar a onda marcada basta pressionar a tecla "c" para retomar a execução do vídeo. Por último, também com o vídeo pausado, as teclas "f" e "b" podem ser utilizadas para adiantar ou atrasar o vídeo. No final da execução do vídeo, os dados serão salvos em um arquivo "waves.txt". Os \textit{frames} contendo as ondas identificadas serão salvos em um diretório "output\_waves/wave\_inspector/".
+
+\paragraph{}O código da ferramenta WaveInspector está ilustrado abaixo:
+
+\lstinputlisting[tabsize=2]{../src/waveInspector.cpp}

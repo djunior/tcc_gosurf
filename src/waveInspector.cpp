@@ -9,7 +9,6 @@
 #include "point.hpp"
 #include "trajectory.h"
 #include "imageOutput.hpp"
-#include "filterPipeline.h"
 #include "tiltFilter.h"
 #include "preProcessor.hpp"
 #include "wave.hpp"
@@ -199,7 +198,6 @@ void mouseHandler(int event, int x, int y, int flags, void* userdata) {
 
     if  ( event == EVENT_LBUTTONDOWN )
     {
-        cout << "Left button of the mouse is clicked - position (" << x << ", " << y << ")" << endl;
         waves->clicked(x,y);
     }
 }

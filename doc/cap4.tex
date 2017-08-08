@@ -108,7 +108,6 @@ for (int y = 0; y < edgeFrame.rows; y++) {
 	\caption[\small{Diagrama das classes Derivable, Trajectory e Point.}]{\small{Diagrama das classes Derivable, Trajectory e Point.}}
 	\label{DiagTrajectory}
 \end{figure}
-\todo{Corrigir diagrama da classe Point e adicionar classe Derivable}
 
 \paragraph{}O cálculo da derivada de uma lista de pontos é implementada no método Derivable::calculateDerivative conforme o código abaixo:
 
@@ -470,7 +469,7 @@ while(true) {
 
 \begin{figure}[h]
 	\centering
-	\includegraphics[width=0.8\textwidth,keepaspectratio]{diagram_wave.png}
+	\includegraphics[width=0.8\textwidth,keepaspectratio]{class_diagram_wave.png}
 	\caption[\small{Diagrama da classe Wave.}]{\small{Diagrama da classe Wave.}}
 	\label{DiagramWave}
 \end{figure}
@@ -500,21 +499,8 @@ while(true) {
 
 \paragraph{}Por fim, a altura das ondas em \textit{pixels} é convertida para medidas do mundo real, em metros. Esta conversão é realizada baseado no método apresentado na seção \ref{sec:camera}. O código abaixo ilustra como as equações descritas na seção \ref{sec:camera} foram implementadas:
 
-\begin{lstlisting}
-// Função que calcula o angulo em radianos correspondente de um pixel na imagem.
-double calculateAngle(int pixel, double cameraAngle, double focalAngle, int imageHeight) {
-	double ang = cameraAngle - focalAngle/2 + ( (pixel * focalAngle) / imageHeight);
-	return ang * 3.14159265 / 180;
-}
-
-\todo{Corrigir a função calculateRealHeight e adicionar texto explicando porque imageHeight - pixelTop }
-// Função que calcula a altura real em metros entre dois pixels
-double calculateRealHeight(int pixelTop, int pixelBottom, double cameraHeight, double cameraAngle, double focalAngle, int imageHeight) {
-	double angleBottom = calculateAngle(pixelBottom, cameraAngle, focalAngle, imageHeight);
-	double angleTop = calculateAngle(pixelTop, cameraAngle, focalAngle, imageHeight);
-	return cameraHeight * ( 1 - ( tan(angleTop) / tan(angleBottom) ) );
-}
-\end{lstlisting}
+\lstinputlisting[linerange=calculateAngleBegin-calculateAngleEnd]{../src/include/camera.hpp}
+\lstinputlisting[linerange=calculateRealHeightBegin-calculateRealHeightEnd]{../src/include/camera.hpp}
 
 \noindent{}A altura das ondas identificadas na linha de arrebentação pode ser calculada conforme o código abaixo:
 

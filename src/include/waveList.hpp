@@ -44,32 +44,18 @@ public:
 
 		if (f.is_open())
 		{
-			while ( ! f.eof() )
+			while ( f >> line_bottom >> line_top)
 		    {
-		    	f >> line_bottom;
+				int bottom_x,bottom_y;
+				int top_x,top_y;
 
-		    	if (line_bottom.at(0) == '#') {
-		    		string str;
-		    		f >> str;
-		    	} else {
-					do {
-						f >> line_top;
-					} while(line_top.at(0) == '#');
+				sscanf(line_bottom.c_str(),"%i,%i",&bottom_x,&bottom_y);
+				sscanf(line_top.c_str(),"%i,%i",&top_x,&top_y);
 
-					int bottom_x,bottom_y;
-					int top_x,top_y;
+				tcc::Point bottom(bottom_x,bottom_y);
+				tcc::Point top(top_x,top_y);
 
-					cout << "Scanned line bottom: " << line_bottom << endl;
-					cout << "Scanned line top: " << line_top << endl;
-
-					sscanf(line_bottom.c_str(),"%i,%i",&bottom_x,&bottom_y);
-					sscanf(line_top.c_str(),"%i,%i",&top_x,&top_y);
-
-					tcc::Point bottom(bottom_x,bottom_y);
-					tcc::Point top(top_x,top_y);
-
-					addWave(bottom,top);
-				}
+				addWave(bottom,top);
 		    }
 		    f.close();
 		}
@@ -81,7 +67,7 @@ public:
 
 		if (f.is_open())
 		{
-			f << "# " << info << endl;
+			// f << "# " << info << endl;
 			for (int i = 0; i < getSize(); i ++) {
 		  		tcc::Point bottom = getWave(i).bottom;
 		  		tcc::Point top = getWave(i).top;

@@ -27,6 +27,8 @@ private:
 		if (isInit)
 			return;
 
+		imwrite("output_images/simpletimestack/simpletimestack_mat.jpg",m);
+
 		CannyFilter cf(50);
 		cf.setSourceMat(&m);
 		cf.filter();
@@ -81,6 +83,9 @@ public:
 
 		// Passo 2.2 - Equalização de Histograma
 		equalizeHist(greyFrame,eqFrame);
+
+		// imshow("eqFrame",eqFrame);
+		// waitKey(10);
 
 		// Passo 3 - Remoção do Céu
 		skyRemover.process(eqFrame);

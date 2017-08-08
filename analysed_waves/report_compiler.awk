@@ -31,12 +31,14 @@ BEGIN{
 	manual_height_sd = 0;
 
 	manual_pixel_average = 0;
-	pixel_line_count = 0;
+	manual_line_pixel_count = 0;
 
-	alg_line_height_count = 0
+	alg_line_height_count = 0;
 	alg_height_average = 0;
-	alg_pixel_average = 0;
 	alg_height_sd = 0;
+
+	alg_pixel_average = 0;
+	alg_line_pixel_count = 0;
 }
 
 FNR==NR && /Waves/{manual_count=$3; next} 
@@ -54,11 +56,12 @@ FNR==NR && /meters/{
 
 FNR==NR && /pixels/{
 	manual_pixel_average+=$3
-	pixel_line_count++
+	manual_pixel_values[++manual_line_pixel_count] = $3
 	next
 }
 /pixels/{
 	alg_pixel_average += $3
+	alg_pixel_values[++alg_line_pixel_count] = $3
 }
 
 END{
@@ -69,28 +72,33 @@ END{
 
 	line_height_count = manual_line_height_count
 
-	manual_height_average /= line_height_count;
-	alg_height_average /= line_height_count;
+	manual_height_average /= manual_line_height_count;
+	alg_height_average /= alg_line_height_count;
 
 	print "Altura media em metros (manual): " manual_height_average
 	print "Altura media em metros (algoritmo): " alg_height_average
 
-	manual_pixel_average /= pixel_line_count;
-	alg_pixel_average /= pixel_line_count;
+	manual_pixel_average /= manual_line_pixel_count;
+	alg_pixel_average /= alg_line_pixel_count;
 
 	print "Altura media em pixels (manual): " manual_pixel_average
 	print "Altura media em pixels (algoritmo): " alg_pixel_average
 
-	manual_height_sd = standard_deviation(manual_height_values,manual_height_average,line_height_count)
+	manual_height_sd = standard_deviation(manual_height_values,manual_height_average,manual_line_height_count)
+	manual_pixel_sd = standard_deviation(manual_pixel_values,manual_pixel_average,manual_line_pixel_count)
 	
 	#manual_height_variance = manual_height_sd^2
 	#manual_height_variance = variance(manual_height_values,line_height_count)
 
-	alg_height_sd = standard_deviation(alg_height_values,alg_height_average,line_height_count)
+	alg_height_sd = standard_deviation(alg_height_values,alg_height_average,alg_line_height_count)
+	alg_pixel_sd = standard_deviation(alg_pixel_values,alg_pixel_average,alg_line_pixel_count)
 	
 	#alg_height_variance = alg_height_sd^2
 	#alg_height_variance = variance(alg_height_values,line_height_count)
 
 	print "Desvio padrao (altura manual em metros): " manual_height_sd
 	print "Desvio padrao (altura algoritmo em metros): " alg_height_sd
+
+	print "Desvio padrao (altura manual em pixels): " manual_pixel_sd
+	print "Desvio padrao (altura algoritmo em pixels): " alg_pixel_sd
 }

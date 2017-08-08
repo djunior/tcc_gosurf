@@ -1,0 +1,50 @@
+Waves detected: 8
+
+Wave index 0
+From height point 457 to 428
+From Duration point 109 to 110
+Height (pixels): 29
+Height (meters): 0.962867
+
+Wave index 1
+From height point 454 to 430
+From Duration point 426 to 472
+Height (pixels): 24
+Height (meters): 0.810211
+
+Wave index 2
+From height point 469 to 451
+From Duration point 1013 to 1025
+Height (pixels): 18
+Height (meters): 0.563709
+
+Wave index 3
+From height point 464 to 430
+From Duration point 1148 to 1162
+Height (pixels): 34
+Height (meters): 1.08826
+
+Wave index 4
+From height point 458 to 447
+From Duration point 1582 to 1626
+Height (pixels): 11
+Height (meters): 0.364473
+
+Wave index 5
+From height point 471 to 453
+From Duration point 2232 to 2238
+Height (pixels): 18
+Height (meters): 0.558291
+
+Wave index 6
+From height point 463 to 451
+From Duration point 2306 to 2306
+Height (pixels): 12
+Height (meters): 0.387538
+
+Wave index 7
+From height point 463 to 443
+From Duration point 2405 to 2438
+Height (pixels): 20
+Height (meters): 0.644955
+

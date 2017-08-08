@@ -90,7 +90,7 @@ void drawDerivative(Mat &m,Trajectory& original) {
 void fixBottomPoint(vector<Wave> &waves, int sea_level_y) {
 	if (waves.size() > 0) {
 		int y = (waves.back().bottom.getY() + sea_level_y*2)/3;
-		waves.back().bottom = Point(x,y);
+		waves.back().bottom = Point(waves.back().bottom.getX(),y);
 	}
 }
 /*---fixBottomPointEnd---*/
