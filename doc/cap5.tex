@@ -32,7 +32,7 @@
 
 \paragraph{}Foram analisados 18 vídeos, contemplando quatro dias distintos. Para cada vídeo as ondas foram analisadas automaticamente pelo algoritmo e manualmente pelo autor, a fim de verificar quantas ondas foram ou deixaram de ser identificadas, e verificar a precisão da identificação do ponto mínimo e máximo da onda. No total foram identificadas 200 ondas manualmente e 225 ondas pelo algoritmo, o que representa uma taxa de acerto de 88\%. Entretanto, como será mostrado, a taxa de acerto de cada vídeo individual pode variar. Os dados obtidos foram apresentados nas tabelas \ref{Tab20170704}, \ref{Tab20170708}, \ref{Tab20170709}, \ref{Tab20170807_1} e \ref{Tab20170807_2}, referentes aos respectivos dias: 04/07/2017, 08/07/2017, 09/07/2017 e 07/08/2017. O dia 04/07/2017 apresentava céu nublado e mar revolto, sem a presença de banhistas na areia ou mar. Já os dias 08/07/2017 e 09/07/2017 apresentavam céu aberto e mar calmo, sendo algumas séries com ondas um pouco maiores. Pode-se observar a presença de pessoas na areia e surfistas no mar. O dia 07/08/2017 apresentada céu aberto e mar calmo, porém mais agitado que os dias 08/07/2017 e 09/07/2017. Não há muitos banhistas, mas é possível notar uma boa quantidade de surfistas. 
 
-\paragraph{}Para facilitar a análise manual dos vídeos foi desenvolvido um programa de inspeção de vídeos de praia denominado WaveInspector. Este programa permite ao usuário assistir um vídeo gravado de forma acelerada, pausar e retomar a execução do vídeo, e, com o vídeo pausado, selecionar com o mouse os pontos máximos e mínimos de uma onda observada na imagem. Uma vez escolhidos os dois pontos, é possível salvar ou descartar os dados selecionados. No final da execução do vídeo um arquivo texto é gerado contendo os pontos máximos e mínimos de cada onda e o número do \textit{frame} em que a medição foi realizada. Salva-se também o \textit{frame} em si com uma linha vertical indicando o centro da imagem. A figura \ref{FigSegmentataionFixedObject}a foi gerada utilizando o programa WaveInspector. O código deste programa será demostrado no apêndice A.
+\paragraph{}Para facilitar a análise manual dos vídeos foi desenvolvido um programa de inspeção de vídeos de praia denominado WaveInspector. Este programa permite ao usuário assistir um vídeo gravado de forma acelerada, pausar e retomar a execução do vídeo, e, com o vídeo pausado, selecionar com o mouse os pontos máximos e mínimos de uma onda observada na imagem. Uma vez escolhidos os dois pontos, é possível salvar ou descartar os dados selecionados. No final da execução do vídeo um arquivo texto é gerado contendo os pontos máximos e mínimos de cada onda e o número do \textit{frame} em que a medição foi realizada. Salva-se também o \textit{frame} em si com uma linha vertical indicando o centro da imagem. A figura \ref{FigSegmentataionFixedObject}a foi gerada utilizando o programa WaveInspector.
 
 \begin{table}[h]
     \subfloat[\small{Dados de um vídeo com 1:25 minutos de duração gravado com \textit{smartphone}.}]{
@@ -171,26 +171,21 @@
 \paragraph{}Os erros na identificação dos pontos mínimos e máximos em geral são causados por interferência externa, e influenciam na altura estimada da onda. A presença de pessoas se deslocando próximos ao mar (Figura \ref{FigPeopleError}) é responsável por introduzir erros na identificação do ponto mínimo de uma onda, fazendo com que pontos na areia sejam identificados como parte da região de espuma. Outro fator que pode influenciar no ponto mínimo da onda é o afastamento da onda da linha de arrebentação esperada. Em geral as ondas tendem a quebrar à uma mesma distância da praia, a linha de arrebentação esperada, onde ocorre um acumulo da espuma produzida pelas ondas. Algumas ondas, entretanto, podem arrebentar antes de atingirem a linha de arrebentação esperada, a uma distância maior da praia. Esta situação afeta a estimação da altura da onda de duas maneiras:
 
 \begin{enumerate}
-
     \item Ondas com distâncias diferentes da câmera podem aparentar possuir a mesma altura em \textit{pixels}, quando na realidade possuem alturas diferentes. Além disso, Browne \textit{et al} \cite{Griffith11} demonstra que o erro associado aos parâmetros da câmera aumentam de acordo com a distância das ondas até a câmera.
 
     \item O ponto mínimo da onda é identificado como o ponto mínimo da linha de arrebentação imediatamente antes da quebra da onda. Quando uma onda quebra antes da linha de arrebentação, a sua base será erroneamente detectada como o ponto mínimo da linha de arrebentação anterior. Este efeito é evidênciado na figura \ref{FigBaseGap} e pode ocorrer quando há um distanciamento temporal entre duas ondas. A seção \ref{sec:wave_identification} apresenta uma forma de remediar este problema, mas que não resolve completamente o problema.
-
 \end{enumerate}
 
 \begin{figure}[h]
-    
     \centering
 
-    \subfloat[\small{Onda acima da linha de arrebentação. A base da onda não foi identificada corretamente.}]{\includegraphics[width=.45\textwidth,keepaspectratio]{wave_min_fail_gap.png}}
+    \subfloat[\small{Onda acima da linha de arrebentação. A base da onda não foi identificada corretamente.}]{\includegraphics[height=.125\textheight,keepaspectratio]{wave_min_fail_gap.png}}
     \qquad
-    \subfloat[\small{Onda acima da linha de arrebentação. A identificação da sua base foi corrigida.}]{\includegraphics[width=.45\textwidth,keepaspectratio]{wave_min_fail_gap_fixed.png}}
+    \subfloat[\small{Onda acima da linha de arrebentação. A identificação da sua base foi corrigida.}]{\includegraphics[height=.125\textheight,keepaspectratio]{wave_min_fail_gap_fixed.png}}
 
     \caption[\small{Efeito do afastamento da onda em relação a linha de arrebentação.}]{\small{Efeito do afastamento da onda em relação a linha de arrebentação.}}
     \label{FigBaseGap}
-
 \end{figure}
-
 
 \paragraph{}A ação do vento \cite{Hwang2016} pode introduzir erros na identificação do ponto de máximo, causando um \textit{spray} da espuma do mar que pode ser erroneamente detectado como o ponto máximo da onda (Figura \ref{FigSprayError}).
 

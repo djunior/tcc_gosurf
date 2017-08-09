@@ -98,6 +98,9 @@ void fixBottomPoint(vector<Wave> &waves, int sea_level_y) {
 
 /*---analyseTrajectoryBegin---*/
 void WaveDetector::analyseTrajectory(Trajectory &t) {
+	// A variavel waves é um vector<Wave> definido como propriedade
+	// da classe WaveDetector
+
 	Derivable derivative;
 	t.calculateDerivative(derivative);
 

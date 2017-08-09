@@ -9,6 +9,7 @@
 	rangeprefix=/*---,
 	rangesuffix=---*/,
   	includerangemarker=false,
+  	tabsize=2,
 }
 
 % Introdução implementação
@@ -254,7 +255,7 @@ while (true) {
 
 \paragraph{}Os passos descritos até aqui compõem juntos o pré-processamento completo, como ilustrado a seguir:
 
-\begin{lstlisting}
+\begin{lstlisting}[tabsize=2]
 // Lendo o vídeo do filesystem
 cv::VideoCapture videoCapture = cv::imread("caminho no filesystem"); 
 
@@ -477,7 +478,7 @@ while(true) {
 %Identificação das Ondas
 \paragraph{}O último passo a ser realizado é a identificação das ondas marítimas. Este passo é realizado implementando o automato descrito no capítulo anterior (Figura \ref{FigAutomato}). O automato de identificação das ondas foi implementado em uma função analyseTrajectory, conforme o código abaixo:
 
-\lstinputlisting[linerange=analyseTrajectoryBegin-analyseTrajectoryEnd]{../src/lib/waveDetector.cpp}
+\lstinputlisting[tabsize=2,linerange=analyseTrajectoryBegin-analyseTrajectoryEnd]{../src/lib/waveDetector.cpp}
 
 \noindent{}A função detectWave utilizada na função analyseTrajectory verifica se um par de pontos identificados como pontos mínimos e máximos locais são elegíveis para formar uma onda. Para serem elegíveis, cada par de pontos devem atender 2 requisitos:
 
