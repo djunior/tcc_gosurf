@@ -1,0 +1,4 @@
+imageSize=720
+cameraHeight=6.0
+cameraAngle=85
+focalAngle=41.41

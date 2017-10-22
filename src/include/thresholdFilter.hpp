@@ -13,8 +13,8 @@ private:
 	int binary_value;
 public:
 	void init() {
-		threshold_value = 150;
-		threshold_type = 4;
+		threshold_value = 0;
+		threshold_type = 4 | CV_THRESH_OTSU;
 		binary_value = 0;
 	}
 	ThresholdFilter(int v) : ImageFilter() {

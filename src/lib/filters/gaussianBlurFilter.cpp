@@ -14,8 +14,8 @@ void GaussianBlurFilter::setKernelSize(int k) {
 }
 
 void GaussianBlurFilter::filter() {
-  /// Reduce noise with a kernel N x N
-  GaussianBlur( srcMat, filteredMat, Size(kernel_size,kernel_size), 0, 0, BORDER_DEFAULT );
+	/// Reduce noise with a kernel N x N
+	GaussianBlur( srcMat, filteredMat, Size(kernel_size,kernel_size), 0, 0, BORDER_DEFAULT );
 }
 
 }

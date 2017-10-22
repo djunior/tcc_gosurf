@@ -71,22 +71,46 @@ void main_process(Mat& image, Mat& outputMat) {
 
 	//Main processing
 	pipeline.addFilter(new GaussianBlurFilter(15));
-	pipeline.addFilter(new ImageOutput("output_images/process/process_gaussian.jpg"));
-	pipeline.addFilter(new ThresholdFilter(150,0,255));
+	// pipeline.addFilter(new ImageOutput("output_images/process/process_gaussian.jpg"));
+	// pipeline.addFilter(new ThresholdFilter(150,0,255));
+	pipeline.addFilter(new ThresholdFilter(0,0 | CV_THRESH_OTSU,255));
 	pipeline.addFilter(new ImageOutput("output_images/process/process_threshold.jpg"));
 	
 	//Wave Band Detection
 	pipeline.addFilter(new WaveBandFinder(WaveBandFinder::WBF_MODE_THRESHOLD));
-
+	// pipeline.addFilter(new ImageOutput("output_images/process/process_segmentation.jpg"));
 	// Debug
 	FilterPipeline* auxPipeline = new FilterPipeline();
 	auxPipeline->addFilter(new WaveBandDebugger(image));
 	auxPipeline->addFilter(new ImageOutput("output_images/process/process_waveband.jpg"));
 	pipeline.addFilter(auxPipeline);
 
-	pipeline.addFilter(new ImageOutput("output_images/process/process_breakzone.jpg"));
+	// pipeline.addFilter(new ImageOutput("output_images/process/process_breakzone.jpg"));
 
 	pipeline.filter();
+
+	FilterPipeline pipeline2(&greyImage);
+
+	//Main processing
+	pipeline2.addFilter(new GaussianBlurFilter(15));
+	// pipeline2.addFilter(new ImageOutput("output_images/process/process_gaussian_2.jpg"));
+	// pipeline.addFilter(new ThresholdFilter(150,0,255));
+	pipeline2.addFilter(new ThresholdFilter(150,0,255));
+	pipeline2.addFilter(new ImageOutput("output_images/process/process_threshold_2.jpg"));
+	
+	//Wave Band Detection
+	pipeline2.addFilter(new WaveBandFinder(WaveBandFinder::WBF_MODE_THRESHOLD));
+	// pipeline2.addFilter(new ImageOutput("output_images/process/process_segmentation_2.jpg"));
+	// Debug
+	FilterPipeline* auxPipeline2 = new FilterPipeline();
+	auxPipeline2->addFilter(new WaveBandDebugger(image));
+	auxPipeline2->addFilter(new ImageOutput("output_images/process/process_waveband_2.jpg"));
+	pipeline2.addFilter(auxPipeline2);
+
+	// pipeline2.addFilter(new ImageOutput("output_images/process/process_breakzone_2.jpg"));
+
+	pipeline2.filter();
+
 
 	pipeline.getOutputMat()->copyTo(outputMat);
 }

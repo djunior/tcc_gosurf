@@ -5,7 +5,7 @@
 
 \section{Pré-Processamento}
 
-\begin{figure}[h]
+\begin{figure}
   \subfloat[\textit{Pipeline} do pré-processamento.]{\includegraphics[width=\textwidth,keepaspectratio]{pre_processamento_pipeline.png}}
   \qquad
   \subfloat[Processamento de cada \textit{frame}.]{\includegraphics[width=\textwidth,keepaspectratio]{pre_processamento_frame.png}}
@@ -25,7 +25,7 @@
 
 \paragraph{}Para construir um \timestack, é necessário fixar uma das dimensões espaciais de cada imagem do vídeo, obtendo assim um conjunto de funções unidimensionais. O \timestack deste vídeo é definido então como uma função bidimensional \(s_{Y}(x,t)\) ou \(s_{X}(t,y)\), onde \(x\) e \(y\) são coordenadas espaciais; \(t\) é uma coordenada temporal; as amplitudes \(s_{X}\) e \(s_{Y}\) são a intensidade ou nível de cinza do vídeo \(g(x,y,t)\) quando são fixados os valores \(x = X\) e \(y = Y\), respectivamente. Dessa forma, a relação entre um \timestack e um vídeo é dada por: \(s_{Y}(x,t)=g(x,Y,t)\) e \(s_{X}(t,y) = g(X,y,t)\).
 
-\begin{figure}[h]
+\begin{figure}
   \centering
   \includegraphics[width=\textwidth,keepaspectratio]{timestack.jpg}
   \caption[\small{\textit{Timestack} resultante do pré-processamento a partir do vídeo de uma praia.}]{\small{\textit{Timestack} resultante do pré-processamento a partir do vídeo de uma praia.}}
@@ -50,7 +50,7 @@
 
 \paragraph{}O Raspberry Pi ainda conta com um conjunto de pinos de entrada e saída de uso genérico (\textit{GPIOs}). Uma desvantagem do Raspberry Pi com relação a outras centrais de processamento é que ele não possuí \textit{GPIOs} analógicos, somente pinos digitais. Entretanto, como será comentado a seguir, é possível contornar esta desvantagem utilizando conversores analógico-digitais. Estes pinos foram utilizados para ligar os sensores periféricos no projeto GoSurf, um termômetro/higrômetro e um anemômetro. Um circuito simples (Figura \ref{FigPCB}) foi projetado para ligar os sensores à central de processamento. O termômetro / higrômetro utilizado foi o DHT22, que pode ser lido diretamente por um pino digital. Por este motivo ele pode ser ligado diretamente aos pinos da central de processamento, acrescentando somente um resistor \textit{pullup} de 1k$\Omega$ entre sua alimentação e o pino de leitura. O anemômetro escolhido foi o C2192, que possuí um pino de leitura analógico. Para utilizá-lo com o Raspberry Pi foi necessário adicionar um conversor analógico-digital (MCP 3201). Este conversor foi escolhido por apresentar resolução adequada ao projeto (12 \textit{bits}) e possuir interface de saída SPI (\textit{Serial Peripheral Interface} ou Interface Periférica Serial). O Raspberry Pi implementa uma comunicação SPI em pinos específicos, o que torna fácil integrar os dois componentes. Por fim, foi necessário adicionar uma alimentação externa ao circuito, pois o anemômetro precisa de uma alimentação de 7 a 12 volts e a central de processamento só é capaz de fornecer 5V. Foram adicionados um par de pilhas de 4.5V, resultando em uma alimentação total de 9V que atende ao requisito. 
 
-\begin{figure}[h]
+\begin{figure}
   \centering
   \includegraphics[width=.8\textwidth,keepaspectratio]{pcb.png}
   \caption[\small{Circuito que conecta os sensores à central de processamento.}]{\small{Circuito que conecta os sensores à central de processamento.}}
@@ -65,7 +65,7 @@
 
 \paragraph{}Primeiro experimentou-se realizar a estabilização do vídeo utilizando técnicas de processamento de imagens. Foi testado um procedimento simples descrito por Nghia Ho \cite{Ho2014}. Embora este procedimento apresente bons resultados para vídeos gravados manualmente (figura \ref{FigStabilization}a e \ref{FigStabilization}b), foi observado que quando aplicado o procedimento em vídeos gravados já com alta estabilidade o procedimento não apresentava resultados significativos (Figura \ref{FigStabilization}c e \ref{FigStabilization}d). Entretanto, o processo de estabilização é custoso, aumentando o tempo de execução do pré-processamento (na figura \ref{FigStabilization} o tempo de execução do pré-processamento foi 8.5 vezes maior.). Como o pré-processamento será executado em um dispositivo com poder de processamento limitado, a performance desta etapa é crucial. Então, concluiu-se que basta utilizar um ponto de montagem para a câmera, como um tripé, para atingir a estabilidade necessária para a extração fiel dos dados desejados.
 
-\begin{figure}[h]
+\begin{figure}
   \centering
   \subfloat[\small{\textit{Timestack} gerado a partir de um vídeo gravado manualmente.}]{\includegraphics[width=.45\textwidth,keepaspectratio]{IMG_0798_2_originalTimestack.jpg}}
   \qquad
@@ -94,7 +94,7 @@
 
 \paragraph{}A equalização de histograma tem como função normalizar o efeito da iluminação em uma imagem. As figuras \ref{FigHistogram}a, \ref{FigHistogram}b, \ref{FigHistogram}c e \ref{FigHistogram}d ilustram o efeito da equalização de histograma sobre uma imagem de alta luminosidade, enquanto as figuras \ref{FigHistogram}e, \ref{FigHistogram}f, \ref{FigHistogram}g e \ref{FigHistogram}h ilustram o efeito da equalização de histograma em um dia de baixa luminosidade. Nota-se que o histograma do dia com baixa luminosidade apresenta uma grande concentração de \textit{pixels} nos níveis de maior intensidade, enquanto o histograma do dia com alta luminosidade está melhor distribuído por todo o espectro de níveis de cinza. As figuras \ref{FigHistogram}c e \ref{FigHistogram}g exibem o efeito de normalização da luminosidade no vídeo. Pode-se notar que o efeito da equalização foi mais significativo na figura \ref{FigHistogram}g.
 
-\begin{figure}[h]
+\begin{figure}
   \centering
   \subfloat[\small{Imagem de uma praia em dia ensolarado (alta luminosidade).}]{\includegraphics[width=.45\textwidth,height=.1\textheight]{sunny_grey_image.jpg}}
   \qquad
@@ -129,7 +129,7 @@
 
 \paragraph{}Uma etapa importante é a detecção da linha de horizonte a fim de viabilizar a detecção e remoção do céu na imagem. Esta operação é utilizada para facilitar o passo de \textit{thresholding} na etapa de processamento de imagem. Em alguns cenários, é difícil distinguir a região de céu da região de arrebentação utilizando apenas o nível de intensidade dos \textit{pixels} de cada região, pois a faixa de valores de intensidade de cada região se sobrepõem. A figura \ref{FigTimestackFail}a exibe um \timestack com o céu incluído após aplicado um \textit{threshold} com valor de limite 150. Pode-se observar que parte do céu não foi removido pelo \textit{threshold} (faixa branca na parte superior da imagem). Já a figura \ref{FigTimestackFail}b exibe um \timestack com o céu incluído após aplicado um \textit{threshold} com valor de limite 210. Com este valor o céu foi removido completamente, mas a delimitação da região de espuma não foi bem definida, dificultando ou até impossibilitando sua identificação (observe a faixa preta estreita presente na faixa branca da imagem). Por este motivo, a segmentação é baseada não só no nível de intensidade dos \textit{pixels} mas como na sua localização na imagem. A detecção da linha de horizonte se mostra fundamental para obter localização desta região.
 
-\begin{figure}[h]
+\begin{figure}
   \centering
   \subfloat[\small{\textit{Timestack} sem remoção do céu (valor de \textit{threshold} 150)}]{\includegraphics[width=\textwidth,keepaspectratio]{process_threshold_150.jpg}}
   \qquad
@@ -140,11 +140,11 @@
 
 \paragraph{}A detecção do céu é realizada utilizando um detector de bordas de Canny para identificar a borda entre o céu e o mar em um \textit{frame} do vídeo (Figura \ref{FigFrameCanny}). Então, procura-se a primeira borda transversal detectada pelo método de Canny, através do algoritmo descrito em \ref{AlgLineTracking}. A borda detectada corresponde a linha do horizonte. Todos os \textit{pixels} acima dessa linha são considerados como \textit{pixels} da região do céu, e serão removidos no passo seguinte.
 
-\begin{figure}[h]
+\begin{figure}
   \centering
-  \subfloat[\small{\textit{Frame} do vídeo original.}]{\includegraphics[width=0.45\textwidth,keepaspectratio]{simpletimestack_original.jpg}}
+  \subfloat[\small{\textit{Frame} do vídeo original.}]{\includegraphics[width=0.45\textwidth,keepaspectratio]{simpletimestack_original_untilt.jpg}}
   \qquad
-  \subfloat[\small{\textit{Frame} do vídeo com bordas detectadas pelo método de Canny.}]{\includegraphics[width=0.45\textwidth,keepaspectratio]{simpletimestack_canny.jpg}}
+  \subfloat[\small{\textit{Frame} do vídeo com bordas detectadas pelo método de Canny.}]{\includegraphics[width=0.45\textwidth,keepaspectratio]{simpletimestack_canny_untilt.jpg}}
   
   \caption[\small{Comparação de um \textit{frame} original do vídeo com o mesmo \textit{frame} com as bordas detectadas pelo método de Canny. A primeira borda transversal é a linha do horizonte.}]{\small{Comparação de um \textit{frame} original do vídeo com o mesmo \textit{frame} com as bordas detectadas pelo método de Canny. A primeira linha transversal na figura b é a linha do horizonte.}}
   \label{FigFrameCanny}
@@ -154,9 +154,9 @@
 
 \paragraph{}O último passo da etapa de pré-processamento é a remoção do céu. Este passo utiliza duas entradas, a linha do horizonte detectada pelo passo anterior, e o \textit{frame} equalizado. A partir da linha do horizonte, considera-se todos os \textit{pixels} do \textit{frame} equalizado acima dessa linha como preto. A figura \ref{FigFrameSkyRemoved} exibe um \textit{frame} equalizado do vídeo original com o céu removido.
 
-\begin{figure}[h]
+\begin{figure}
   \centering
-  \includegraphics[width=0.8\textwidth,keepaspectratio]{simpletimestack_sky_removed.jpg}
+  \includegraphics[width=0.8\textwidth,keepaspectratio]{simpletimestack_sky_removed_untilt.jpg}
   \caption[\small{\textit{Frame} equalizado com o céu removido}]{\small{\textit{Frame} equalizado com o céu removido}}
   \label{FigFrameSkyRemoved}
 \end{figure}
@@ -165,7 +165,7 @@
 
 \section{Processamento Principal}
 
-\begin{figure}[h]
+\begin{figure}
   \centering
   \includegraphics[width=\textwidth,height=\textheight,keepaspectratio]{diagrama_processamento.png}
   \caption[\small{Diagrama de Bloco da etapa de processamento principal.}]{\label{FigDiagramaProc} \small{Diagrama de Bloco da etapa de processamento principal.}}
@@ -173,7 +173,7 @@
 
 \paragraph{}A etapa de processamento principal tem como objetivo extrair a linha de arrebentação (figura \ref{FigLinhaArrebentacao}) de um \timestack gerado pelo pré-processamento. A linha de arrebentação é definida como a linha que delimita a região de espuma do restante do mar. Uma característica marcante dessas duas regiões é que a região de espuma apresenta a maioria dos \textit{pixels} com intensidade alta, enquanto o restante do mar apresenta a maioria dos \textit{pixels} com intensidade baixa. Esta característica será explorada para separar a região de espuma do restante da imagem. Em seguida, a borda superior desta região, que corresponde a linha de arrebentação, será analisada para identificar as ondas do mar presentes na imagem e medir a sua altura e periodicidade.
 
-\begin{figure}[h]
+\begin{figure}
   \centering
   \subfloat[\small{\textit{Timestack} gerado pelo pré-processamento.}]{\includegraphics[width=0.45\textwidth,keepaspectratio]{breakzone_timestack.png}}
   \qquad
@@ -186,7 +186,7 @@
 
 \section{Suavização}
 
-\begin{figure}[h]
+\begin{figure}
   \centering
   \includegraphics[width=.8\textwidth,keepaspectratio]{process_gaussian.jpg}
   \caption[\small{\textit{Timestack} gerado pelo pré-processamento suavizado pelo filtro gaussiano.}]{\small{\textit{Timestack} gerado pelo pré-processamento suavizado pelo filtro gaussiano.}}
@@ -195,7 +195,7 @@
 
 \paragraph{}A primeira etapa de suavização é realizada utilizando um filtro passa-baixas gaussiano, implementado no domínio do espaço com máscara de tamanho 15, valor escolhido empiricamente após experimentar com imagens de diversos dias diferentes. A figura \ref{FigBlur} ilustra um \textit{timestack} suavizado pelo processo descrito. Este efeito de suavização é importante para reduzir o nível de ruído na imagem, facilitando a identificação das bordas relevantes nos passos subsequentes. Outro efeito desejado é homogeneizar o nível de intensidade das regiões da imagem, de forma que o passo de \textit{thresholding} consiga segmentar a região de arrebentação do \timestack consistentemente. A figura \ref{FigGaussianBlurComparison} ilustra a diferença na segmentação da região de espuma com e sem o passo de suavização. A região de espuma detectada está marcada em vermelho. Nota-se que na figura \ref{FigGaussianBlurComparison}b a região de espuma detectada é influenciada por pequenas faixas de alta intensidade espalhadas na região do mar, enquanto a figura \ref{FigGaussianBlurComparison}a consegue filtrar essa influência e detectar uma região de espuma mais uniforme.
 
-\begin{figure}[h]
+\begin{figure}
   \centering
   \subfloat[Região de espuma detectada em um \textit{timestack} suavizado.]{\includegraphics[width=0.8\textwidth,keepaspectratio]{waveband_blur.png}}
   \qquad
@@ -206,9 +206,9 @@
 
 \section{\textit{Thresholding}}
 
-\paragraph{}\textit{Thresholding} é o primeiro passo para realizar a segmentação. Neste passo separa-se a região de espuma do restante do mar, alterando todos os \textit{pixels} com intensidade abaixo de 150 para 0, e todos os \textit{pixels} acima deste valor para o valor de intensidade máximo. O valor limite foi escolhido empiricamente após a análise de diversas imagens, contemplando dias variados. A figura \ref{FigThreshold} compara a região de espuma detectada após o passo de \textit{threshold} com valores diferentes. Pode-se notar na figura \ref{FigThreshold}a uma borda mais estreita sobre a região de espuma observada, enquanto a figura \ref{FigThreshold}b exibe uma região detectada não condizente com o resultado esperado. Inicialmente foi considerado um método de decisão do valor de \threshold dinâmico, mas como discutido previamente, os passos de equalização e remoção do céu realizados durante o pré-processamento permitem utilizar um valor de \threshold estático, independente da condição de iluminação no momento da aquisição do vídeo. 
+\paragraph{}\textit{Thresholding} é o primeiro passo para realizar a segmentação. Neste passo separa-se a região de espuma do restante do mar, alterando todos os \textit{pixels} com intensidade abaixo do limite para 0, e todos os \textit{pixels} acima deste valor para o valor de intensidade máximo. O valor limite é escolhido dinamicamente através do método de Otsu. A figura \ref{FigThreshold} compara a região de espuma detectada após o passo de \textit{threshold} com valores diferentes. Inicialmente foi considerado um método de decisão do valor de \threshold estático, entretanto o método de Otsu produz resultados 
 
-\begin{figure}[h]
+\begin{figure}
   \centering
   \subfloat[\small{Região de espuma detectada usando \textit{threshold} no valor 150.}]{\includegraphics[width=.4\textwidth,keepaspectratio]{waveband_threshold_150.png}}
   \qquad
@@ -220,7 +220,7 @@
 
 \paragraph{}Entretanto, dias muito nublados podem causar problemas para o \textit{thresholding}, como pode ser visto na figura \ref{FigThresholdFail}. Nesta figura os valores de intensidade da região de espuma e da região do mar no entorno das ondas se sobrepõe. Neste caso, o \threshold com valor estático não é capaz de separar as duas regiões, impossibilitando a identificação das ondas do mar nos passos subsequentes.
 
-\begin{figure}[h]
+\begin{figure}
   \centering
   \subfloat[\small{\textit{Timestack} gerado pelo pré-processamento do vídeo de um dia nublado.}]{\includegraphics[width=.8\textwidth,keepaspectratio]{IMG_0882.jpg}}
   \qquad
@@ -265,20 +265,20 @@
 
 \paragraph{}Em condições normais a região de maior área será a região de espuma da imagem, então pode-se descartar todas as outras regiões. Por fim basta identificar as bordas da região restante utilizando um método de detecção de bordas. Novamente, a utilização da biblioteca OpenCV permitiu realizar a detecção de bordas e identificação das regiões isoladas em um único passo, ou seja, não foi necessário realizar mais nenhuma operação para obter as bordas da região de espuma. Outro método considerado para esta tarefa foi o detector de bordas de Canny (figura \ref{FigCannySuzuki}), já utilizado no passo de detecção da linha do horizonte, entretanto pela agilidade fornecida pelo OpenCV o método de Canny foi preterido.
 
-\begin{figure}[h]
+\begin{figure}
   \centering
   \subfloat[\small{Região de espuma detectada pelo método de Canny.}]{\includegraphics[width=0.45\textwidth,keepaspectratio]{process_waveband_canny.png}}
   \qquad
   \subfloat[\small{Região de espuma detectada pelo método de Suzuki (função findContours).}]{\includegraphics[width=0.45\textwidth,keepaspectratio]{process_waveband_suzuki.png}}
   \caption[\small{Comparação dos métodos de Canny e Suzuki para detecção de bordas.}]{\small{Comparação dos métodos de Canny e Suzuki para detecção de bordas.}}
-  \label{FigCannSuzuki}
+  \label{FigCannySuzuki}
 \end{figure}
 
 \section{Análise e Identificação das Ondas Marítimas}
 
 \paragraph{}A última etapa do algoritmo de estimação da altura de ondas do mar é analisar a linha de arrebentação extraída do \timestack e identificar as ondas do mar presentes nesta imagem. Feito isso, é possível encontrar o ponto mínimo e máximo locais da linha de arrebentação, que correspondem ao ponto mínimo e máximo da onda em questão. Estas etapas são descritas nas seções a seguir.
 
-\begin{figure}[h]
+\begin{figure}
 \begin{center}
   \includegraphics[width=\textwidth,height=\textheight,keepaspectratio]{diagrama_analise.png}
   \caption[\small{Diagrama de Bloco da etapa de análise. Fonte: Autor}]{\label{FigDiagramaAnalise} \small{Diagrama de Bloco da etapa de análise.}}
@@ -348,15 +348,15 @@ identificar as ondas na linha rastreada no passo anterior. Para isso, calcula-se
 
 \noindent{}A sequência $s'[n]$ indica quais trechos da sequência original $s[n]$ são crescentes, decrescentes ou constantes. Então, ao caminhar sobre a sequência derivada $s'[n]$, é trivial determinar quais são as faces crescentes das ondas. Em um cenário ideal, o ponto inicial de uma face crescente corresponde ao ponto mínimo local de uma onda, e o último ponto crescente desta face corresponde ao ponto de máximo local, determinando assim a altura da onda. Entretanto, em uma imagem não ideal podem existir trechos que a derivada é $0$, ou até mesmo negativa, antes da sequência tornar a crescer. A figura \ref{FigAutomato} descreve um autômato que reconhece uma onda considerando as condições descritas anteriormente.
 
-\begin{figure}[h]
+\begin{figure}
   \centering
   \includegraphics[width=\textwidth,height=\textheight,keepaspectratio]{automato_identificacao_onda.png}
   \caption[\small{Autômato Finito Determinístico que identifica uma onda em uma linha de arrebentação.}]{\label{FigAutomato} \small{Autômato Finito Determinístico que identifica uma onda em uma linha de arrebentação.}}
 \end{figure}
 
-\noindent{}O estado 0 do autômato procura pela primeira derivada $s'[n]$ positiva, marcando o ponto equivalente de $s[n]$ como o mínimo da onda e avançando para o estado 1. O estado 1 procura pela primeira derivada negativa de $s'[n]$, marcando o ponto equivalente de $s[n]$ como candidato ao ponto máximo da onda e andando para o estado 2. Então, os estados 2 e 3 buscam por "buracos" ou \textit{gaps} no trecho de derivada positiva, onde a derivada se torna negativa por um curto período e depois $s[n]$ torna a crescer. O estado 2 procura por novos pontos de máximo, trechos onde a derivada é positiva, e o estado 3 procura por trechos de derivada negativa. Quando o estado 3 encontrar uma derivada positiva, o autômato retorna para o estado 2. Enquanto o estado 3 encontrar derivadas não-positivas um contador de tamanho do \textit{gap} é incrementado. Quando o tamanho do \textit{gap} é superior a um certo limite, o autômato avança para o estado 4, identificando assim que um candidato a uma onda foi encontrado, delimitado pelos pontos de mínimo e máximo encontrados anteriormente. Este candidato apenas será considerado uma onda se sua altura estiver dentro de uma faixa de controle, isto é, são descartadas ondas muito pequenas ou muito grandes. A figura \ref{FigWave} mostra os pares de pontos máximo e mínimo identificados pelo autômato em uma linha de arrebentação aplicados no \timestack original. As linhas verdes unem os pares de pontos encontrados, e as linhas vermelhas evidenciam a altura em \textit{pixels} da onda identificada. 
+\noindent{}O estado 0 do autômato procura pela primeira derivada $s'[n]$ positiva, marcando o ponto equivalente de $s[n]$ como o mínimo da onda e avançando para o estado 1. O estado 1 procura pela primeira derivada negativa de $s'[n]$, marcando o ponto equivalente de $s[n]$ como candidato ao ponto máximo da onda e andando para o estado 2. Então, os estados 2 e 3 buscam por "buracos" ou \textit{gaps} no trecho de derivada positiva, onde a derivada se torna negativa por um curto período e depois $s[n]$ torna a crescer. O estado 2 continua a procurar por trechos de derivada negativa, enquanto o estado 3 procura por novos pontos de máximo em trechos onde a derivada é positiva. Quando o estado 2 encontrar uma derivada positiva, o autômato avança para o estado 3. Enquanto o estado 2 encontrar derivadas não-positivas um contador de tamanho do \textit{gap} é incrementado. Quando o tamanho do \textit{gap} é superior a um certo limite, o autômato avança para o estado 4, identificando assim que um candidato a uma onda foi encontrado, delimitado pelos pontos de mínimo e máximo encontrados anteriormente. Este candidato apenas será considerado uma onda se sua altura estiver dentro de uma faixa de controle, isto é, são descartadas ondas muito pequenas ou muito grandes. A figura \ref{FigWave} mostra os pares de pontos máximo e mínimo identificados pelo autômato em uma linha de arrebentação aplicados no \timestack original. As linhas verdes unem os pares de pontos encontrados, e as linhas vermelhas evidenciam a altura em \textit{pixels} da onda identificada. 
 
-\begin{figure}[h]
+\begin{figure}
   \centering
   \includegraphics[width=\textwidth,height=\textheight,keepaspectratio]{process_waves_result.png}
   \caption[\small{Ondas identificadas pelo autômato.}]{\label{FigWave} \small{Ondas identificadas pelo autômato.}}
@@ -364,7 +364,7 @@ identificar as ondas na linha rastreada no passo anterior. Para isso, calcula-se
 
 \paragraph{}Analisando os dados experimentais foi detectado um problema na identificação do ponto mínimo de algumas ondas. Este problema acontece quando uma onda arrebenta antes do esperado. Ao analisar um vídeo de uma praia, pode-se perceber que a maioria das ondas arrebenta a uma distância constante da areia. Entretanto, algumas ondas, geralmente maiores, podem arrebentar mais distantes da praia. Quando isto ocorre, o nível da região de espuma antes da arrebentação da onda não pode mais ser utilizado para determinar o ponto mínimo da onda. A figura \ref{FigWaveMinPoint}a ilustra o ponto mínimo detectado pelo autômato de uma onda distante da praia. A figura \ref{FigWaveMinPoint}b demostra os limites da onda detectada sobre o \textit{frame} correspondente no vídeo original. Pode-se notar que o ponto mínimo detectado está abaixo do ponto mínimo real para esta onda.
 
-\begin{figure}[h]
+\begin{figure}
   \centering
   \subfloat[\small{Onda detectada em um \textit{timestack} com ponto mínimo detectado erroneamente.}]{\includegraphics[width=.45\textwidth]{wave_min_fix_fail_result.png}}
   \qquad

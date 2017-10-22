@@ -41,8 +41,8 @@ BEGIN{
 	alg_line_pixel_count = 0;
 }
 
-FNR==NR && /Waves/{manual_count=$3; next} 
-/Waves/{alg_count=$3} 
+FNR==NR && /Waves/{manual_count+=$3; next} 
+/Waves/{alg_count+=$3} 
 
 FNR==NR && /meters/{
 	manual_height_average+=$3

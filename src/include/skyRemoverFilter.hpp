@@ -48,7 +48,7 @@ public:
 			}
 		}
 
-		imwrite("output_images/simpletimestack/simpletimestack_sky_remover_mask.jpg",mask);
+		imshow("output_images/simpletimestack/simpletimestack_sky_remover_mask.jpg",mask);
 	}
 
 	void filter() {

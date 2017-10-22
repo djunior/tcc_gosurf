@@ -30,110 +30,20 @@
     \label{FigDataLocation}
 \end{figure}
 
-\paragraph{}Foram analisados 18 vídeos, contemplando quatro dias distintos. Para cada vídeo as ondas foram analisadas automaticamente pelo algoritmo e manualmente pelo autor, a fim de verificar quantas ondas foram ou deixaram de ser identificadas, e verificar a precisão da identificação do ponto mínimo e máximo da onda. No total foram identificadas 200 ondas manualmente e 225 ondas pelo algoritmo, o que representa uma taxa de acerto de 88\%. Entretanto, como será mostrado, a taxa de acerto de cada vídeo individual pode variar. Os dados obtidos foram apresentados nas tabelas \ref{Tab20170704}, \ref{Tab20170708}, \ref{Tab20170709}, \ref{Tab20170807_1} e \ref{Tab20170807_2}, referentes aos respectivos dias: 04/07/2017, 08/07/2017, 09/07/2017 e 07/08/2017. O dia 04/07/2017 apresentava céu nublado e mar revolto, sem a presença de banhistas na areia ou mar. Já os dias 08/07/2017 e 09/07/2017 apresentavam céu aberto e mar calmo, sendo algumas séries com ondas um pouco maiores. Pode-se observar a presença de pessoas na areia e surfistas no mar. O dia 07/08/2017 apresentada céu aberto e mar calmo, porém mais agitado que os dias 08/07/2017 e 09/07/2017. Não há muitos banhistas, mas é possível notar uma boa quantidade de surfistas. 
+\paragraph{}Foram analisados 18 vídeos, contemplando quatro dias distintos. Para cada vídeo as ondas foram analisadas automaticamente pelo algoritmo e manualmente pelo autor, a fim de verificar quantas ondas foram ou deixaram de ser identificadas, e verificar a precisão da identificação do ponto mínimo e máximo da onda. A tabela \ref{TabTotalWaves} exibe os dados compilados de todos os vídeos capturados. Os dados obtidos de cada vídeo foram apresentados nas tabelas \ref{Tab20170704}, \ref{Tab20170708}, \ref{Tab20170709}, \ref{Tab20170807_1}, \ref{Tab20170807_2} e \ref{Tab20170807_3} referentes aos respectivos dias: 04/07/2017, 08/07/2017, 09/07/2017 e 07/08/2017 (Tabelas \ref{Tab20170807_1}, \ref{Tab20170807_2} e \ref{Tab20170807_3}). O dia 04/07/2017 apresentava céu nublado e mar revolto, sem a presença de banhistas na areia ou mar. Já os dias 08/07/2017 e 09/07/2017 apresentavam céu aberto e mar calmo, sendo algumas séries com ondas um pouco maiores. Pode-se observar a presença de pessoas na areia e surfistas no mar. O dia 07/08/2017 apresentada céu aberto e mar calmo, porém mais agitado que os dias 08/07/2017 e 09/07/2017. Não há muitos banhistas, mas é possível notar uma boa quantidade de surfistas. 
+
+\begin{table}
+    \centering
+    \input{../analysed_waves_otsu/total_waves.tex}
+    \caption[\small{Resultado da análise de todos os vídeos capturados.}]{\small{Resultado da análise de todos os vídeos capturados.}}
+    \label{TabTotalWaves}
+\end{table}
 
 \paragraph{}Para facilitar a análise manual dos vídeos foi desenvolvido um programa de inspeção de vídeos de praia denominado WaveInspector. Este programa permite ao usuário assistir um vídeo gravado de forma acelerada, pausar e retomar a execução do vídeo, e, com o vídeo pausado, selecionar com o mouse os pontos máximos e mínimos de uma onda observada na imagem. Uma vez escolhidos os dois pontos, é possível salvar ou descartar os dados selecionados. No final da execução do vídeo um arquivo texto é gerado contendo os pontos máximos e mínimos de cada onda e o número do \textit{frame} em que a medição foi realizada. Salva-se também o \textit{frame} em si com uma linha vertical indicando o centro da imagem. A figura \ref{FigSegmentataionFixedObject}a foi gerada utilizando o programa WaveInspector.
 
-\begin{table}[h]
-    \subfloat[\small{Dados de um vídeo com 1:25 minutos de duração gravado com \textit{smartphone}.}]{
-	   \input{../analysed_waves/wave_data/IMG_0886/report_table.tex}
-    }
-    \qquad
-    \subfloat[\small{Dados de um vídeo com 1:01 minutos de duração gravado com \textit{smartphone}.}]{
-        \input{../analysed_waves/wave_data/IMG_0887/report_table.tex}
-    }
-    \qquad
-    \subfloat[\small{Dados de um vídeo com 1:33 minutos de duração gravado com \textit{smartphone}.}]{
-        \input{../analysed_waves/wave_data/IMG_0888/report_table.tex}
-    }
-    \qquad
-    \subfloat[\small{Dados de um vídeo com 2:51 minutos de duração gravado com \textit{smartphone}.}]{
-        \input{../analysed_waves/wave_data/IMG_0889/report_table.tex}
-    }
-	\caption[\small{Dados dos vídeos gravados no dia 04/07/2017}]{\small{Dados dos vídeos gravados no dia 04/07/2017}}
-	\label{Tab20170704}
-\end{table}
-
-\begin{table}[h]
-	\centering
-    \subfloat[\small{Dados de um vídeo com 1:58 minutos de duração gravado com \textit{smartphone}.}]{
-	   \input{../analysed_waves/wave_data/IMG_0894/report_table.tex}
-    }
-    \qquad
-    \subfloat[\small{Dados de um vídeo com 2:58 minutos de duração gravado com \textit{smartphone}.}]{
-        \input{../analysed_waves/wave_data/IMG_0898/report_table.tex}    
-    }
-	\caption[\small{Dados dos vídeos gravados no dia 08/07/2017}]{\small{Dados dos vídeos gravados no dia 08/07/2017}}
-	\label{Tab20170708}
-\end{table}
-
-\begin{table}[h]
-	\centering
-    \subfloat[\small{Dados de um vídeo com 2:13 minutos de duração gravado com \textit{smartphone}.}]{
-	   \input{../analysed_waves/wave_data/IMG_0900/report_table.tex}
-    }
-    \qquad
-    \subfloat[\small{Dados de um vídeo com 1:45 minutos de duração gravado com \textit{smartphone}.}]{
-        \input{../analysed_waves/wave_data/IMG_0902/report_table.tex}
-    }
-    \qquad
-    \subfloat[\small{Dados de um vídeo com 8:37 minutos de duração gravado com \textit{smartphone}.}]{
-        \input{../analysed_waves/wave_data/IMG_0903/report_table.tex}
-    }
-	\caption[\small{Dados dos vídeos gravados no dia 09/07/2017}]{\small{Dados dos vídeos gravados no dia 09/07/2017}}
-	\label{Tab20170709}
-\end{table}
-
-\begin{table}[h]
-    \centering
-    \subfloat[\small{Dados de um vídeo 0:57 segundos de duração gravado com o aparato de \textit{hardware}.}]{
-        \input{../analysed_waves/wave_data/pivideo5/report_table.tex}
-    }
-    \qquad
-    \subfloat[\small{Dados de um vídeo 0:58 segundos de duração gravado com o aparato de \textit{hardware}.}]{
-        \input{../analysed_waves/wave_data/pivideo6/report_table.tex}
-    }
-    \qquad
-    \subfloat[\small{Dados de um vídeo 1:43 minutos de duração gravado com o aparato de \textit{hardware}.}]{
-        \input{../analysed_waves/wave_data/pivideo7/report_table.tex}
-    }
-    \qquad
-    \subfloat[\small{Dados de um vídeo 4:50 minutos de duração gravado com o aparato de \textit{hardware}.}]{
-        \input{../analysed_waves/wave_data/pivideo8/report_table.tex}
-    }
-    \caption[\small{Dados dos vídeos gravados no dia 07/08/2017}]{\small{Dados dos vídeos gravados no dia 07/08/2017}}
-    \label{Tab20170807_1}
-\end{table}
-
-\begin{table}[h]
-    \centering
-    \subfloat[\small{Dados de um vídeo 1:57 minutos de duração gravado com o aparato de \textit{hardware}.}]{
-        \input{../analysed_waves/wave_data/pivideo9/report_table.tex}
-    }
-    \qquad
-    \subfloat[\small{Dados de um vídeo 4:54 minutos de duração gravado com o aparato de \textit{hardware}.}]{
-        \input{../analysed_waves/wave_data/pivideo10/report_table.tex}
-    }
-    \qquad
-    \subfloat[\small{Dados de um vídeo 1:57 minutos de duração gravado com o aparato de \textit{hardware}.}]{
-        \input{../analysed_waves/wave_data/pivideo12/report_table.tex}
-    }
-    \caption[\small{Dados dos vídeos gravados no dia 07/08/2017}]{\small{Dados dos vídeos gravados no dia 07/08/2017}}
-    \label{Tab20170807_2}
-\end{table}
-
-\begin{table}[h]
-    \centering
-    \subfloat[\small{Dados de um vídeo 0:45 segundos de duração gravado com \textit{smartphone}.}]{
-        \input{../analysed_waves/wave_data/IMG_0915/report_table.tex}
-    }
-    \qquad
-    \subfloat[\small{Dados de um vídeo 0:38 segundos de duração gravado com \textit{smartphone}.}]{
-        \input{../analysed_waves/wave_data/IMG_0916/report_table.tex}
-    }
-\end{table}
-
 \paragraph{}Alguns fatores podem interferir no algoritmo de estimação de altura das ondas. Dentre estes fatores, pode-se classificá-los em duas categorias: problemas impeditivos e não impeditivos. Os problemas impeditivos impossibilitam completamente a identificação das região de espuma do mar, e em geral possuem duas causas: baixa iluminação e interferência fixa de banhistas na areia. O problema da baixa iluminação foi discutido na seção \ref{sec:segmentation_border_detection} e ilustrado pela figura \ref{FigThresholdFail}. Já a interferência de banhistas fixos ocorre quando alguma pessoa ou objeto está posicionado sobre a coluna central de cada \textit{frame} do vídeo como na imagem \ref{FigSegmentataionFixedObject}. Esta pessoa ou objeto se traduz no \textit{timestack} como uma linha escura contínua. Esta linha divide a região de espuma encontrada, formando duas regiões de alta intensidade na imagem binarizada pela etapa de \textit{thresholding}. Dependendo da posição vertical onde a região é dividida a região de espuma pode não ser a maior região segmentada pela imagem, fazendo com que a etapa de segmentação selecione a região errada (por exemplo, selecione a faixa de areia ao invés de selecionar a região de espuma). 
+
+\paragraph{}Nos 4 dias em que os vídeos foram capturados, 9 vídeos foram descartados por apresentarem problemas impeditivos, em geral interferência humana. Um quinto dia (01/07/2017) teve todos os seus vídeos descartados por baixa iluminação. Os vídeos descartados não foram contabilizados nos resultados.
 
 \begin{figure}[h]
     \centering
@@ -201,4 +111,123 @@
 	\label{FigSprayError}
 \end{figure}
 
-\paragraph{}Os dados apresentados nas tabelas \ref{Tab20170704}, \ref{Tab20170708} e \ref{Tab20170709} demonstram que apesar dos possíveis erros relatados, a altura estimada média das ondas está dentro um limite satisfatório das ondas medidas manualmente, comprovando que o algoritmo proposto atende a proposta inicial deste projeto de graduação.
+\paragraph{}Por fim, a tabela \ref{TabConfusionMatrix} apresenta a matrix de confusão contendo dados de todos os vídeos analisados. Os dados derivados da matrix de confusão estão apresentados na tabela \ref{TabConfusionData}. Estes dados demonstram que o algoritmo consegue identificar corretamente as ondas do mar com uma taxa de 84.25\% e consegue rejeitar não-ondas com uma taxa de 66.67\%, resultando em uma eficiência de 75.46\%. O algoritmo gera poucos falso-positivos, com uma taxa de precisão de 91.24\%, embora tenha a tendência a não indentificar ondas reais com uma taxa de predição negativa de 50.66\%. A acurácia do algoritmo é de 80.82\%.
+
+\begin{table}
+    \centering
+    \input{../analysed_waves_otsu/confusion_matrix.tex}
+    \caption[\small{Matrix de confusão dos vídeos analisados.}]{\small{Matrix de confusão dos vídeos analisados.}}
+    \label{TabConfusionMatrix}
+\end{table}
+
+\begin{table}
+    \centering
+    \input{../analysed_waves_otsu/derived_data_confusion_matrix.tex}
+    \caption[\small{Dados derivados da tabela \ref{TabConfusionMatrix}}]{\small{Dados derivados da tabela \ref{TabConfusionMatrix}}}
+    \label{TabConfusionData}
+\end{table}
+
+\begin{table}[h]
+    \subfloat[\small{Dados de um vídeo com 1:25 minutos de duração gravado com \textit{smartphone}.}]{
+       \input{../analysed_waves_otsu/wave_data/IMG_0886/report_table.tex}
+    }
+    \qquad
+    \subfloat[\small{Dados de um vídeo com 1:01 minutos de duração gravado com \textit{smartphone}.}]{
+        \input{../analysed_waves_otsu/wave_data/IMG_0887/report_table.tex}
+    }
+    \qquad
+    \subfloat[\small{Dados de um vídeo com 1:33 minutos de duração gravado com \textit{smartphone}.}]{
+        \input{../analysed_waves_otsu/wave_data/IMG_0888/report_table.tex}
+    }
+    \qquad
+    % \subfloat[\small{Dados de um vídeo com 2:51 minutos de duração gravado com \textit{smartphone}.}]{
+    %     \input{../analysed_waves_otsu/wave_data/IMG_0889/report_table.tex}
+    % }
+    \caption[\small{Dados dos vídeos gravados no dia 04/07/2017}]{\small{Dados dos vídeos gravados no dia 04/07/2017}}
+    \label{Tab20170704}
+\end{table}
+
+\begin{table}[h]
+    \centering
+    \subfloat[\small{Dados de um vídeo com 1:58 minutos de duração gravado com \textit{smartphone}.}]{
+       \input{../analysed_waves_otsu/wave_data/IMG_0894/report_table.tex}
+    }
+    \qquad
+    \subfloat[\small{Dados de um vídeo com 2:58 minutos de duração gravado com \textit{smartphone}.}]{
+        \input{../analysed_waves_otsu/wave_data/IMG_0898/report_table.tex}    
+    }
+    \caption[\small{Dados dos vídeos gravados no dia 08/07/2017}]{\small{Dados dos vídeos gravados no dia 08/07/2017}}
+    \label{Tab20170708}
+\end{table}
+
+\begin{table}[h]
+    \centering
+    \subfloat[\small{Dados de um vídeo com 2:13 minutos de duração gravado com \textit{smartphone}.}]{
+       \input{../analysed_waves_otsu/wave_data/IMG_0900/report_table.tex}
+    }
+    \qquad
+    \subfloat[\small{Dados de um vídeo com 1:45 minutos de duração gravado com \textit{smartphone}.}]{
+        \input{../analysed_waves_otsu/wave_data/IMG_0902/report_table.tex}
+    }
+    \qquad
+    \subfloat[\small{Dados de um vídeo com 8:37 minutos de duração gravado com \textit{smartphone}.}]{
+        \input{../analysed_waves_otsu/wave_data/IMG_0903/report_table.tex}
+    }
+    \caption[\small{Dados dos vídeos gravados no dia 09/07/2017}]{\small{Dados dos vídeos gravados no dia 09/07/2017}}
+    \label{Tab20170709}
+\end{table}
+
+\begin{table}[h]
+    \centering
+    \subfloat[\small{Dados de um vídeo 0:57 segundos de duração gravado com o aparato de \textit{hardware}.}]{
+        \input{../analysed_waves_otsu/wave_data/pivideo5/report_table.tex}
+    }
+    \qquad
+    \subfloat[\small{Dados de um vídeo 0:58 segundos de duração gravado com o aparato de \textit{hardware}.}]{
+        \input{../analysed_waves_otsu/wave_data/pivideo6/report_table.tex}
+    }
+    \qquad
+    \subfloat[\small{Dados de um vídeo 1:43 minutos de duração gravado com o aparato de \textit{hardware}.}]{
+        \input{../analysed_waves_otsu/wave_data/pivideo7/report_table.tex}
+    }
+    \qquad
+    \subfloat[\small{Dados de um vídeo 4:50 minutos de duração gravado com o aparato de \textit{hardware}.}]{
+        \input{../analysed_waves_otsu/wave_data/pivideo8/report_table.tex}
+    }
+    \caption[\small{Dados dos vídeos gravados no dia 07/08/2017}]{\small{Dados dos vídeos gravados no dia 07/08/2017}}
+    \label{Tab20170807_1}
+\end{table}
+
+\begin{table}[h]
+    \centering
+    \subfloat[\small{Dados de um vídeo 1:57 minutos de duração gravado com o aparato de \textit{hardware}.}]{
+        \input{../analysed_waves_otsu/wave_data/pivideo9/report_table.tex}
+    }
+    \qquad
+    \subfloat[\small{Dados de um vídeo 4:54 minutos de duração gravado com o aparato de \textit{hardware}.}]{
+        \input{../analysed_waves_otsu/wave_data/pivideo10/report_table.tex}
+    }
+    \qquad
+    \subfloat[\small{Dados de um vídeo 1:57 minutos de duração gravado com o aparato de \textit{hardware}.}]{
+        \input{../analysed_waves_otsu/wave_data/pivideo11/report_table.tex}
+    }
+    \qquad
+    \subfloat[\small{Dados de um vídeo 1:57 minutos de duração gravado com o aparato de \textit{hardware}.}]{
+        \input{../analysed_waves_otsu/wave_data/pivideo12/report_table.tex}
+    }
+    \caption[\small{Dados dos vídeos gravados no dia 07/08/2017}]{\small{Dados dos vídeos gravados no dia 07/08/2017}}
+    \label{Tab20170807_2}
+\end{table}
+
+\begin{table}[h]
+    \centering
+    \subfloat[\small{Dados de um vídeo 0:45 segundos de duração gravado com \textit{smartphone}.}]{
+        \input{../analysed_waves/wave_data/IMG_0915/report_table.tex}
+    }
+    \qquad
+    \subfloat[\small{Dados de um vídeo 0:38 segundos de duração gravado com \textit{smartphone}.}]{
+        \input{../analysed_waves/wave_data/IMG_0916/report_table.tex}
+    }
+    \caption[\small{Dados dos vídeos gravados no dia 07/08/2017}]{\small{Dados dos vídeos gravados no dia 07/08/2017}}
+    \label{Tab20170807_3}
+\end{table}

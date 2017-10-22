@@ -27,13 +27,13 @@ private:
 		if (isInit)
 			return;
 
-		imwrite("output_images/simpletimestack/simpletimestack_mat.jpg",m);
+		// imwrite("output_images/simpletimestack/simpletimestack_mat.jpg",m);
 
 		CannyFilter cf(50);
 		cf.setSourceMat(&m);
 		cf.filter();
 
-		imwrite("output_images/simpletimestack/simpletimestack_canny.jpg",(*cf.getFilteredImage()));
+		// imshow("output_images/simpletimestack/simpletimestack_canny.jpg",(*cf.getFilteredImage()));
 
 		skyRemover.init((*cf.getFilteredImage()));
 
@@ -51,7 +51,7 @@ public:
 	}
 
 	void generateTimestack(VideoCapture &cap) {
-		cout << "Generate timestack" << endl;
+		// cout << "Generate timestack" << endl;
 		Mat frame;
 		count = 0;
 		while(true) {
@@ -69,6 +69,7 @@ public:
 	}
 	
 	void process(Mat &m) {
+		// cout << "process begin" << endl;
 		Mat greyFrame, eqFrame;
 		TiltFilter tiltFilter;
 
@@ -78,34 +79,57 @@ public:
 		else
 			cvtColor(m,greyFrame,COLOR_BGR2GRAY);
 
+		// cout << "calling init" << endl;
 		// Passo 2.1 - detecção da linha de horizonte
 		init(greyFrame);
 
+		// cout << "equalizing hist" << endl;
 		// Passo 2.2 - Equalização de Histograma
 		equalizeHist(greyFrame,eqFrame);
 
-		// imshow("eqFrame",eqFrame);
-		// waitKey(10);
+		// imshow("eq",eqFrame);
 
+		// cout << "removing sky" << endl;
 		// Passo 3 - Remoção do Céu
 		skyRemover.process(eqFrame);
 
-		// imshow("sky_removed",(*skyRemover.getFilteredImage()));
-		// waitKey(0);		
+		// imshow("sky removed",(*skyRemover.getFilteredImage()));
+		// waitKey(0);
 
+		// cout << "initializing tilt filter" << endl;
 		tiltFilter.init(skyRemover.getFilteredImage());
+
+		// cout << "fixing tilt" << endl;
 		tiltFilter.process((*skyRemover.getFilteredImage()));
 
+		// cout << "adding to timestack" << endl;
 		// Passo 4 - adicionar frame ao timestack
 		timestack.process((*tiltFilter.getFilteredImage()));
-		// timestack.process(eqFrame);
 
-		if (count == 100)
-			imwrite("output_images/simpletimestack/simpletimestack_sky_removed.jpg",(*skyRemover.getFilteredImage()));
+		if (count == 100) {
+
+			imwrite("output_images/simpletimestack/simpletimestack_sky_removed_untilt.jpg",(*tiltFilter.getFilteredImage()));
+
+			tiltFilter.process(m);
+			imwrite("output_images/simpletimestack/simpletimestack_original_untilt.jpg",(*tiltFilter.getFilteredImage()));
+
+			CannyFilter cf(50);
+			cf.setSourceMat(tiltFilter.getFilteredImage());
+			cf.filter();
+
+			imwrite("output_images/simpletimestack/simpletimestack_canny_untilt.jpg",(*cf.getFilteredImage()));
+
+			tiltFilter.process(eqFrame);
+			imwrite("output_images/simpletimestack/simpletimestack_eq_untilt.jpg",(*tiltFilter.getFilteredImage()));
+
+			tiltFilter.process(greyFrame);
+			imwrite("output_images/simpletimestack/simpletimestack_grey_untilt.jpg",(*tiltFilter.getFilteredImage()));
+
+		}
 	}
 
 	void save(string path) {
-		cout << "PreProcessor::save" << endl;
+		// cout << "PreProcessor::save" << endl;
 		timestack.save(path);
 	}
 };

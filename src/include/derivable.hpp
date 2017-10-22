@@ -48,12 +48,9 @@ public:
 	/*---calculateDerivativeBegin---*/
 	void calculateDerivative(Derivable& d) {
 		for (int i = 0; i < points.size(); i++) {
-			int x = points[i].getX();
-			int y = points[i].getY();
-
 			if (i > 0) {
-				int dX = x - points[i-1].getX();
-				int dY = y - points[i-1].getY();
+				int dX = points[i].getX() - points[i-1].getX();
+				int dY = points[i].getY() - points[i-1].getY();
 				d.addPoint(dX,dY);
 			}
 		}

@@ -64,9 +64,30 @@ void simpleTimestack(VideoCapture& cap) {
 	// t.save("output_images/timestack.jpg");
 }
 
+void no_process_timestack(std::string path) {
+	VideoCapture cap(path);
+	Timestack t(cap);
+	Mat frame;
+	int count = 0;
+	while(true) {
+		cap >> frame;
+		if (frame.data == NULL)
+			break;
+
+		count++;
+
+		t.process(frame);
+	}
+	t.save("output_images/timestack_original.jpg");
+}
+
 int main(int argc, char** argv) {
 
 	string path = argv[1];
+
+	// no_process_timestack(path);
+	// if (true)
+	// 	return 0;
 
 	VideoCapture cap(path);
 

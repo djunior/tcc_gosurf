@@ -39,6 +39,14 @@ bool WaveDetector::detectWave(Trajectory& t, int bottom, int top) {
 }
 /*---detectWaveEnd---*/
 
+void drawWavePoints(Mat &m, WaveList& waveList) {
+	for (int i = 0; i < waveList.getSize(); i++) {
+		Wave wave = waveList.getWave(i);
+		circle(m, cv::Point(wave.bottom.getX(),wave.bottom.getY()), 5, Scalar( 0, 0, 255 ), -1, 8 );
+		circle(m, cv::Point(wave.top.getX(),wave.top.getY()), 5, Scalar( 0, 255, 0 ), -1, 8 );
+	}
+}
+
 void WaveDetector::drawWaves(Mat &mat) {
 	if (waves.size() > 0) {
 		for (int i = 0; i < waves.size(); i++) {
@@ -50,9 +58,11 @@ void WaveDetector::drawWaves(Mat &mat) {
 			cv::Point pt3(bottom.getX(), bottom.getY());
 
 			line(mat,pt1,pt2,Scalar(0,255,0),3);
-			line(mat,pt3,pt2,Scalar(0,0,255),3);
+			// line(mat,pt3,pt2,Scalar(0,0,255),3);
 		}
 	}
+
+	drawWavePoints(mat,rejectedWaveList);
 }
 
 void draw(Mat &mat, Trajectory &original, Derivable &derivative, int offset) {
@@ -104,6 +114,8 @@ void WaveDetector::analyseTrajectory(Trajectory &t) {
 	Derivable derivative;
 	t.calculateDerivative(derivative);
 
+	drawDerivative(srcMat,t);
+
 	int state = 0; 
 	int bottom_index = 0;
 	int bottom_back_index = 0;
@@ -131,7 +143,7 @@ void WaveDetector::analyseTrajectory(Trajectory &t) {
 			case 1:
 				if (dY > 0) {
 					top_index = i+1;
-					state = 2;
+					state = 3;
 				}
 
 				break;
@@ -155,17 +167,20 @@ void WaveDetector::analyseTrajectory(Trajectory &t) {
 						sea_level_y += t.getPoint(bottom_index).getY();
 						sea_level_count++;
 					}
+
+					Wave wave(t.getPoint(bottom_index),t.getPoint(top_index));
+					rejectedWaveList.addWave(wave);
 					
 					if (detectWave(t,bottom_index,top_index)) {
 
 						sea_level_y /= sea_level_count;
 						fixBottomPoint(waves,sea_level_y);
 
-						Wave wave(t.getPoint(bottom_index),t.getPoint(top_index));
 						waves.push_back(wave);
 
 						sea_level_y = 0;
 						sea_level_count = 0;
+
 					}
 
 					gap_count = 0;

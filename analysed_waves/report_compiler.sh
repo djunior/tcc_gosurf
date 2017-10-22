@@ -1,9 +1,13 @@
 #!/bin/bash
 
+abs () { echo -E "${1#-}" ;}
+
 ALG_SUM=`cat wave_data/*/report.txt | awk 'BEGIN{sum=0}/Waves/{sum+=$3}END{print sum}'`
 MAN_SUM=`cat wave_data/*/manual_report.txt | awk 'BEGIN{sum=0}/Waves/{sum+=$3}END{print sum}'`
 
-PERCENT=$((100 - (ALG_SUM - MAN_SUM)*100 / MAN_SUM ))
+DIFF=$((ALG_SUM-MAN_SUM))
+ABS_DIFF=abs $DIFF
+PERCENT=$((100 - ( ABS_DIFF*100 / MAN_SUM) ))
 
 echo Numero de ondas identificadas manualmente: $MAN_SUM
 echo Numero de ondas identificadas pelo algoritmo: $ALG_SUM

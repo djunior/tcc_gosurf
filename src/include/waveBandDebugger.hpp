@@ -47,8 +47,8 @@ public:
 		cout << "resizing video" << endl;
 		// resize(debug,debug,Size(debug.cols/2,debug.rows/2));
 
-		cout << "showing video" << endl;
-		imshow("trajectory debug",debug);
+		// cout << "showing video" << endl;
+		// imshow("trajectory debug",debug);
 
 	}
 };

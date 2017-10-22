@@ -28,7 +28,7 @@ As imagens obtidas são pré-processadas, extraindo dados como tamanho e frequênci
 
 
 
-\section{Identificação de objetos}
+\section{Identificação de Objetos}
 
 \paragraph{}Para extrair os dados desejados de uma imagem, é necessário separar o que é o objeto de estudo -- no caso específico deste projeto, uma onda do mar -- do restante da imagem. Isto é, através de transformações na imagem original deseja-se identificar o que é o primeiro plano e o plano de fundo. Este processo de extração de objetos ou planos de uma imagem é chamado na literatura de segmentação \cite{Gonzalez92}.
 
@@ -36,7 +36,22 @@ As imagens obtidas são pré-processadas, extraindo dados como tamanho e frequênci
 
 \paragraph{}Os métodos de aprimoramento de imagens podem ser estudados em dois domínios: domínio espacial e domínio da frequência. O aprimoramento no domínio espacial trabalha com os próprios \textit{pixels} de uma imagem, e podem ser representados pela expressão: \(g(x,y) = T[f(x,y)]\), onde \( g(x,y) \) é a imagem transformada, \( f(x,y) \) é a imagem original e \( T[ \ \cdot\  ] \) é a transformação que será aplicada na imagem original. As técnicas de aprimoramento no domínimo da frequência procuram implementar um filtro que possui uma resposta em frequência específica para realizar a operação desejada, que podem ser representadas pela expressão: $G(j\Omega) = H(j\Omega)F(j\Omega)$, onde $F(j\Omega)$ é a imagem original representada no domínio da frequência, $H(j\Omega)$ é a resposta em frequência do filtro que será aplicado e $G(j\Omega)$ é a imagem resultante desta operação. Em algumas aplicações, trabalhar no domínio da frequência será vantajoso, e em outras será vantajoso trabalhar no domínio espacial. É importante lembra que os métodos no domínio espacial e no domínio da frequência são equivalentes. Neste capítulo todos os métodos serão apresentados no domínio espacial.
 
-\paragraph{}Alguns métodos de aprimoramento de imagens serão utilizados nesse projeto: transformações em níveis de cinza, filtros de nitidez (\textit{sharpening}), filtros de suavização (\textit{blur}), filtros de detecção de bordas. Esses métodos são importantes para melhorar o contraste entre as regiões da imagem analisada e reduzir o ruído, facilitando assim o processo de segmentação que será realizado posteriormente.
+\paragraph{}Alguns métodos de aprimoramento de imagens serão utilizados nesse projeto: equalização de histograma, transformações em níveis de cinza, filtros de nitidez (\textit{sharpening}), filtros de suavização (\textit{blur}), filtros de detecção de bordas. Esses métodos são importantes para melhorar o contraste entre as regiões da imagem analisada e reduzir o ruído, facilitando assim o processo de segmentação que será realizado posteriormente.
+
+
+\paragraph{}A equalização do histograma da imagem é um método utilizado para normalizar a luminosidade da imagem, de forma que seja possível processar tanto dias de alta luminosidade (céu sem nuvens e sol forte) quanto dias de baixa luminosidade (céu nublado e sol fraco). Gonzalez \cite{Gonzalez92} define um histograma de uma imagem digital com 0 até L-1 níveis de cinza como uma função discreta $h(r_{k}) = n_{k}$, onde $r_{k}$ é o k-ésimo nível de cinza e $n_{k}$ é o número de \textit{pixels} com o nível de cinza $r_{k}$. Esta função pode ser normalizada pelo número total de \textit{pixels} $n$, a função normalizada $p(r_{k})$ é definida como:
+
+\[
+	p(r_{k}) = \frac{n_{k}}{n}
+\]
+
+\noindent{}A função $p(r_{k})$ pode ser interpretada como a probabilidade da ocorrência do nível de cinza $r_{k}$ na imagem digital. A equalização do histograma consiste em encontrar uma transformação T que quando aplicada no histograma normalizado $p(r_{k})$ que resulta em um histograma uniforme. Gonzalez demonstra que a seguinte transformação atinge este objetivo:
+
+\[
+	s_{k} = T(r_{k}) = \sum_{j=0}^{k} \frac{n_{j}}{n}
+\]
+
+\noindent{}Onde $k = 0,1,2,...,L-1$ e $s_{k}$ é a função que representa o histograma equalizado. 
 
 \paragraph{}As transformações em níveis de cinza englobam métodos que alteram o contraste de uma imagem. Em geral, são métodos onde cada pixel \((x,y)\) da saída depende apenas do pixel correspondente da entrada, ou seja, não é influenciado pelos seus vizinhos. O principal método que será utilizado nesse projeto é o de \textit{thresholding}, onde a transformação aplicada na entrada é da forma: 
 
@@ -48,7 +63,7 @@ T[f(x,y)] =
 \end{cases}
 \] 
 
-\noindent{}Onde C é uma constante escolhida arbitrariamente. A utilidade dessa função é facilitar a definição das regiões da imagem, quais fazem parte do céu, do mar e da arrebentação.
+\noindent{}Onde C é uma constante escolhida arbitrariamente. A utilidade dessa função é facilitar a definição das regiões da imagem, quais fazem parte do céu, do mar e da arrebentação. A constante C pode ser calculada através do método de Otsu \cite{Otsu1979}, que calcula um valor de limiar ótimo para binarizar a imagem. Este método considera que o histograma da imagem pode ser dividido em duas classes $C_{0}$ e $C_{1}$, $C_{0}$ englobando todos os \textit{pixels} com níveis de cinza $r_{0}$ até $r_{i}$, e $C_{1}$ englobando todos os \textit{pixels} com níveis de cinza $r_{i+1}$ até $r_{L-1}$. O método de Otsu então calcula o valor de $i$ que minimiza a variância das classes $C_{0}$ e $C_{1}$.
 
 \paragraph{}Os filtros de suavização, também conhecidos como filtros de \textit{blur} são importantes para reduzir o nível de ruído na imagem. Outra função importante para esse projeto é homogeneizar as regiões da imagem, isto é, eliminar, ou pelo menos reduzir, pontos mais claros em regiões escuras, ou pontos escuros em regiões claros. Dessa forma, os métodos de \textit{thresholding} são mais efetivos.
 
@@ -108,25 +123,6 @@ H(u,v) = e^{-D^{2}(u,v)/2D^{2}_{0}}
 \] 
 
 \noindent{}Onde \(g(x,y)\) é a imagem de saída e \(f(x,y)\) é a imagem de entrada. Entretanto, a medida que o projeto progrediu percebeu-se que o reforço na intensidade das bordas realizado pelos método de \textit{sharpening} não compensavam o aumento de ruído introduzido na imagem, portanto foram descartados do projeto.
-
-
-
-
-\paragraph{}Por último, utiliza-se um método para normalizar a luminosidade da imagem, de forma que seja possível processar tanto dias de alta luminosidade (céu sem nuvens e sol forte) quanto dias de baixa luminosidade (céu nublado e sol fraco). Esta normalização pode ser realizada através da equalização do histograma da imagem. Gonzalez \cite{Gonzalez92} define um histograma de uma imagem digital com 0 até L-1 níveis de cinza como uma função discreta $h(r_ {k}) = n_{k}$, onde $r_{k}$ é o k-ésimo nível de cinza e $n_{k}$ é o número de \textit{pixels} com o nível de cinza $r_{k}$. Esta função pode ser normalizada pelo número total de \textit{pixels} $n$, a função normalizada $p(r_{k})$ é definida como:
-
-\[
-	p(r_{k}) = \frac{n_{k}}{n}
-\]
-
-\noindent{}A função $p(r_{k})$ pode ser interpretada como a probabilidade da ocorrência do nível de cinza $r_{k}$ na imagem digital. A equalização do histograma consiste em encontrar uma transformação T que quando aplicada no histograma normalizado $p(r_{k})$ que resulta em um histograma uniforme. Gonzalez demonstra que a seguinte transformação atinge este objetivo:
-
-\[
-	s_{k} = T(r_{k}) = \sum_{j=0}^{k} \frac{n_{j}}{n}
-\]
-
-\noindent{}Onde $k = 0,1,2,...,L-1$ e $s_{k}$ é a função que representa o histograma equalizado. 
-
-
 
 \section{Métodos de Segmentação de Imagens}
 

@@ -343,15 +343,13 @@ cv::GaussianBlur(timestackMat,blurredMat,kernelSize,standardDeviation);
 \end{lstlisting}
 
 %Thresholding
-\paragraph{}A seguir é realizada o passo de \textit{thresholding}. Este passo é realizado utilizando a função \textit{threshold}, que recebe cinco parâmetros: um objeto Mat de entrada, um objeto Mat de saída, um valor double indicando o valor limite do \textit{threshold}, um valor double indicando qual é o valor máximo utilizado em \textit{threshold} de binarização, e um valor inteiro indicando qual o tipo de \textit{threshold} que será aplicado. Os tipos de \textit{threshold} disponíveis são: 
-
-%cv::THRESH_BINARY, cv::THRESH_BINARY_INV, cv::THRESH_TRUNC, cv::THRESH_TOZERO e cv::THRESH_TOZERO_INV. Neste projeto será utilizado o tipo cv::THRESH_BINARY. O código abaixo exibe como esta função é utilizada:
+\paragraph{}A seguir é realizada o passo de \textit{thresholding}. Este passo é realizado utilizando a função \textit{threshold}, que recebe cinco parâmetros: um objeto Mat de entrada, um objeto Mat de saída, um valor double indicando o valor limite do \textit{threshold}, um valor double indicando qual é o valor máximo utilizado em \textit{threshold} de binarização, e um valor inteiro indicando qual o tipo de \textit{threshold} que será aplicado. O tipo de \textit{threshold} pode ser combinado com a sinalização cv::CV\_THRESH\_OTSU para utilizar o método de Otsu para calcular o valor do limite. Neste caso, o valor double indicando o limiar de \textit{threshold} deve ser 0. Neste projeto será utilizado o tipo cv::CV\_THRESH\_BINARY com o método de Otsu. O código abaixo exibe como esta função é utilizada:
 
 \begin{lstlisting}
-double thresholdLimit = 150;
+double thresholdLimit = 0;
 double maxValue = 255;
 cv::Mat thresholdedMat;
-cv::threshold(blurredMat,thresholdedMat,thresholdLimit,maxValue,cv::THRESH_BINARY);
+cv::threshold(blurredMat,thresholdedMat,thresholdLimit,maxValue,cv::CV_THRESH_BINARY | cv::CV_THRESH_OTSU);
 \end{lstlisting}
 
 % \noindent{}O tipo de \textit{thresholding} cv::THRESH_BINARY indica que qualquer \texit{pixel} do objeto Mat de entrada com valor de intensidade acima do valor limite será alterado para o valor máximo, e qualquer \texit{pixel} do objeto Mat de entrada com valor de intensidade abaixo do valor limite será alterado para zero.

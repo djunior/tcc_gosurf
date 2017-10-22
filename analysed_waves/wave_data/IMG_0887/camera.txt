@@ -1,0 +1,5 @@
+imageSize=720
+cameraHeight=6.0
+cameraAngle=83
+sensorSize=3.6
+focalLength=4.15
